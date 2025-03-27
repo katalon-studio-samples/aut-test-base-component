@@ -40,6 +40,7 @@ const menuItems = [
     category: 'Advanced',
     items: [
       { path: '/context-menu', label: 'Context Menu' },
+      { path: '/multi-tiered-menu', label: 'Multi Tiered Menu' },
       { path: '/notifications', label: 'Notifications' },
       { path: '/ab-testing', label: 'A/B Testing' },
       { path: '/auth', label: 'Authentication' },

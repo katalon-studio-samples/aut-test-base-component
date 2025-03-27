@@ -126,6 +126,12 @@ const categories = [
         icon: <MousePointer2 className="w-6 h-6" />
       },
       {
+        title: 'Multi Tiered Menu',
+        path: '/multi-tiered-menu',
+        description: 'Handle right-click context menus',
+        icon: <MousePointer2 className="w-6 h-6" />
+      },
+      {
         title: 'Notifications',
         path: '/notifications',
         description: 'Test notification systems',

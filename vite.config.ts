@@ -3,12 +3,4 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
-  base: '/test-automation-practices/',
-  build: {
-    outDir: 'dist',
-    copyPublicDir: true
-  }
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
@@ -25,6 +25,7 @@ import { AlertsPage } from './pages/AlertsPage';
 import { KeyPressPage } from './pages/KeyPressPage';
 import { ShadowDOMPage } from './pages/ShadowDOMPage';
 import { Menu, X } from 'lucide-react';
+import MultiTieredMenuPage from "./pages/MultiTieredMenuPage";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -77,6 +78,7 @@ function App() {
                 <Route path="/file-download" element={<FileDownloadPage />} />
                 <Route path="/iframes" element={<IframePage />} />
                 <Route path="/context-menu" element={<ContextMenuPage />} />
+                <Route path="//multi-tiered-menu" element={<MultiTieredMenuPage />} />
                 <Route path="/hover" element={<HoverPage />} />
                 <Route path="/notifications" element={<NotificationsPage />} />
                 <Route path="/ab-testing" element={<ABTestingPage />} />

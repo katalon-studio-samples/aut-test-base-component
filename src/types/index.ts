@@ -10,6 +10,7 @@ export interface TableData {
   email: string;
   status: string;
   role: string;
+  action?: string;
 }
 
 export interface FormData {

@@ -19,10 +19,17 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
   };
 
   const sortedData = [...data].sort((a, b) => {
-    if (sortDirection === 'asc') {
-      return a[sortField] > b[sortField] ? 1 : -1;
+    const aValue = a[sortField];
+    const bValue = b[sortField];
+
+    if (aValue === undefined || bValue === undefined) {
+      return 0;
     }
-    return a[sortField] < b[sortField] ? 1 : -1;
+
+    if (sortDirection === 'asc') {
+      return aValue > bValue ? 1 : -1;
+    }
+    return aValue < bValue ? 1 : -1;
   });
 
   return (
