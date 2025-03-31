@@ -13,7 +13,7 @@ export const IframePage: React.FC = () => {
       <IframeExample/>
       <h1 className="text-2xl font-bold mb-6 mt-10">Iframe Complex</h1>
       <IframeComplex/>
-      <h1 className="text-2xl font-bold mb-6 mt-10">Iframe sample domain</h1>
+      <h1 className="text-2xl font-bold mb-6 mt-10">Iframe same domain</h1>
       <div className="border rounded-lg p-4" data-test="iframe-wrapper-educenter">
         <h3 className="text-lg font-medium mb-2">Educator Center</h3>
         <iframe
@@ -23,7 +23,7 @@ export const IframePage: React.FC = () => {
           data-test="iframe-educenter"
         />
       </div>
-      <h1 className="text-2xl font-bold mb-6 mt-10">Iframe other domain</h1>
+      <h1 className="text-2xl font-bold mb-6 mt-10">Iframe different domain</h1>
       <div className="border rounded-lg p-4" data-test="iframe-wrapper-map">
         <h3 className="text-lg font-medium mb-2">Map</h3>
         <iframe
