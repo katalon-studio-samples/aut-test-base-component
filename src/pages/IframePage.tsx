@@ -1,5 +1,6 @@
 import React from 'react';
 import { IframeExample } from '../components/IframeExample';
+import {IframeComplex} from "../components/IframeComplex";
 
 export const IframePage: React.FC = () => {
   return (
@@ -9,7 +10,19 @@ export const IframePage: React.FC = () => {
         Practice working with iframes, including nested elements and cross-frame
         communication.
       </p>
-      <IframeExample />
+      <IframeExample/>
+      <h1 className="text-2xl font-bold mb-6 mt-10">Iframe Complex</h1>
+      <IframeComplex/>
+      <h1 className="text-2xl font-bold mb-6 mt-10">Iframe New app sample domain</h1>
+      <div className="border rounded-lg p-4" data-test="iframe-wrapper-educenter">
+        <h3 className="text-lg font-medium mb-2">Educator Center</h3>
+        <iframe
+          src="https://educenter.aut.katalon.com/"
+          className="w-full h-[100vh] border-0 bg-white"
+          sandbox="allow-scripts allow-forms"
+          data-test="iframe-educenter"
+        />
+      </div>
     </div>
   );
 };

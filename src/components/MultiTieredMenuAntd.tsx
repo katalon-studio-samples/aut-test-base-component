@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Space } from 'antd';
-import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { CaretDownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
 const { Header } = Layout;
