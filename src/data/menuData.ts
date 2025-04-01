@@ -292,4 +292,7 @@ export const menuData: MenuItem[] = [
       }
     ]
   }
-]; 
+];
+
+export const IFRAME_BASE_URL = 'https://base-component.aut.katalon.com';
+// export const IFRAME_BASE_URL = 'http://localhost:5173';

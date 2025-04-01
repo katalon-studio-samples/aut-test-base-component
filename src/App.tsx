@@ -26,6 +26,7 @@ import { KeyPressPage } from './pages/KeyPressPage';
 import { ShadowDOMPage } from './pages/ShadowDOMPage';
 import { Menu, X } from 'lucide-react';
 import MultiTieredMenuPage from "./pages/MultiTieredMenuPage";
+import {IframePageNested1Level} from "./pages/IframePageNested1Level.tsx";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -77,7 +78,7 @@ function App() {
                 <Route path="/file-upload" element={<FileUploadPage />} />
                 <Route path="/file-download" element={<FileDownloadPage />} />
                 <Route path="/iframes" element={<IframePage />} />
-                <Route path="/iframes-1" element={<TablesPage />} />
+                <Route path="/iframes-1" element={<IframePageNested1Level />} />
                 <Route path="/iframes-2" element={<FormsPage />} />
                 <Route path="/context-menu" element={<ContextMenuPage />} />
                 <Route path="//multi-tiered-menu" element={<MultiTieredMenuPage />} />
