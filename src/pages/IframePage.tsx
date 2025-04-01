@@ -17,9 +17,9 @@ export const IframePage: React.FC = () => {
       <div className="border rounded-lg p-4" data-test="iframe-wrapper-educenter">
         <h3 className="text-lg font-medium mb-2">Educator Center</h3>
         <iframe
-          src="https://educenter.aut.katalon.com/"
+          src="https://base-component.aut.katalon.com"
           className="w-full h-[100vh] border-0 bg-white"
-          sandbox="allow-scripts allow-forms"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
           data-test="iframe-educenter"
         />
       </div>
