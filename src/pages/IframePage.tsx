@@ -15,9 +15,27 @@ export const IframePage: React.FC = () => {
       <IframeComplex/>
       <h1 className="text-2xl font-bold mb-6 mt-10">Iframe same domain</h1>
       <div className="border rounded-lg p-4" data-test="iframe-wrapper-educenter">
-        <h3 className="text-lg font-medium mb-2">Educator Center</h3>
+        <h3 className="text-lg font-medium mb-2">Iframe Center</h3>
         <iframe
           src="https://base-component.aut.katalon.com"
+          className="w-full h-[100vh] border-0 bg-white"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+          data-test="iframe-educenter"
+        />
+      </div>
+      <div className="border rounded-lg mt-10" data-test="iframe-wrapper-educenter">
+        <h3 className="text-lg font-medium mb-2">Iframe Center</h3>
+        <iframe
+          src="https://base-component.aut.katalon.com/#/forms"
+          className="w-full h-[100vh] border-0 bg-white"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+          data-test="iframe-educenter"
+        />
+      </div>
+      <div className="border rounded-lg p-4 mt-10" data-test="iframe-wrapper-educenter">
+        <h3 className="text-lg font-medium mb-2">Iframe Center</h3>
+        <iframe
+          src="https://base-component.aut.katalon.com/#/tables"
           className="w-full h-[100vh] border-0 bg-white"
           sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
           data-test="iframe-educenter"

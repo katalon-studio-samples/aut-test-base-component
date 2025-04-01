@@ -39,7 +39,7 @@ function App() {
       <Router>
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors flex flex-col md:flex-row">
           {/* Mobile menu button */}
-          <button 
+          <button
             onClick={toggleSidebar}
             className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-white dark:bg-gray-800 shadow-md"
             aria-label="Toggle menu"
@@ -53,7 +53,7 @@ function App() {
           </button>
 
           {/* Sidebar for mobile with overlay */}
-          <div 
+          <div
             className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 md:hidden ${
               sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
@@ -62,7 +62,7 @@ function App() {
 
           {/* Sidebar */}
           <SideNav isOpen={sidebarOpen} onClose={toggleSidebar} />
-          
+
           {/* Main content */}
           <div className="flex-1 md:ml-64 pt-16 md:pt-0">
             <ThemeToggle />
@@ -77,6 +77,8 @@ function App() {
                 <Route path="/file-upload" element={<FileUploadPage />} />
                 <Route path="/file-download" element={<FileDownloadPage />} />
                 <Route path="/iframes" element={<IframePage />} />
+                <Route path="/iframes-1" element={<TablesPage />} />
+                <Route path="/iframes-2" element={<FormsPage />} />
                 <Route path="/context-menu" element={<ContextMenuPage />} />
                 <Route path="//multi-tiered-menu" element={<MultiTieredMenuPage />} />
                 <Route path="/hover" element={<HoverPage />} />
