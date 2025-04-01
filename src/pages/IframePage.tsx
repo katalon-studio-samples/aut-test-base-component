@@ -71,7 +71,7 @@ export const IframePage: React.FC = () => {
           <div className="border rounded-lg mt-10" data-test="iframe-wrapper-educenter">
             <h3 className="text-lg font-medium mb-2">Iframe Center</h3>
             <iframe
-              src="https://base-component.aut.katalon.com/#/forms"
+              src={`${IFRAME_BASE_URL}/forms`}
               className="w-full h-[100vh] border-0 bg-white"
               sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
               data-test="iframe-educenter"
@@ -88,7 +88,7 @@ export const IframePage: React.FC = () => {
           <div className="border rounded-lg p-4 mt-10" data-test="iframe-wrapper-educenter">
             <h3 className="text-lg font-medium mb-2">Iframe Center</h3>
             <iframe
-              src="https://base-component.aut.katalon.com/#/tables"
+              src={`${IFRAME_BASE_URL}/tables`}
               className="w-full h-[100vh] border-0 bg-white"
               sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
               data-test="iframe-educenter"
@@ -99,16 +99,16 @@ export const IframePage: React.FC = () => {
 
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Iframe same domain nested: 1 Level</Typography>
+          <Typography>Iframe same domain nested level</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <div className="border rounded-lg p-4 mt-10" data-test="iframe-wrapper-educenter">
             <h3 className="text-lg font-medium mb-2">Iframe Center</h3>
             <iframe
-              src={`${IFRAME_BASE_URL}/#/iframes-1`}
+              src={`${IFRAME_BASE_URL}/iframes-1`}
               className="w-full h-[100vh] border-0 bg-white"
               sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-              data-test="iframe-educenter"
+              data-test="iframe-nested"
             />
           </div>
         </AccordionDetails>
