@@ -7,7 +7,7 @@ export const IframePageNested1Level: React.FC = () => {
       <iframe
         src={`${IFRAME_BASE_URL}/iframes-2`}
         className="w-full h-[100vh] border-0 bg-white"
-        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+        sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
         data-test="iframe-nested"
       />
     </div>

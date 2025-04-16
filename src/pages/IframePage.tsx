@@ -56,7 +56,7 @@ export const IframePage: React.FC = () => {
             <iframe
               src="https://base-component.aut.katalon.com"
               className="w-full h-[100vh] border-0 bg-white"
-              sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+              sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
               data-test="iframe-educenter"
             />
           </div>
@@ -73,7 +73,7 @@ export const IframePage: React.FC = () => {
             <iframe
               src={`${IFRAME_BASE_URL}/forms`}
               className="w-full h-[100vh] border-0 bg-white"
-              sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+              sandbox="allow-same-origin allow-scripts allow-popups allow-forms  allow-modals"
               data-test="iframe-educenter"
             />
           </div>
@@ -90,7 +90,7 @@ export const IframePage: React.FC = () => {
             <iframe
               src={`${IFRAME_BASE_URL}/tables`}
               className="w-full h-[100vh] border-0 bg-white"
-              sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+              sandbox="allow-same-origin allow-scripts allow-popups allow-forms  allow-modals"
               data-test="iframe-educenter"
             />
           </div>
@@ -107,7 +107,7 @@ export const IframePage: React.FC = () => {
             <iframe
               src={`${IFRAME_BASE_URL}/iframes-1`}
               className="w-full h-[100vh] border-0 bg-white"
-              sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+              sandbox="allow-same-origin allow-scripts allow-popups allow-forms  allow-modals"
               data-test="iframe-nested"
             />
           </div>
