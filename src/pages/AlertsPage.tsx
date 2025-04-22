@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
 export const AlertsPage: React.FC = () => {
   const [lastAction, setLastAction] = useState<string>('');
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const handleAlert = () => {
     alert('This is a simple alert!');
     setLastAction('Alert shown');
+  };
+
+  const handleDialog = () => {
+    setDialogOpen(true);
+    setLastAction('Dialog Model shown');
   };
 
   const handleConfirm = () => {
@@ -22,6 +29,16 @@ export const AlertsPage: React.FC = () => {
     <div className="px-4 py-6 sm:px-0">
       <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">JavaScript Alerts</h1>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm space-y-6">
+        <div>
+          <button
+              onClick={handleDialog}
+              className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+              data-test="alert-button"
+          >
+            Show Dialog Modal
+          </button>
+        </div>
+
         <div>
           <button
             onClick={handleAlert}
@@ -61,6 +78,15 @@ export const AlertsPage: React.FC = () => {
           </div>
         )}
       </div>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <DialogTitle>Alert</DialogTitle>
+      <DialogContent>This is a simple alert!</DialogContent>
+      <DialogActions>
+        <Button onClick={() => { setDialogOpen(false); setLastAction('Alert shown'); }} color="primary">
+          OK
+        </Button>
+      </DialogActions>
+      </Dialog>
     </div>
   );
 };

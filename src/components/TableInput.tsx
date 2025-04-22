@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { TableData } from '../../types';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
 interface TableInputProps {
   type: 'text' | 'select' | 'button' | 'multiselect';
@@ -59,6 +60,7 @@ interface DynamicTableProps {
 const DynamicTableInput: React.FC<DynamicTableProps> = ({ data }) => {
   const [sortField, setSortField] = useState<keyof TableData>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleSort = (field: keyof TableData) => {
     if (field === sortField) {
@@ -124,7 +126,24 @@ const DynamicTableInput: React.FC<DynamicTableProps> = ({ data }) => {
                   ) : key === 'role' ? (
                     <TableInput type="multiselect" value={value as string[]} options={['Admin', 'User', 'Editor']} />
                   ) : key === 'action' ? (
-                    <TableInput type="button" value={value} onClick={() => alert('Action clicked')} />
+                    <>
+                      <TableInput
+                          type="button"
+                          value={value}
+                          onClick={() => setOpenDialog(true)}
+                      />
+                      {openDialog && (
+                          <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+                            <DialogTitle>Action</DialogTitle>
+                            <DialogContent>
+                              <p>Action clicked</p>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button onClick={() => setOpenDialog(false)}>Close</Button>
+                            </DialogActions>
+                          </Dialog>
+                      )}
+                    </>
                   ) : (
                     value
                   )}

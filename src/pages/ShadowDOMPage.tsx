@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
 export const ShadowDOMPage: React.FC = () => {
   const hostRef = useRef<HTMLDivElement>(null);
   const shadowRootRef = useRef<ShadowRoot | null>(null);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
 
   useEffect(() => {
     if (hostRef.current && !shadowRootRef.current) {
@@ -53,7 +55,7 @@ export const ShadowDOMPage: React.FC = () => {
       const button = content.querySelector('button');
       if (button) {
         button.addEventListener('click', () => {
-          alert('Button in Shadow DOM clicked!');
+          setDialogOpen(true);
         });
       }
     }
@@ -87,6 +89,17 @@ export const ShadowDOMPage: React.FC = () => {
           <p className="text-gray-700 dark:text-gray-300">This content is in the regular DOM, outside the Shadow DOM.</p>
         </div>
       </div>
+      <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogTitle>Shadow DOM Button</DialogTitle>
+        <DialogContent>
+          <p>The button inside the Shadow DOM was clicked!</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

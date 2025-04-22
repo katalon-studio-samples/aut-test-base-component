@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 
 export interface MenuItem {
   id: string;
@@ -12,6 +13,11 @@ interface MultiTieredMenuProps {
 
 const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
   const [hoveredPath, setHoveredPath] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [clickedItemLabel, setClickedItemLabel] = useState<string | null>(null);
 
   const handleMouseEnter = (itemId: string, level: number) => {
     // Keep all parent levels and add this new level
@@ -25,7 +31,8 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
 
   const handleClick = (item: MenuItem) => {
     if (!item.children || item.children.length === 0) {
-      alert(`You clicked: ${item.label}`);
+      setClickedItemLabel(item.label);
+      setOpen(true);
     }
   };
 
@@ -85,6 +92,7 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
   };
 
   return (
+  <>
     <nav className="bg-white border-b">
       <div className="max-w-7xl mx-auto px-4">
         <ul className="flex items-stretch">
@@ -92,6 +100,18 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
         </ul>
       </div>
     </nav>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Item Clicked</DialogTitle>
+      <DialogContent>
+        <p>You clicked: {clickedItemLabel}</p>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </>
   );
 };
 

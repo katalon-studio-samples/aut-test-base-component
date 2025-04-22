@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Menu, Space } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle,} from "@mui/material";
 
 const { Header } = Layout;
 
@@ -17,6 +18,11 @@ interface MultiTieredMenuAntdProps {
 
 const MultiTieredMenuAntd: React.FC<MultiTieredMenuAntdProps> = ({ items }) => {
   const [openKeys, setOpenKeys] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [clickedItemLabel, setClickedItemLabel] = useState<string | null>(null);
 
   const handleOpenChange = (keys: string[]) => {
     setOpenKeys(keys);
@@ -24,7 +30,8 @@ const MultiTieredMenuAntd: React.FC<MultiTieredMenuAntdProps> = ({ items }) => {
 
   const handleMenuClick = (item: MenuItem) => {
     if (!item.children || item.children.length === 0) {
-      alert(`You clicked: ${item.label}`);
+      setClickedItemLabel(item.label);
+      setOpen(true);
     }
   };
 
@@ -81,6 +88,17 @@ const MultiTieredMenuAntd: React.FC<MultiTieredMenuAntdProps> = ({ items }) => {
       <Header style={{ background: '#fff', padding: 0, borderBottom: '1px solid #f0f0f0' }}>
         <Menu {...submenuStyle} />
       </Header>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Item Clicked</DialogTitle>
+        <DialogContent>
+          <p>You clicked: {clickedItemLabel}</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Layout>
   );
 };

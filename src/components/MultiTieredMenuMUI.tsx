@@ -12,6 +12,10 @@ import {
   Box,
   ClickAwayListener,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material';
 import {
   KeyboardArrowDown,
@@ -31,6 +35,11 @@ interface MultiTieredMenuMUIProps {
 const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
   const [hoveredPath, setHoveredPath] = useState<string[]>([]);
   const [anchorEls, setAnchorEls] = useState<(HTMLElement | null)[]>([]);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [clickedItemLabel, setClickedItemLabel] = useState<string | null>(null);
 
   const handleMouseEnter = (itemId: string, level: number, event: React.MouseEvent<HTMLElement>) => {
     const newPath = [...hoveredPath.slice(0, level), itemId];
@@ -53,7 +62,8 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
 
   const handleClick = (item: MenuItem) => {
     if (!item.children || item.children.length === 0) {
-      alert(`You clicked: ${item.label}`);
+      setClickedItemLabel(item.label);
+      setOpen(true);
     }
   };
 
@@ -136,11 +146,24 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
   };
 
   return (
-    <AppBar position="static" color="default">
-      <Toolbar sx={{ justifyContent: 'start' }}>
-        {items.map(item => renderMenuItem(item))}
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar position="static" color="default">
+        <Toolbar sx={{ justifyContent: 'start' }}>
+          {items.map(item => renderMenuItem(item))}
+        </Toolbar>
+      </AppBar>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Item Clicked</DialogTitle>
+        <DialogContent>
+          <p>You clicked: {clickedItemLabel}</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
