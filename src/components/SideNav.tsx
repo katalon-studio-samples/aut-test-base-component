@@ -47,6 +47,7 @@ const menuItems = [
       { path: '/checkboxes', label: 'Checkboxes' },
       { path: '/exit-intent', label: 'Exit Intent' },
       { path: '/alerts', label: 'Alerts' },
+      { path: '/open-popup', label: 'Open Popup' },
     ]
   }
 ];

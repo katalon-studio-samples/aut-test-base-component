@@ -28,6 +28,8 @@ import { Menu, X } from 'lucide-react';
 import MultiTieredMenuPage from "./pages/MultiTieredMenuPage";
 import { IframePageNested1Level } from "./pages/IframePageNested1Level.tsx";
 import { IframePageNested2Level } from "./pages/IframePageNested2Level.tsx";
+import { OpenPopupPage } from "./pages/OpenPopupPage.tsx";
+import { PopupFormPage } from "./pages/PopupFormPage.tsx";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -94,6 +96,8 @@ function App() {
                 <Route path="/alerts" element={<AlertsPage />} />
                 <Route path="/key-press" element={<KeyPressPage />} />
                 <Route path="/shadow-dom" element={<ShadowDOMPage />} />
+                <Route path="/open-popup" element={<OpenPopupPage />} />
+                <Route path="/popup-form" element={<PopupFormPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
