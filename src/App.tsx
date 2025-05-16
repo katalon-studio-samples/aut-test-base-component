@@ -30,6 +30,7 @@ import { IframePageNested1Level } from "./pages/IframePageNested1Level.tsx";
 import { IframePageNested2Level } from "./pages/IframePageNested2Level.tsx";
 import { OpenPopupPage } from "./pages/OpenPopupPage.tsx";
 import { PopupFormPage } from "./pages/PopupFormPage.tsx";
+import { KeyValueFormPage } from './pages/KeyValueFormPage.tsx';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -98,6 +99,7 @@ function App() {
                 <Route path="/shadow-dom" element={<ShadowDOMPage />} />
                 <Route path="/open-popup" element={<OpenPopupPage />} />
                 <Route path="/popup-form" element={<PopupFormPage />} />
+                <Route path="/key-value-form" element={<KeyValueFormPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

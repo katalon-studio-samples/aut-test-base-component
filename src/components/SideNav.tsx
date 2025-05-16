@@ -34,6 +34,7 @@ const menuItems = [
       { path: '/iframes', label: 'Iframes' },
       { path: '/broken-images', label: 'Broken Images' },
       { path: '/shadow-dom', label: 'Shadow DOM' },
+      { path: '/key-value-form', label: 'Key-Value Form' },
     ]
   },
   {
