@@ -31,6 +31,10 @@ import { IframePageNested2Level } from "./pages/IframePageNested2Level.tsx";
 import { OpenPopupPage } from "./pages/OpenPopupPage.tsx";
 import { PopupFormPage } from "./pages/PopupFormPage.tsx";
 import { KeyValueFormPage } from './pages/KeyValueFormPage.tsx';
+import { IframeCellphoneDemoPage } from './pages/IframeCellphoneDemoPage';
+import { IframeVinothQADemoPage } from './pages/IframeVinothQADemoPage';
+import { IframeDocsKatalonPage } from './pages/IframeDocsKatalonPage';
+import { IframeSameDomainPage } from './pages/IframeSameDomainPage.tsx';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -100,6 +104,10 @@ function App() {
                 <Route path="/open-popup" element={<OpenPopupPage />} />
                 <Route path="/popup-form" element={<PopupFormPage />} />
                 <Route path="/key-value-form" element={<KeyValueFormPage />} />
+                <Route path="/iframes/cellphone-demo" element={<IframeCellphoneDemoPage />} />
+                <Route path="/iframes/vinoth-demo" element={<IframeVinothQADemoPage />} />
+                <Route path="/iframes/docs-katalon" element={<IframeDocsKatalonPage />} />
+                <Route path="/iframes/same-domain" element={<IframeSameDomainPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

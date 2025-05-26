@@ -21,7 +21,6 @@ const AccordionSummary = styled(StyledAccordionSummary)(() => ({
 
 export const IframePage: React.FC = () => {
     return (
-        <>
             <Stack direction="column" spacing={5} className="px-4 py-6 sm:px-0">
                 <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
@@ -135,35 +134,6 @@ export const IframePage: React.FC = () => {
                         </div>
                     </AccordionDetails>
                 </Accordion>
-
-                <Accordion>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                        <Typography>Iframe Katalon Docs</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <h1 className="text-2xl font-bold mb-6 mt-10">Katalon Documentation</h1>
-                        <div className="border rounded-lg p-4" data-test="iframe-wrapper-katalon-docs">
-                            <h3 className="text-lg font-medium mb-2">Katalon Docs</h3>
-                            <iframe
-                                src="https://docs.katalon.com/"
-                                className="w-full h-[100vh] border-0 bg-white"
-                                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
-                                allow="autoplay; fullscreen"
-                                data-test="iframe-katalon-docs"
-                            />
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
             </Stack>
-            <div className="border rounded-lg p-4 mb-8" data-test="iframe-wrapper-vinothqaacademy">
-                <h3 className="text-lg font-medium mb-2">Vinoth QA Academy Demo Site</h3>
-                <iframe
-                    src="https://vinothqaacademy.com/demo-site/"
-                    className="w-full h-[100vh] border-0 bg-white"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
-                    data-test="iframe-vinothqaacademy"
-                />
-            </div>
-        </>
     );
 };

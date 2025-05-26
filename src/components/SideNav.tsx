@@ -31,7 +31,17 @@ const menuItems = [
     items: [
       { path: '/file-upload', label: 'File Upload' },
       { path: '/file-download', label: 'File Download' },
-      { path: '/iframes', label: 'Iframes' },
+      {
+        path: '/iframes',
+        label: 'Iframes',
+        children: [
+          { path: '/iframes', label: 'Iframes Home' },
+          { path: '/iframes/cellphone-demo', label: 'Cellphone Demo' },
+          { path: '/iframes/vinoth-demo', label: 'Vinoth QA Demo' },
+          { path: '/iframes/docs-katalon', label: 'Docs Katalon' },
+          { path: '/iframes/same-domain', label: 'Base Component Iframe' },
+        ]
+      },
       { path: '/broken-images', label: 'Broken Images' },
       { path: '/shadow-dom', label: 'Shadow DOM' },
       { path: '/key-value-form', label: 'Key-Value Form' },
@@ -88,21 +98,42 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
             </h3>
             <ul className="space-y-1">
               {category.items.map((item) => (
-                <li key={item.path}>
-                  <Link
-                    to={item.path}
-                    className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                      location.pathname === item.path
-                        ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                    }`}
-                    data-test={`nav-${item.path.slice(1)}`}
-                    onClick={handleLinkClick}
-                  >
-                    <ChevronRight className="w-4 h-4 mr-2" />
-                    {item.label}
-                  </Link>
-                </li>
+                  <li key={item.path}>
+                    <Link
+                        to={item.path}
+                        className={`flex items-center px-3 py-2 text-sm rounded-md ${
+                            location.pathname === item.path
+                                ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                        }`}
+                        data-test={`nav-${item.path.slice(1)}`}
+                        onClick={handleLinkClick}
+                    >
+                      <ChevronRight className="w-4 h-4 mr-2" />
+                      {item.label}
+                    </Link>
+                    {item.children && (
+                        <ul className="ml-6 mt-1 space-y-1">
+                          {item.children.map((child) => (
+                              <li key={child.path}>
+                                <Link
+                                    to={child.path}
+                                    className={`flex items-center px-3 py-2 text-sm rounded-md ${
+                                        location.pathname === child.path
+                                            ? 'bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300'
+                                            : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                    }`}
+                                    data-test={`nav-${child.path.slice(1)}`}
+                                    onClick={handleLinkClick}
+                                >
+                                  <ChevronRight className="w-4 h-4 mr-2" />
+                                  {child.label}
+                                </Link>
+                              </li>
+                          ))}
+                        </ul>
+                    )}
+                  </li>
               ))}
             </ul>
           </div>
