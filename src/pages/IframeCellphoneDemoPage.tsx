@@ -8,8 +8,9 @@ export const IframeCellphoneDemoPage: React.FC = () => (
       title="Cellphone Demo"
       width="1000"
       height="800"
-      className="border"
       allowFullScreen
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
     />
   </div>
 );
