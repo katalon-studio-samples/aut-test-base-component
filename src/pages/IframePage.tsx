@@ -148,6 +148,7 @@ export const IframePage: React.FC = () => {
                                 src="https://docs.katalon.com/"
                                 className="w-full h-[100vh] border-0 bg-white"
                                 sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
+                                allow="autoplay; fullscreen"
                                 data-test="iframe-katalon-docs"
                             />
                         </div>
