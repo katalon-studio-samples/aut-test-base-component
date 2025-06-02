@@ -35,6 +35,7 @@ import { IframeCellphoneDemoPage } from './pages/IframeCellphoneDemoPage';
 import { IframeVinothQADemoPage } from './pages/IframeVinothQADemoPage';
 import { IframeDocsKatalonPage } from './pages/IframeDocsKatalonPage';
 import { IframeSameDomainPage } from './pages/IframeSameDomainPage.tsx';
+import { RichTextEditorExamplePage } from './pages/RichTextEditorExamplePage';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -108,6 +109,7 @@ function App() {
                 <Route path="/iframes/vinoth-demo" element={<IframeVinothQADemoPage />} />
                 <Route path="/iframes/docs-katalon" element={<IframeDocsKatalonPage />} />
                 <Route path="/iframes/same-domain" element={<IframeSameDomainPage />} />
+                <Route path="/rich-text-editor" element={<RichTextEditorExamplePage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
