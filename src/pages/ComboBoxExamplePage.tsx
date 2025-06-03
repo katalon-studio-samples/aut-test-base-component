@@ -88,6 +88,7 @@ export const ComboBoxExamplePage: React.FC = () => {
                                 <div
                                     key={opt.value}
                                     className={`option px-3 py-2 hover:bg-gray-100 cursor-pointer${selected?.value === opt.value ? ' bg-gray-200' : ''}`}
+                                    id={`option-${Math.random().toString(36).slice(2)}`}
                                     aria-selected={selected?.value === opt.value ? 'true' : 'false'}
                                     onClick={e => {
                                         e.stopPropagation();
