@@ -46,6 +46,7 @@ const menuItems = [
       { path: '/shadow-dom', label: 'Shadow DOM' },
       { path: '/key-value-form', label: 'Key-Value Form' },
       { path: '/rich-text-editor', label: 'Rich Text Editor' },
+      { path: '/combobox', label: 'Combo Box' },
     ]
   },
   {
