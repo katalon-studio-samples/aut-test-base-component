@@ -18,6 +18,7 @@ const menuItems = [
         label: 'Input',
         children: [
           { path: '/input/checkbox', label: 'Input Checkbox' },
+          { path: '/input/text', label: 'Input Text' },
         ]
       },
     ]

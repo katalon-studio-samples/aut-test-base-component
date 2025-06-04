@@ -57,3 +57,14 @@ label {
     margin-right: 8px;
     vertical-align: middle;
 }
+
+.textInput[required] {
+  border: 2px solid #e53e3e; /* red-600 */
+  background-color: #fff5f5; /* red-50 */
+}
+
+.textInput[required]:focus {
+  border-color: #c53030; /* darker red */
+  outline: none;
+  background-color: #fff0f0;
+}
