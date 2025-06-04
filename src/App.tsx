@@ -37,6 +37,7 @@ import { IframeDocsKatalonPage } from './pages/IframeDocsKatalonPage';
 import { IframeSameDomainPage } from './pages/IframeSameDomainPage.tsx';
 import { RichTextEditorExamplePage } from './pages/RichTextEditorExamplePage';
 import { ComboBoxExamplePage } from './pages/ComboBoxExamplePage.tsx';
+import { CheckBoxPage } from './pages/Input/CheckBoxPage.tsx';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -111,6 +112,7 @@ function App() {
                 <Route path="/iframes/docs-katalon" element={<IframeDocsKatalonPage />} />
                 <Route path="/iframes/same-domain" element={<IframeSameDomainPage />} />
                 <Route path="/rich-text-editor" element={<RichTextEditorExamplePage />} />
+                <Route path="/input/checkbox" element={<CheckBoxPage />} />
                 <Route path="/combobox" element={<ComboBoxExamplePage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>

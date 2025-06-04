@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, ChevronRight } from 'lucide-react';
 
@@ -14,6 +14,12 @@ const menuItems = [
       { path: '/about', label: 'About' },
       { path: '/forms', label: 'Forms' },
       { path: '/tables', label: 'Tables' },
+      {
+        label: 'Input',
+        children: [
+          { path: '/input/checkbox', label: 'Input Checkbox' },
+        ]
+      },
     ]
   },
   {
@@ -67,6 +73,11 @@ const menuItems = [
 
 export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
   const location = useLocation();
+  const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
+
+  const handleToggle = (key: string) => {
+    setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
 
   const handleLinkClick = () => {
     if (onClose && window.innerWidth < 768) {
@@ -75,72 +86,105 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
   };
 
   return (
-    <div 
-      className={`bg-white dark:bg-gray-800 shadow-lg h-screen overflow-y-auto transition-all duration-300 z-40
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
-        fixed md:translate-x-0 md:sticky top-0 left-0 w-64`}
-    >
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-        <Link 
-          to="/" 
-          className="flex items-center space-x-2 text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
-          data-test="home-link"
-          onClick={handleLinkClick}
-        >
-          <Home className="w-5 h-5" />
-          <span className="font-semibold">Home</span>
-        </Link>
+      <div className={`bg-white dark:bg-gray-800 shadow-lg h-screen overflow-y-auto transition-all duration-300 z-40
+      ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      fixed md:translate-x-0 md:sticky top-0 left-0 w-64`}
+      >
+        {/* ...Home link... */}
+        <nav className="p-4">
+          {menuItems.map((category) => (
+              <div key={category.category} className="mb-6">
+                <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+                  {category.category}
+                </h3>
+                <ul className="space-y-1">
+                  {category.items.map((item, idx) => {
+                    const hasChildren = !!item.children;
+                    const hasPath = !!item.path;
+                    const key = `${category.category}-${item.label}-${idx}`;
+                    if (hasChildren && !hasPath) {
+                      return (
+                          <li key={key}>
+                            <button
+                                type="button"
+                                className="flex items-center px-3 py-2 text-sm rounded-md w-full text-left text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                                onClick={() => handleToggle(key)}
+                                aria-expanded={!!expanded[key]}
+                                data-test={`nav-collapse-${item.label.replace(/\s+/g, '-').toLowerCase()}`}
+                            >
+                              <ChevronRight
+                                  className={`w-4 h-4 mr-2 transition-transform ${expanded[key] ? 'rotate-90' : ''}`}
+                              />
+                              {item.label}
+                            </button>
+                            {expanded[key] && (
+                                <ul className="ml-6 mt-1 space-y-1">
+                                  {item.children.map((child) => (
+                                      <li key={child.path}>
+                                        <Link
+                                            to={child.path}
+                                            className={`flex items-center px-3 py-2 text-sm rounded-md ${
+                                                location.pathname === child.path
+                                                    ? 'bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300'
+                                                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                            }`}
+                                            data-test={`nav-${child.path.slice(1)}`}
+                                            onClick={handleLinkClick}
+                                        >
+                                          <ChevronRight className="w-4 h-4 mr-2" />
+                                          {child.label}
+                                        </Link>
+                                      </li>
+                                  ))}
+                                </ul>
+                            )}
+                          </li>
+                      );
+                    }
+                    // Default rendering for items with path
+                    return (
+                        <li key={item.path || key}>
+                          <Link
+                              to={item.path}
+                              className={`flex items-center px-3 py-2 text-sm rounded-md ${
+                                  location.pathname === item.path
+                                      ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'
+                                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                              }`}
+                              data-test={`nav-${item.path?.slice(1)}`}
+                              onClick={handleLinkClick}
+                          >
+                            <ChevronRight className="w-4 h-4 mr-2" />
+                            {item.label}
+                          </Link>
+                          {hasChildren && hasPath && (
+                              <ul className="ml-6 mt-1 space-y-1">
+                                {item.children.map((child) => (
+                                    <li key={child.path}>
+                                      <Link
+                                          to={child.path}
+                                          className={`flex items-center px-3 py-2 text-sm rounded-md ${
+                                              location.pathname === child.path
+                                                  ? 'bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300'
+                                                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
+                                          }`}
+                                          data-test={`nav-${child.path.slice(1)}`}
+                                          onClick={handleLinkClick}
+                                      >
+                                        <ChevronRight className="w-4 h-4 mr-2" />
+                                        {child.label}
+                                      </Link>
+                                    </li>
+                                ))}
+                              </ul>
+                          )}
+                        </li>
+                    );
+                  })}
+                </ul>
+              </div>
+          ))}
+        </nav>
       </div>
-      
-      <nav className="p-4">
-        {menuItems.map((category) => (
-          <div key={category.category} className="mb-6">
-            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
-              {category.category}
-            </h3>
-            <ul className="space-y-1">
-              {category.items.map((item) => (
-                  <li key={item.path}>
-                    <Link
-                        to={item.path}
-                        className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                            location.pathname === item.path
-                                ? 'bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                        }`}
-                        data-test={`nav-${item.path.slice(1)}`}
-                        onClick={handleLinkClick}
-                    >
-                      <ChevronRight className="w-4 h-4 mr-2" />
-                      {item.label}
-                    </Link>
-                    {item.children && (
-                        <ul className="ml-6 mt-1 space-y-1">
-                          {item.children.map((child) => (
-                              <li key={child.path}>
-                                <Link
-                                    to={child.path}
-                                    className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                                        location.pathname === child.path
-                                            ? 'bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300'
-                                            : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
-                                    }`}
-                                    data-test={`nav-${child.path.slice(1)}`}
-                                    onClick={handleLinkClick}
-                                >
-                                  <ChevronRight className="w-4 h-4 mr-2" />
-                                  {child.label}
-                                </Link>
-                              </li>
-                          ))}
-                        </ul>
-                    )}
-                  </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </nav>
-    </div>
   );
 };
