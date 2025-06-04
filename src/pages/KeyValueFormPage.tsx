@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface KeyValue {
   key: string;
@@ -7,7 +7,7 @@ interface KeyValue {
 
 export const KeyValueFormPage: React.FC = () => {
   const [pairs, setPairs] = useState<KeyValue[]>([]);
-  const [current, setCurrent] = useState<KeyValue>({ key: '', value: '' });
+  const [current, setCurrent] = useState<KeyValue>({ key: "", value: "" });
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +17,7 @@ export const KeyValueFormPage: React.FC = () => {
   const handleNext = () => {
     if (current.key.trim() && current.value.trim()) {
       setPairs([...pairs, current]);
-      setCurrent({ key: '', value: '' });
+      setCurrent({ key: "", value: "" });
     }
   };
 
@@ -101,7 +101,8 @@ export const KeyValueFormPage: React.FC = () => {
           <ul className="list-disc pl-5">
             {pairs.map((pair, idx) => (
               <li key={idx}>
-                <span className="font-mono">{pair.key}</span>: <span className="font-mono">{pair.value}</span>
+                <span className="font-mono">{pair.key}</span>:{" "}
+                <span className="font-mono">{pair.value}</span>
               </li>
             ))}
           </ul>

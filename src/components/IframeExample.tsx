@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import type { IframeContent } from '../types';
+import React, { useState, useEffect } from "react";
+import type { IframeContent } from "../types";
 
 const iframeContents: IframeContent[] = [
   {
-    id: 'iframe1',
-    title: 'Simple Content',
+    id: "iframe1",
+    title: "Simple Content",
     content: `
       <html>
         <head>
@@ -20,11 +20,11 @@ const iframeContents: IframeContent[] = [
           </button>
         </body>
       </html>
-    `
+    `,
   },
   {
-    id: 'iframe2',
-    title: 'Nested Elements',
+    id: "iframe2",
+    title: "Nested Elements",
     content: `
       <html>
         <head>
@@ -48,8 +48,8 @@ const iframeContents: IframeContent[] = [
           </div>
         </body>
       </html>
-    `
-  }
+    `,
+  },
 ];
 
 export const IframeExample: React.FC = () => {
@@ -57,20 +57,24 @@ export const IframeExample: React.FC = () => {
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      if (typeof event.data === 'string') {
-        setMessages(prev => [...prev, event.data]);
+      if (typeof event.data === "string") {
+        setMessages((prev) => [...prev, event.data]);
       }
     };
 
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
   }, []);
 
   return (
     <div className="space-y-6" data-test="iframe-container">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {iframeContents.map(({ id, title, content }) => (
-          <div key={id} className="border rounded-lg p-4" data-test={`iframe-wrapper-${id}`}>
+          <div
+            key={id}
+            className="border rounded-lg p-4"
+            data-test={`iframe-wrapper-${id}`}
+          >
             <h3 className="text-lg font-medium mb-2">{title}</h3>
             <iframe
               srcDoc={content}
@@ -83,7 +87,10 @@ export const IframeExample: React.FC = () => {
       </div>
 
       {messages.length > 0 && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg" data-test="iframe-messages">
+        <div
+          className="mt-4 p-4 bg-gray-50 rounded-lg"
+          data-test="iframe-messages"
+        >
           <h3 className="text-lg font-medium mb-2">Messages from iframes:</h3>
           <ul className="space-y-1">
             {messages.map((message, index) => (

@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import React, { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 
 export interface MenuItem {
   id: string;
@@ -21,12 +27,12 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
 
   const handleMouseEnter = (itemId: string, level: number) => {
     // Keep all parent levels and add this new level
-    setHoveredPath(prev => [...prev.slice(0, level), itemId]);
+    setHoveredPath((prev) => [...prev.slice(0, level), itemId]);
   };
 
   const handleMouseLeave = (level: number) => {
     // Remove this level and all deeper levels
-    setHoveredPath(prev => prev.slice(0, level));
+    setHoveredPath((prev) => prev.slice(0, level));
   };
 
   const handleClick = (item: MenuItem) => {
@@ -42,18 +48,19 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
     const shouldShowChildren = isInPath && hasChildren;
 
     return (
-      <li 
-        key={item.id} 
+      <li
+        key={item.id}
         className="relative"
         onMouseEnter={() => handleMouseEnter(item.id, level)}
         onMouseLeave={() => handleMouseLeave(level)}
       >
-        <button 
+        <button
           className={`
             flex items-center justify-between gap-1 whitespace-nowrap
-            ${level === 0 
-              ? 'h-14 px-4 text-gray-700 hover:text-blue-600 font-medium text-base' 
-              : 'w-full px-4 py-2 text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+            ${
+              level === 0
+                ? "h-14 px-4 text-gray-700 hover:text-blue-600 font-medium text-base"
+                : "w-full px-4 py-2 text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50"
             }
           `}
           onClick={() => handleClick(item)}
@@ -76,14 +83,14 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
           )}
         </button>
         {shouldShowChildren && item.children && (
-          <div 
+          <div
             className={`
               absolute bg-white shadow-lg rounded-md py-2 min-w-[200px] z-10
-              ${level === 0 ? 'left-0 top-[95%]' : 'left-[95%] top-0'}
+              ${level === 0 ? "left-0 top-[95%]" : "left-[95%] top-0"}
             `}
           >
             <ul>
-              {item.children.map(child => renderMenuItem(child, level + 1))}
+              {item.children.map((child) => renderMenuItem(child, level + 1))}
             </ul>
           </div>
         )}
@@ -92,27 +99,27 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
   };
 
   return (
-  <>
-    <nav className="bg-white border-b">
-      <div className="max-w-7xl mx-auto px-4">
-        <ul className="flex items-stretch">
-          {items.map(item => renderMenuItem(item))}
-        </ul>
-      </div>
-    </nav>
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Item Clicked</DialogTitle>
-      <DialogContent>
-        <p>You clicked: {clickedItemLabel}</p>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  </>
+    <>
+      <nav className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4">
+          <ul className="flex items-stretch">
+            {items.map((item) => renderMenuItem(item))}
+          </ul>
+        </div>
+      </nav>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Item Clicked</DialogTitle>
+        <DialogContent>
+          <p>You clicked: {clickedItemLabel}</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
-export default MultiTieredMenu; 
+export default MultiTieredMenu;

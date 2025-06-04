@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from "react";
 
 const initialHtml = `
 <div
@@ -66,51 +66,60 @@ export const RichTextEditorExamplePage: React.FC = () => {
         <button
           type="button"
           className="px-2 py-1 border rounded hover:bg-gray-100"
-          onMouseDown={e => { e.preventDefault(); format('bold'); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            format("bold");
+          }}
         >
           <b>B</b>
         </button>
         <button
           type="button"
           className="px-2 py-1 border rounded hover:bg-gray-100"
-          onMouseDown={e => { e.preventDefault(); format('italic'); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            format("italic");
+          }}
         >
           <i>I</i>
         </button>
         <button
           type="button"
           className="px-2 py-1 border rounded hover:bg-gray-100"
-          onMouseDown={e => { e.preventDefault(); format('underline'); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            format("underline");
+          }}
         >
           <u>U</u>
         </button>
       </div>
-        <div className="relative">
-            <div
-                ref={editorRef}
-                className="border rounded p-2 min-h-[300px] bg-white"
-                contentEditable
-                suppressContentEditableWarning
-                style={{ outline: 'none' }}
-                aria-label="Description area, start typing to enter text."
-                spellCheck={false}
-                onInput={handleInput}
-            />
-            {isEmpty && (
-                <span
-                    style={{
-                        position: 'absolute',
-                        top: 8,
-                        left: 12,
-                        color: '#aaa',
-                        pointerEvents: 'none',
-                        userSelect: 'none',
-                    }}
-                >
-      Add a description
-    </span>
-            )}
-        </div>
+      <div className="relative">
+        <div
+          ref={editorRef}
+          className="border rounded p-2 min-h-[300px] bg-white"
+          contentEditable
+          suppressContentEditableWarning
+          style={{ outline: "none" }}
+          aria-label="Description area, start typing to enter text."
+          spellCheck={false}
+          onInput={handleInput}
+        />
+        {isEmpty && (
+          <span
+            style={{
+              position: "absolute",
+              top: 8,
+              left: 12,
+              color: "#aaa",
+              pointerEvents: "none",
+              userSelect: "none",
+            }}
+          >
+            Add a description
+          </span>
+        )}
+      </div>
       <div className="mt-4 flex gap-2">
         <button
           className="px-4 py-2 bg-blue-600 text-white rounded"

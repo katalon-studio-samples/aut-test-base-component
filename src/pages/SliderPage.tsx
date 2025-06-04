@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export const SliderPage: React.FC = () => {
   const [value, setValue] = useState(50);
@@ -6,7 +6,9 @@ export const SliderPage: React.FC = () => {
 
   return (
     <div className="px-4 py-6 sm:px-0">
-      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Horizontal Slider</h1>
+      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+        Horizontal Slider
+      </h1>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
         <div className="space-y-4">
           <div className="relative" data-test="slider-container">
@@ -31,7 +33,10 @@ export const SliderPage: React.FC = () => {
               </div>
             )}
           </div>
-          <div className="text-center text-gray-900 dark:text-white" data-test="slider-value">
+          <div
+            className="text-center text-gray-900 dark:text-white"
+            data-test="slider-value"
+          >
             Current value: {value}
           </div>
         </div>

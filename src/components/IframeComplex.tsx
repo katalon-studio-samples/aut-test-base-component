@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import type { IframeContent } from '../types';
+import React, { useState, useEffect } from "react";
+import type { IframeContent } from "../types";
 
 const iframeContents: IframeContent[] = [
   {
-    id: 'simple-form',
-    title: 'Simple Form',
+    id: "simple-form",
+    title: "Simple Form",
     content: `
       <html>
         <head>
@@ -68,11 +68,11 @@ const iframeContents: IframeContent[] = [
           </script>
         </body>
       </html>
-    `
+    `,
   },
   {
-    id: 'complex-form',
-    title: 'Complex Form',
+    id: "complex-form",
+    title: "Complex Form",
     content: `
       <html>
         <head>
@@ -200,11 +200,11 @@ const iframeContents: IframeContent[] = [
           </script>
         </body>
       </html>
-    `
+    `,
   },
   {
-    id: 'complex-page',
-    title: 'Complex Page with Native Elements',
+    id: "complex-page",
+    title: "Complex Page with Native Elements",
     content: `
       <html>
         <head>
@@ -918,22 +918,24 @@ const iframeContents: IframeContent[] = [
           </script>
         </body>
       </html>
-    `
-  }
+    `,
+  },
 ];
 
 export const IframeComplex: React.FC = () => {
-  const [messages, setMessages] = useState<Array<{type: string; formId: string; data: unknown}>>([]);
+  const [messages, setMessages] = useState<
+    Array<{ type: string; formId: string; data: unknown }>
+  >([]);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      if (event.data && event.data.type === 'FORM_SUBMIT') {
-        setMessages(prev => [...prev, event.data]);
+      if (event.data && event.data.type === "FORM_SUBMIT") {
+        setMessages((prev) => [...prev, event.data]);
       }
     };
 
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
   }, []);
 
   const simpleAndComplexForms = iframeContents.slice(0, 2);
@@ -943,7 +945,11 @@ export const IframeComplex: React.FC = () => {
     <div className="space-y-6" data-test="iframe-complex-container">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {simpleAndComplexForms.map(({ id, title, content }) => (
-          <div key={id} className="border rounded-lg p-4 bg-white shadow-sm" data-test={`iframe-wrapper-${id}`}>
+          <div
+            key={id}
+            className="border rounded-lg p-4 bg-white shadow-sm"
+            data-test={`iframe-wrapper-${id}`}
+          >
             <h3 className="text-lg font-medium mb-4">{title}</h3>
             <iframe
               srcDoc={content}
@@ -955,7 +961,10 @@ export const IframeComplex: React.FC = () => {
         ))}
       </div>
 
-      <div className="border rounded-lg p-4 bg-white shadow-sm" data-test={`iframe-wrapper-${complexPage.id}`}>
+      <div
+        className="border rounded-lg p-4 bg-white shadow-sm"
+        data-test={`iframe-wrapper-${complexPage.id}`}
+      >
         <h3 className="text-lg font-medium mb-4">{complexPage.title}</h3>
         <iframe
           srcDoc={complexPage.content}
@@ -966,12 +975,15 @@ export const IframeComplex: React.FC = () => {
       </div>
 
       {messages.length > 0 && (
-        <div className="mt-6 p-6 bg-white rounded-lg shadow-sm" data-test="iframe-messages">
+        <div
+          className="mt-6 p-6 bg-white rounded-lg shadow-sm"
+          data-test="iframe-messages"
+        >
           <h3 className="text-lg font-medium mb-4">Form Submissions:</h3>
           <div className="space-y-4">
             {messages.map((message, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="p-4 bg-gray-50 rounded-md"
                 data-test={`iframe-message-${index}`}
               >
@@ -986,4 +998,4 @@ export const IframeComplex: React.FC = () => {
       )}
     </div>
   );
-}; 
+};

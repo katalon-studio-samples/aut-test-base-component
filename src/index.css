@@ -6,15 +6,20 @@
   body {
     @apply text-gray-900 dark:text-gray-100;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply text-gray-900 dark:text-white;
   }
-  
+
   p {
     @apply text-gray-700 dark:text-gray-300;
   }
-  
+
   input[type="text"],
   input[type="email"],
   input[type="password"],
@@ -26,19 +31,19 @@
   button {
     @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900;
   }
-  
+
   label {
     @apply dark:text-gray-300;
   }
-  
+
   table {
     @apply dark:text-gray-300;
   }
-  
+
   th {
     @apply dark:text-gray-300;
   }
-  
+
   td {
     @apply dark:text-gray-300;
   }
@@ -56,15 +61,15 @@
   .btn-secondary {
     @apply bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-500;
   }
-  
+
   .card {
     @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700;
   }
-  
+
   .card-header {
     @apply font-semibold text-gray-900 dark:text-white;
   }
-  
+
   .card-body {
     @apply text-gray-700 dark:text-gray-300;
   }

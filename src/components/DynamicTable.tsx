@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import type { TableData } from '../types';
+import React, { useState } from "react";
+import type { TableData } from "../types";
 
 interface DynamicTableProps {
   data: TableData[];
 }
 
 export const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
-  const [sortField, setSortField] = useState<keyof TableData>('name');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [sortField, setSortField] = useState<keyof TableData>("name");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   const handleSort = (field: keyof TableData) => {
     if (field === sortField) {
-      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
-      setSortDirection('asc');
+      setSortDirection("asc");
     }
   };
 
@@ -26,7 +26,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
       return 0;
     }
 
-    if (sortDirection === 'asc') {
+    if (sortDirection === "asc") {
       return aValue > bValue ? 1 : -1;
     }
     return aValue < bValue ? 1 : -1;
@@ -48,9 +48,7 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
                   <div className="flex items-center">
                     <span className="mr-1">{key}</span>
                     {sortField === key && (
-                      <span>
-                        {sortDirection === 'asc' ? '↑' : '↓'}
-                      </span>
+                      <span>{sortDirection === "asc" ? "↑" : "↓"}</span>
                     )}
                   </div>
                 </th>
@@ -59,7 +57,11 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({ data }) => {
           </thead>
           <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
             {sortedData.map((row) => (
-              <tr key={row.id} data-test={`table-row-${row.id}`} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+              <tr
+                key={row.id}
+                data-test={`table-row-${row.id}`}
+                className="hover:bg-gray-50 dark:hover:bg-gray-700"
+              >
                 {Object.entries(row).map(([key, value]) => (
                   <td
                     key={key}

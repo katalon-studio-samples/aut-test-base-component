@@ -1,5 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
+import React, { useEffect, useRef } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 
 export const ShadowDOMPage: React.FC = () => {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -9,9 +15,9 @@ export const ShadowDOMPage: React.FC = () => {
   useEffect(() => {
     if (hostRef.current && !shadowRootRef.current) {
       // Only create shadow root if it doesn't exist
-      shadowRootRef.current = hostRef.current.attachShadow({ mode: 'open' });
+      shadowRootRef.current = hostRef.current.attachShadow({ mode: "open" });
 
-      const style = document.createElement('style');
+      const style = document.createElement("style");
       style.textContent = `
         .shadow-content {
           padding: 20px;
@@ -38,9 +44,9 @@ export const ShadowDOMPage: React.FC = () => {
         }
       `;
 
-      const content = document.createElement('div');
-      content.setAttribute('class', 'shadow-content');
-      content.setAttribute('data-test', 'shadow-content');
+      const content = document.createElement("div");
+      content.setAttribute("class", "shadow-content");
+      content.setAttribute("data-test", "shadow-content");
       content.innerHTML = `
         <h2>This is inside Shadow DOM</h2>
         <p>This content is encapsulated within a Shadow DOM.</p>
@@ -52,9 +58,9 @@ export const ShadowDOMPage: React.FC = () => {
       shadowRootRef.current.appendChild(style);
       shadowRootRef.current.appendChild(content);
 
-      const button = content.querySelector('button');
+      const button = content.querySelector("button");
       if (button) {
-        button.addEventListener('click', () => {
+        button.addEventListener("click", () => {
           setDialogOpen(true);
         });
       }
@@ -73,7 +79,9 @@ export const ShadowDOMPage: React.FC = () => {
 
   return (
     <div className="px-4 py-6 sm:px-0">
-      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Shadow DOM Example</h1>
+      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+        Shadow DOM Example
+      </h1>
       <p className="mb-6 text-gray-600 dark:text-gray-300">
         This page demonstrates working with Shadow DOM elements, which provide
         encapsulation for markup structure, style, and behavior.
@@ -85,8 +93,12 @@ export const ShadowDOMPage: React.FC = () => {
         </div>
 
         <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded">
-          <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-white">Regular DOM Content</h3>
-          <p className="text-gray-700 dark:text-gray-300">This content is in the regular DOM, outside the Shadow DOM.</p>
+          <h3 className="text-lg font-medium mb-2 text-gray-900 dark:text-white">
+            Regular DOM Content
+          </h3>
+          <p className="text-gray-700 dark:text-gray-300">
+            This content is in the regular DOM, outside the Shadow DOM.
+          </p>
         </div>
       </div>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>

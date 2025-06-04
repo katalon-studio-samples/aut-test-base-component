@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 export const useMouseLeave = (callback: (event: MouseEvent) => void) => {
   useEffect(() => {
@@ -9,7 +9,7 @@ export const useMouseLeave = (callback: (event: MouseEvent) => void) => {
       }
     };
 
-    document.addEventListener('mouseleave', handleMouseLeave);
-    return () => document.removeEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener("mouseleave", handleMouseLeave);
+    return () => document.removeEventListener("mouseleave", handleMouseLeave);
   }, [callback]);
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface Checkbox {
   id: string;
@@ -8,36 +8,44 @@ interface Checkbox {
 
 export const CheckboxesPage: React.FC = () => {
   const [checkboxes, setCheckboxes] = useState<Checkbox[]>([
-    { id: 'checkbox1', label: 'Checkbox 1', checked: false },
-    { id: 'checkbox2', label: 'Checkbox 2', checked: true },
-    { id: 'checkbox3', label: 'Checkbox 3', checked: false },
+    { id: "checkbox1", label: "Checkbox 1", checked: false },
+    { id: "checkbox2", label: "Checkbox 2", checked: true },
+    { id: "checkbox3", label: "Checkbox 3", checked: false },
   ]);
 
   const handleCheckboxChange = (id: string) => {
-    setCheckboxes(checkboxes.map(checkbox =>
-      checkbox.id === id
-        ? { ...checkbox, checked: !checkbox.checked }
-        : checkbox
-    ));
+    setCheckboxes(
+      checkboxes.map((checkbox) =>
+        checkbox.id === id
+          ? { ...checkbox, checked: !checkbox.checked }
+          : checkbox,
+      ),
+    );
   };
 
   const handleCheckAll = () => {
-    setCheckboxes(checkboxes.map(checkbox => ({
-      ...checkbox,
-      checked: true
-    })));
+    setCheckboxes(
+      checkboxes.map((checkbox) => ({
+        ...checkbox,
+        checked: true,
+      })),
+    );
   };
 
   const handleUncheckAll = () => {
-    setCheckboxes(checkboxes.map(checkbox => ({
-      ...checkbox,
-      checked: false
-    })));
+    setCheckboxes(
+      checkboxes.map((checkbox) => ({
+        ...checkbox,
+        checked: false,
+      })),
+    );
   };
 
   return (
     <div className="px-4 py-6 sm:px-0">
-      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Checkboxes</h1>
+      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+        Checkboxes
+      </h1>
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
         <div className="space-y-4" data-test="checkbox-group">
           {checkboxes.map(({ id, label, checked }) => (

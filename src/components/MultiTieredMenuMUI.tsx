@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -16,11 +16,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from '@mui/material';
-import {
-  KeyboardArrowDown,
-  KeyboardArrowRight,
-} from '@mui/icons-material';
+} from "@mui/material";
+import { KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
 
 export interface MenuItem {
   id: string;
@@ -41,18 +38,22 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
   };
   const [clickedItemLabel, setClickedItemLabel] = useState<string | null>(null);
 
-  const handleMouseEnter = (itemId: string, level: number, event: React.MouseEvent<HTMLElement>) => {
+  const handleMouseEnter = (
+    itemId: string,
+    level: number,
+    event: React.MouseEvent<HTMLElement>,
+  ) => {
     const newPath = [...hoveredPath.slice(0, level), itemId];
     setHoveredPath(newPath);
-    
+
     const newAnchorEls = [...anchorEls.slice(0, level)];
     newAnchorEls[level] = event.currentTarget;
     setAnchorEls(newAnchorEls);
   };
 
   const handleMouseLeave = (level: number) => {
-    setHoveredPath(prev => prev.slice(0, level));
-    setAnchorEls(prev => prev.slice(0, level));
+    setHoveredPath((prev) => prev.slice(0, level));
+    setAnchorEls((prev) => prev.slice(0, level));
   };
 
   const handleClickAway = () => {
@@ -77,7 +78,9 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
       return (
         <Box
           key={item.id}
-          onMouseEnter={(event: React.MouseEvent<HTMLDivElement>) => handleMouseEnter(item.id, level, event)}
+          onMouseEnter={(event: React.MouseEvent<HTMLDivElement>) =>
+            handleMouseEnter(item.id, level, event)
+          }
           onMouseLeave={() => handleMouseLeave(level)}
         >
           <Button
@@ -85,9 +88,9 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
             endIcon={hasChildren ? <KeyboardArrowDown /> : undefined}
             onClick={() => handleClick(item)}
             sx={{
-              height: '64px',
-              textTransform: 'none',
-              fontSize: '1rem',
+              height: "64px",
+              textTransform: "none",
+              fontSize: "1rem",
             }}
           >
             {item.label}
@@ -102,7 +105,9 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
               <ClickAwayListener onClickAway={handleClickAway}>
                 <Paper elevation={3}>
                   <List sx={{ minWidth: 200 }}>
-                    {item.children.map(child => renderMenuItem(child, level + 1))}
+                    {item.children.map((child) =>
+                      renderMenuItem(child, level + 1),
+                    )}
                   </List>
                 </Paper>
               </ClickAwayListener>
@@ -116,7 +121,9 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
       <ListItem
         key={item.id}
         disablePadding
-        onMouseEnter={(event: React.MouseEvent<HTMLLIElement>) => handleMouseEnter(item.id, level, event)}
+        onMouseEnter={(event: React.MouseEvent<HTMLLIElement>) =>
+          handleMouseEnter(item.id, level, event)
+        }
         onMouseLeave={() => handleMouseLeave(level)}
       >
         <ListItemButton onClick={() => handleClick(item)}>
@@ -136,7 +143,7 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
           >
             <Paper elevation={3}>
               <List sx={{ minWidth: 200 }}>
-                {item.children.map(child => renderMenuItem(child, level + 1))}
+                {item.children.map((child) => renderMenuItem(child, level + 1))}
               </List>
             </Paper>
           </Popper>
@@ -148,8 +155,8 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
   return (
     <>
       <AppBar position="static" color="default">
-        <Toolbar sx={{ justifyContent: 'start' }}>
-          {items.map(item => renderMenuItem(item))}
+        <Toolbar sx={{ justifyContent: "start" }}>
+          {items.map((item) => renderMenuItem(item))}
         </Toolbar>
       </AppBar>
       <Dialog open={open} onClose={handleClose}>
@@ -167,4 +174,4 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
   );
 };
 
-export default MultiTieredMenuMUI; 
+export default MultiTieredMenuMUI;

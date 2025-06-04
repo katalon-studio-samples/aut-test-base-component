@@ -1,13 +1,13 @@
-import { simulateNetworkDelay } from './delay';
+import { simulateNetworkDelay } from "./delay";
 
 // Retry mechanism for flaky tests
 export const retry = async <T>(
   fn: () => Promise<T>,
   maxAttempts = 3,
-  delay = 1000
+  delay = 1000,
 ): Promise<T> => {
   let lastError: Error | undefined;
-  
+
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
       return await fn();
@@ -18,7 +18,7 @@ export const retry = async <T>(
       }
     }
   }
-  
+
   throw lastError;
 };
 
@@ -28,16 +28,16 @@ export const getTestId = (id: string) => `[data-test="${id}"]`;
 // Wait for element helper
 export const waitForElement = async (
   selector: string,
-  timeout = 5000
+  timeout = 5000,
 ): Promise<Element | null> => {
   const startTime = Date.now();
-  
+
   while (Date.now() - startTime < timeout) {
     const element = document.querySelector(selector);
     if (element) return element;
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
   }
-  
+
   return null;
 };
 
@@ -45,12 +45,14 @@ export const waitForElement = async (
 export const assertElementState = {
   isVisible: async (element: Element): Promise<boolean> => {
     const style = window.getComputedStyle(element);
-    return style.display !== 'none' && 
-           style.visibility !== 'hidden' && 
-           style.opacity !== '0';
+    return (
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      style.opacity !== "0"
+    );
   },
-  
+
   hasText: (element: Element, text: string): boolean => {
     return element.textContent?.includes(text) ?? false;
-  }
+  },
 };

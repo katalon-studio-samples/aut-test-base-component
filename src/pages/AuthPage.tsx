@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
-import { simulateNetworkDelay } from '../utils/delay';
+import React, { useState } from "react";
+import { simulateNetworkDelay } from "../utils/delay";
 
 const VALID_CREDENTIALS = {
-  username: 'admin',
-  password: 'admin',
+  username: "admin",
+  password: "admin",
 };
 
 export const AuthPage: React.FC = () => {
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
-  const [error, setError] = useState('');
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     await simulateNetworkDelay();
@@ -25,7 +28,7 @@ export const AuthPage: React.FC = () => {
     ) {
       setIsAuthenticated(true);
     } else {
-      setError('Invalid username or password');
+      setError("Invalid username or password");
     }
 
     setIsLoading(false);
@@ -54,9 +57,16 @@ export const AuthPage: React.FC = () => {
     <div className="px-4 py-6 sm:px-0">
       <h1 className="text-2xl font-bold mb-6">Basic Authentication</h1>
       <div className="max-w-md mx-auto">
-        <form onSubmit={handleSubmit} className="space-y-4" data-test="auth-form">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
+          data-test="auth-form"
+        >
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700"
+            >
               Username
             </label>
             <input
@@ -72,7 +82,10 @@ export const AuthPage: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -99,7 +112,7 @@ export const AuthPage: React.FC = () => {
             className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
             data-test="login-button"
           >
-            {isLoading ? 'Loading...' : 'Login'}
+            {isLoading ? "Loading..." : "Login"}
           </button>
         </form>
 

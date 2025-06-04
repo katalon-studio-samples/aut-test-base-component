@@ -7,11 +7,13 @@ A platform designed to help QA engineers and developers practice test automation
 ## 🚀 Features
 
 - **Form Handling & Validation**
+
   - Dynamic input validation
   - Error message handling
   - Form submission scenarios
 
 - **Interactive Elements**
+
   - Drag and drop functionality
   - Dynamic content loading
   - Hover states and animations
@@ -19,6 +21,7 @@ A platform designed to help QA engineers and developers practice test automation
   - Key press events
 
 - **File Operations**
+
   - File upload with drag & drop
   - File download handling
   - Multiple file formats support
@@ -30,21 +33,23 @@ A platform designed to help QA engineers and developers practice test automation
   - Shadow DOM manipulation
   - Iframe interactions
 
-
 ## 📦 Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/moatazeldebsy/test-automation-practices.git
 cd test-automation-practices
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -54,22 +59,24 @@ npm run dev
 Here are some examples of how to interact with key features:
 
 ### Form Validation
+
 ```typescript
 // Example test for form validation
-test('should show error for invalid email', async () => {
-  await page.fill('[data-test="email-input"]', 'invalid-email');
+test("should show error for invalid email", async () => {
+  await page.fill('[data-test="email-input"]', "invalid-email");
   await page.click('[data-test="submit-button"]');
   expect(await page.isVisible('[data-test="email-error"]')).toBeTruthy();
 });
 ```
 
 ### Drag and Drop
+
 ```typescript
 // Example test for drag and drop functionality
-test('should reorder items via drag and drop', async () => {
+test("should reorder items via drag and drop", async () => {
   await page.dragAndDrop(
     '[data-test="drag-handle-1"]',
-    '[data-test="drag-handle-2"]'
+    '[data-test="drag-handle-2"]',
   );
 });
 ```

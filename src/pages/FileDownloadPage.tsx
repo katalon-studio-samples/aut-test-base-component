@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Download, AlertCircle, File, FileType, FileText } from 'lucide-react';
-import { downloadFile } from '../utils/download';
+import React, { useState } from "react";
+import { Download, AlertCircle, File, FileType, FileText } from "lucide-react";
+import { downloadFile } from "../utils/download";
 
 export const FileDownloadPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
@@ -8,38 +8,40 @@ export const FileDownloadPage: React.FC = () => {
 
   const files = [
     {
-      name: 'Sample Text',
-      filename: 'sample.txt',
-      type: 'TXT',
-      size: '1 KB',
-      url: 'https://raw.githubusercontent.com/moatazeldebsy/test-automation-practice/main/sample-files/sample.txt',
-      icon: FileText
+      name: "Sample Text",
+      filename: "sample.txt",
+      type: "TXT",
+      size: "1 KB",
+      url: "https://raw.githubusercontent.com/moatazeldebsy/test-automation-practice/main/sample-files/sample.txt",
+      icon: FileText,
     },
     {
-      name: 'Sample CSV',
-      filename: 'sample.csv',
-      type: 'CSV',
-      size: '2 KB',
-      url: 'https://raw.githubusercontent.com/moatazeldebsy/test-automation-practice/main/sample-files/sample.csv',
-      icon: FileType
+      name: "Sample CSV",
+      filename: "sample.csv",
+      type: "CSV",
+      size: "2 KB",
+      url: "https://raw.githubusercontent.com/moatazeldebsy/test-automation-practice/main/sample-files/sample.csv",
+      icon: FileType,
     },
     {
-      name: 'Sample PDF',
-      filename: 'sample.pdf',
-      type: 'PDF',
-      size: '20 KB',
-      url: 'https://raw.githubusercontent.com/moatazeldebsy/test-automation-practice/main/sample-files/sample.pdf',
-      icon: File
-    }
+      name: "Sample PDF",
+      filename: "sample.pdf",
+      type: "PDF",
+      size: "20 KB",
+      url: "https://raw.githubusercontent.com/moatazeldebsy/test-automation-practice/main/sample-files/sample.pdf",
+      icon: File,
+    },
   ];
 
-  const handleDownload = async (file: typeof files[0]) => {
+  const handleDownload = async (file: (typeof files)[0]) => {
     try {
       setError(null);
       setDownloading(file.filename);
       await downloadFile(file.url, file.filename);
     } catch (err) {
-      setError(`Failed to download ${file.name}. Please try again later or contact support if the issue persists.`);
+      setError(
+        `Failed to download ${file.name}. Please try again later or contact support if the issue persists.`,
+      );
     } finally {
       setDownloading(null);
     }
@@ -47,10 +49,15 @@ export const FileDownloadPage: React.FC = () => {
 
   return (
     <div className="px-4 py-6 sm:px-0">
-      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">File Download</h1>
-      
+      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+        File Download
+      </h1>
+
       {error && (
-        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start" data-test="error-message">
+        <div
+          className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start"
+          data-test="error-message"
+        >
           <AlertCircle className="w-5 h-5 text-red-500 dark:text-red-400 mr-2 flex-shrink-0 mt-0.5" />
           <p className="text-red-700 dark:text-red-300">{error}</p>
         </div>
@@ -84,12 +91,14 @@ export const FileDownloadPage: React.FC = () => {
                       disabled={downloading === file.filename}
                       className={`p-2 rounded-full transition-colors ${
                         downloading === file.filename
-                          ? 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
-                          : 'text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                          ? "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                          : "text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
                       }`}
                       data-test={`download-button-${index}`}
                     >
-                      <Download className={`w-5 h-5 ${downloading === file.filename ? 'animate-bounce' : ''}`} />
+                      <Download
+                        className={`w-5 h-5 ${downloading === file.filename ? "animate-bounce" : ""}`}
+                      />
                     </button>
                   </div>
                 </div>

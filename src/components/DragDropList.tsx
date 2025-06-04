@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   DndContext,
   closestCenter,
@@ -6,31 +6,34 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { SortableItem } from './SortableItem';
+} from "@dnd-kit/sortable";
+import { SortableItem } from "./SortableItem";
 
 interface DragDropListProps {
   items: string[];
   onReorder: (items: string[]) => void;
 }
 
-export const DragDropList: React.FC<DragDropListProps> = ({ items, onReorder }) => {
+export const DragDropList: React.FC<DragDropListProps> = ({
+  items,
+  onReorder,
+}) => {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
-    
+
     if (active.id !== over.id) {
       const oldIndex = items.indexOf(active.id);
       const newIndex = items.indexOf(over.id);

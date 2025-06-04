@@ -38,6 +38,6 @@ export interface ContextMenuPosition {
 
 export interface NotificationMessage {
   id: string;
-  type: 'success' | 'error' | 'info';
+  type: "success" | "error" | "info";
   message: string;
 }

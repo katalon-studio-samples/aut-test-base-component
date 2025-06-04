@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export const HoverExample: React.FC = () => {
   const [hoveredFigure, setHoveredFigure] = useState<number | null>(null);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6" data-test="hover-example">
+    <div
+      className="grid grid-cols-1 md:grid-cols-3 gap-6"
+      data-test="hover-example"
+    >
       {[1, 2, 3].map((figure) => (
         <div
           key={figure}

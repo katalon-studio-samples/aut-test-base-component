@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import type { ContextMenuPosition } from '../types';
+import React, { useState, useEffect } from "react";
+import type { ContextMenuPosition } from "../types";
 
 export const ContextMenu: React.FC = () => {
   const [position, setPosition] = useState<ContextMenuPosition | null>(null);
@@ -14,12 +14,15 @@ export const ContextMenu: React.FC = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
   }, []);
 
   return (
-    <div className="p-8 bg-white dark:bg-gray-800 rounded-lg shadow" data-test="context-menu-area">
+    <div
+      className="p-8 bg-white dark:bg-gray-800 rounded-lg shadow"
+      data-test="context-menu-area"
+    >
       <div
         className="h-48 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center text-gray-700 dark:text-gray-300"
         onContextMenu={handleContextMenu}
