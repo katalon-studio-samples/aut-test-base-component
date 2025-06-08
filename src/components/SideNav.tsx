@@ -21,6 +21,7 @@ const menuItems = [
           { path: "/input/text", label: "Input Text" },
         ],
       },
+      { path: "/list-card", label: "List Card" },
     ],
   },
   {
