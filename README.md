@@ -54,6 +54,14 @@ npm install
 npm run dev
 ```
 
+4. Update deps version:
+
+```bash
+npm update
+npx npm-check-updates -u
+npm install
+```
+
 ## 🔧 Usage
 
 Here are some examples of how to interact with key features:
