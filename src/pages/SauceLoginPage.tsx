@@ -295,7 +295,6 @@ export const SauceLoginPage: React.FC = () => {
                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                 placeholder="Enter username"
                 data-test="username-input"
-                required
               />
             </div>
 
@@ -316,7 +315,6 @@ export const SauceLoginPage: React.FC = () => {
                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                 placeholder="Enter password"
                 data-test="password-input"
-                required
               />
             </div>
 
