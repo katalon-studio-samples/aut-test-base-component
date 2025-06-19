@@ -5,7 +5,9 @@ type Item = { [key: string]: unknown };
 
 export const CardListPage: React.FC = () => {
   const items: Item[] = Array.isArray(sampleData) ? sampleData : [];
-  const [selected, setSelected] = useState<{ idx: number; key: string } | null>(null);
+  const [selected, setSelected] = useState<{ idx: number; key: string } | null>(
+    null,
+  );
   const [filterKey, setFilterKey] = useState<string>("");
   const [filterValue, setFilterValue] = useState<string>("");
   const [filterKey2, setFilterKey2] = useState<string>("");
@@ -15,12 +17,12 @@ export const CardListPage: React.FC = () => {
 
   const allKeys = useMemo(() => {
     const keys = new Set<string>();
-    items.forEach(item => Object.keys(item).forEach(k => keys.add(k)));
+    items.forEach((item) => Object.keys(item).forEach((k) => keys.add(k)));
     return Array.from(keys);
   }, [items]);
 
   const filteredItems = useMemo(() => {
-    return items.filter(item => {
+    return items.filter((item) => {
       const cond1 =
         !filterKey || !filterValue
           ? true
@@ -41,7 +43,7 @@ export const CardListPage: React.FC = () => {
   const totalPages = Math.ceil(filteredItems.length / pageSize);
   const pagedItems = filteredItems.slice(
     (currentPage - 1) * pageSize,
-    currentPage * pageSize
+    currentPage * pageSize,
   );
 
   // Reset to first page when filters or page size change
@@ -58,16 +60,20 @@ export const CardListPage: React.FC = () => {
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Business Cards (All Attributes)</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        Business Cards (All Attributes)
+      </h1>
       <div className="flex items-center gap-4 mb-6">
         <select
           className="border rounded px-2 py-1"
           value={filterKey}
-          onChange={e => setFilterKey(e.target.value)}
+          onChange={(e) => setFilterKey(e.target.value)}
         >
           <option value="">Select attribute</option>
-          {allKeys.map(key => (
-            <option key={key} value={key}>{key}</option>
+          {allKeys.map((key) => (
+            <option key={key} value={key}>
+              {key}
+            </option>
           ))}
         </select>
         <input
@@ -75,17 +81,19 @@ export const CardListPage: React.FC = () => {
           type="text"
           placeholder="Search value"
           value={filterValue}
-          onChange={e => setFilterValue(e.target.value)}
+          onChange={(e) => setFilterValue(e.target.value)}
         />
         <span className="mx-2 text-gray-500">AND</span>
         <select
           className="border rounded px-2 py-1"
           value={filterKey2}
-          onChange={e => setFilterKey2(e.target.value)}
+          onChange={(e) => setFilterKey2(e.target.value)}
         >
           <option value="">Select attribute</option>
-          {allKeys.map(key => (
-            <option key={key} value={key}>{key}</option>
+          {allKeys.map((key) => (
+            <option key={key} value={key}>
+              {key}
+            </option>
           ))}
         </select>
         <input
@@ -93,7 +101,7 @@ export const CardListPage: React.FC = () => {
           type="text"
           placeholder="Search value"
           value={filterValue2}
-          onChange={e => setFilterValue2(e.target.value)}
+          onChange={(e) => setFilterValue2(e.target.value)}
         />
         <button
           className="ml-4 px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300"
@@ -102,20 +110,22 @@ export const CardListPage: React.FC = () => {
           Clear Filters
         </button>
         <input
-            className="border rounded px-2 py-1 bg-gray-100 w-32"
-            type="text"
-            readOnly
-            value={`Total: ${filteredItems.length}`}
+          className="border rounded px-2 py-1 bg-gray-100 w-32"
+          type="text"
+          readOnly
+          value={`Total: ${filteredItems.length}`}
         />
         <label className="ml-4">
           Page size:&nbsp;
           <select
             className="border rounded px-2 py-1"
             value={pageSize}
-            onChange={e => setPageSize(Number(e.target.value))}
+            onChange={(e) => setPageSize(Number(e.target.value))}
           >
-            {[5, 10, 20, 50, 100, 200, 500].map(size => (
-              <option key={size} value={size}>{size}</option>
+            {[5, 10, 20, 50, 100, 200, 500].map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
             ))}
           </select>
         </label>
@@ -130,11 +140,15 @@ export const CardListPage: React.FC = () => {
               <div
                 key={key}
                 className={`py-1 px-2 rounded cursor-pointer transition ${
-                  selected && selected.idx === idx + (currentPage - 1) * pageSize && selected.key === key
+                  selected &&
+                  selected.idx === idx + (currentPage - 1) * pageSize &&
+                  selected.key === key
                     ? "bg-blue-100"
                     : ""
                 }`}
-                onClick={() => setSelected({ idx: idx + (currentPage - 1) * pageSize, key })}
+                onClick={() =>
+                  setSelected({ idx: idx + (currentPage - 1) * pageSize, key })
+                }
               >
                 <span className="font-semibold text-purple-700">{key}:</span>{" "}
                 <span className="text-gray-800">{String(value)}</span>
@@ -146,7 +160,7 @@ export const CardListPage: React.FC = () => {
       <div className="flex items-center gap-2 mt-6">
         <button
           className="px-3 py-1 border rounded disabled:opacity-50"
-          onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
           disabled={currentPage === 1}
         >
           Prev
@@ -156,7 +170,7 @@ export const CardListPage: React.FC = () => {
         </span>
         <button
           className="px-3 py-1 border rounded disabled:opacity-50"
-          onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
           disabled={currentPage === totalPages}
         >
           Next
