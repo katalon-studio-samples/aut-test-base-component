@@ -44,6 +44,7 @@ import { RichTextEditorExamplePage } from "./pages/RichTextEditorExamplePage";
 import { ComboBoxExamplePage } from "./pages/ComboBoxExamplePage.tsx";
 import { CheckBoxPage as InputCheckBoxPage } from "./pages/Input/CheckBoxPage.tsx";
 import { TextPage as InputTextPage } from "./pages/Input/TextPage.tsx";
+import { RadioSearchSubmitPage } from "./pages/Input/RadioSearchSubmitPage.tsx";
 import { CardListPage } from "./pages/PII/CardListPage.tsx";
 import { SauceLoginPage } from "./pages/SauceLoginPage";
 
@@ -144,6 +145,7 @@ function App() {
                 />
                 <Route path="/input/checkbox" element={<InputCheckBoxPage />} />
                 <Route path="/input/text" element={<InputTextPage />} />
+                <Route path="/input/radio-search-submit" element={<RadioSearchSubmitPage />} />
                 <Route path="/combobox" element={<ComboBoxExamplePage />} />
                 <Route path="/list-card" element={<CardListPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />

@@ -20,6 +20,7 @@ const menuItems = [
         children: [
           { path: "/input/checkbox", label: "Input Checkbox" },
           { path: "/input/text", label: "Input Text" },
+          { path: "/input/radio-search-submit", label: "Radio Search Submit" },
         ],
       },
       { path: "/list-card", label: "List Card" },
