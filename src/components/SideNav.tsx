@@ -21,6 +21,7 @@ const menuItems = [
           { path: "/input/checkbox", label: "Input Checkbox" },
           { path: "/input/text", label: "Input Text" },
           { path: "/input/radio-search-submit", label: "Radio Search Submit" },
+          { path: "/input/form-inputs", label: "Form Input Types" },
         ],
       },
       { path: "/list-card", label: "List Card" },
