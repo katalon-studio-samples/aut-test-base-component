@@ -10,46 +10,286 @@ interface Product {
 }
 
 const mockProducts: Product[] = [
-  { id: 1, name: "Wireless Headphones", category: "Electronics", price: 89.99, rating: 4.5 },
-  { id: 2, name: "Smartphone Case", category: "Accessories", price: 19.99, rating: 4.2 },
-  { id: 3, name: "Laptop Stand", category: "Accessories", price: 34.99, rating: 4.7 },
-  { id: 4, name: "Bluetooth Speaker", category: "Electronics", price: 129.99, rating: 4.3 },
-  { id: 5, name: "Phone Charger", category: "Electronics", price: 24.99, rating: 4.1 },
-  { id: 6, name: "Wireless Mouse", category: "Electronics", price: 45.99, rating: 4.6 },
-  { id: 7, name: "Keyboard Wrist Rest", category: "Accessories", price: 15.99, rating: 4.0 },
-  { id: 8, name: "USB Hub", category: "Electronics", price: 29.99, rating: 4.4 },
-  { id: 9, name: "Gaming Mouse", category: "Electronics", price: 79.99, rating: 4.8 },
-  { id: 10, name: "Mechanical Keyboard", category: "Electronics", price: 149.99, rating: 4.9 },
-  { id: 11, name: "Webcam HD", category: "Electronics", price: 59.99, rating: 4.2 },
-  { id: 12, name: "Monitor Stand", category: "Accessories", price: 89.99, rating: 4.5 },
-  { id: 13, name: "Cable Organizer", category: "Accessories", price: 12.99, rating: 3.8 },
-  { id: 14, name: "Laptop Cooling Pad", category: "Accessories", price: 39.99, rating: 4.1 },
-  { id: 15, name: "Wireless Earbuds", category: "Electronics", price: 159.99, rating: 4.7 },
-  { id: 16, name: "Tablet Stand", category: "Accessories", price: 25.99, rating: 4.3 },
-  { id: 17, name: "External Hard Drive", category: "Electronics", price: 89.99, rating: 4.4 },
-  { id: 18, name: "Screen Protector", category: "Accessories", price: 8.99, rating: 3.9 },
-  { id: 19, name: "Wireless Charger", category: "Electronics", price: 34.99, rating: 4.2 },
-  { id: 20, name: "Desk Lamp", category: "Accessories", price: 49.99, rating: 4.6 },
-  { id: 21, name: "USB-C Cable", category: "Electronics", price: 14.99, rating: 4.0 },
-  { id: 22, name: "Laptop Sleeve", category: "Accessories", price: 22.99, rating: 4.1 },
-  { id: 23, name: "Bluetooth Keyboard", category: "Electronics", price: 69.99, rating: 4.3 },
-  { id: 24, name: "Mouse Pad", category: "Accessories", price: 9.99, rating: 3.7 },
-  { id: 25, name: "Portable SSD", category: "Electronics", price: 199.99, rating: 4.8 },
-  { id: 26, name: "Headphone Stand", category: "Accessories", price: 18.99, rating: 4.0 },
-  { id: 27, name: "USB Microphone", category: "Electronics", price: 79.99, rating: 4.5 },
-  { id: 28, name: "Cable Clips", category: "Accessories", price: 6.99, rating: 3.6 },
-  { id: 29, name: "Wireless Gaming Headset", category: "Electronics", price: 129.99, rating: 4.6 },
-  { id: 30, name: "Laptop Dock", category: "Electronics", price: 299.99, rating: 4.7 },
-  { id: 31, name: "Desk Organizer", category: "Accessories", price: 32.99, rating: 4.2 },
-  { id: 32, name: "Smart Watch", category: "Electronics", price: 249.99, rating: 4.4 },
-  { id: 33, name: "Phone Mount", category: "Accessories", price: 16.99, rating: 3.9 },
-  { id: 34, name: "Wireless Presenter", category: "Electronics", price: 44.99, rating: 4.1 },
-  { id: 35, name: "Cable Sleeve", category: "Accessories", price: 11.99, rating: 3.8 },
-  { id: 36, name: "Bluetooth Adapter", category: "Electronics", price: 19.99, rating: 4.0 },
-  { id: 37, name: "Monitor Arm", category: "Accessories", price: 119.99, rating: 4.5 },
-  { id: 38, name: "USB Fan", category: "Electronics", price: 12.99, rating: 3.5 },
-  { id: 39, name: "Laptop Lock", category: "Accessories", price: 28.99, rating: 4.2 },
-  { id: 40, name: "Wireless Trackball", category: "Electronics", price: 89.99, rating: 4.3 },
+  {
+    id: 1,
+    name: "Wireless Headphones",
+    category: "Electronics",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    id: 2,
+    name: "Smartphone Case",
+    category: "Accessories",
+    price: 19.99,
+    rating: 4.2,
+  },
+  {
+    id: 3,
+    name: "Laptop Stand",
+    category: "Accessories",
+    price: 34.99,
+    rating: 4.7,
+  },
+  {
+    id: 4,
+    name: "Bluetooth Speaker",
+    category: "Electronics",
+    price: 129.99,
+    rating: 4.3,
+  },
+  {
+    id: 5,
+    name: "Phone Charger",
+    category: "Electronics",
+    price: 24.99,
+    rating: 4.1,
+  },
+  {
+    id: 6,
+    name: "Wireless Mouse",
+    category: "Electronics",
+    price: 45.99,
+    rating: 4.6,
+  },
+  {
+    id: 7,
+    name: "Keyboard Wrist Rest",
+    category: "Accessories",
+    price: 15.99,
+    rating: 4.0,
+  },
+  {
+    id: 8,
+    name: "USB Hub",
+    category: "Electronics",
+    price: 29.99,
+    rating: 4.4,
+  },
+  {
+    id: 9,
+    name: "Gaming Mouse",
+    category: "Electronics",
+    price: 79.99,
+    rating: 4.8,
+  },
+  {
+    id: 10,
+    name: "Mechanical Keyboard",
+    category: "Electronics",
+    price: 149.99,
+    rating: 4.9,
+  },
+  {
+    id: 11,
+    name: "Webcam HD",
+    category: "Electronics",
+    price: 59.99,
+    rating: 4.2,
+  },
+  {
+    id: 12,
+    name: "Monitor Stand",
+    category: "Accessories",
+    price: 89.99,
+    rating: 4.5,
+  },
+  {
+    id: 13,
+    name: "Cable Organizer",
+    category: "Accessories",
+    price: 12.99,
+    rating: 3.8,
+  },
+  {
+    id: 14,
+    name: "Laptop Cooling Pad",
+    category: "Accessories",
+    price: 39.99,
+    rating: 4.1,
+  },
+  {
+    id: 15,
+    name: "Wireless Earbuds",
+    category: "Electronics",
+    price: 159.99,
+    rating: 4.7,
+  },
+  {
+    id: 16,
+    name: "Tablet Stand",
+    category: "Accessories",
+    price: 25.99,
+    rating: 4.3,
+  },
+  {
+    id: 17,
+    name: "External Hard Drive",
+    category: "Electronics",
+    price: 89.99,
+    rating: 4.4,
+  },
+  {
+    id: 18,
+    name: "Screen Protector",
+    category: "Accessories",
+    price: 8.99,
+    rating: 3.9,
+  },
+  {
+    id: 19,
+    name: "Wireless Charger",
+    category: "Electronics",
+    price: 34.99,
+    rating: 4.2,
+  },
+  {
+    id: 20,
+    name: "Desk Lamp",
+    category: "Accessories",
+    price: 49.99,
+    rating: 4.6,
+  },
+  {
+    id: 21,
+    name: "USB-C Cable",
+    category: "Electronics",
+    price: 14.99,
+    rating: 4.0,
+  },
+  {
+    id: 22,
+    name: "Laptop Sleeve",
+    category: "Accessories",
+    price: 22.99,
+    rating: 4.1,
+  },
+  {
+    id: 23,
+    name: "Bluetooth Keyboard",
+    category: "Electronics",
+    price: 69.99,
+    rating: 4.3,
+  },
+  {
+    id: 24,
+    name: "Mouse Pad",
+    category: "Accessories",
+    price: 9.99,
+    rating: 3.7,
+  },
+  {
+    id: 25,
+    name: "Portable SSD",
+    category: "Electronics",
+    price: 199.99,
+    rating: 4.8,
+  },
+  {
+    id: 26,
+    name: "Headphone Stand",
+    category: "Accessories",
+    price: 18.99,
+    rating: 4.0,
+  },
+  {
+    id: 27,
+    name: "USB Microphone",
+    category: "Electronics",
+    price: 79.99,
+    rating: 4.5,
+  },
+  {
+    id: 28,
+    name: "Cable Clips",
+    category: "Accessories",
+    price: 6.99,
+    rating: 3.6,
+  },
+  {
+    id: 29,
+    name: "Wireless Gaming Headset",
+    category: "Electronics",
+    price: 129.99,
+    rating: 4.6,
+  },
+  {
+    id: 30,
+    name: "Laptop Dock",
+    category: "Electronics",
+    price: 299.99,
+    rating: 4.7,
+  },
+  {
+    id: 31,
+    name: "Desk Organizer",
+    category: "Accessories",
+    price: 32.99,
+    rating: 4.2,
+  },
+  {
+    id: 32,
+    name: "Smart Watch",
+    category: "Electronics",
+    price: 249.99,
+    rating: 4.4,
+  },
+  {
+    id: 33,
+    name: "Phone Mount",
+    category: "Accessories",
+    price: 16.99,
+    rating: 3.9,
+  },
+  {
+    id: 34,
+    name: "Wireless Presenter",
+    category: "Electronics",
+    price: 44.99,
+    rating: 4.1,
+  },
+  {
+    id: 35,
+    name: "Cable Sleeve",
+    category: "Accessories",
+    price: 11.99,
+    rating: 3.8,
+  },
+  {
+    id: 36,
+    name: "Bluetooth Adapter",
+    category: "Electronics",
+    price: 19.99,
+    rating: 4.0,
+  },
+  {
+    id: 37,
+    name: "Monitor Arm",
+    category: "Accessories",
+    price: 119.99,
+    rating: 4.5,
+  },
+  {
+    id: 38,
+    name: "USB Fan",
+    category: "Electronics",
+    price: 12.99,
+    rating: 3.5,
+  },
+  {
+    id: 39,
+    name: "Laptop Lock",
+    category: "Accessories",
+    price: 28.99,
+    rating: 4.2,
+  },
+  {
+    id: 40,
+    name: "Wireless Trackball",
+    category: "Electronics",
+    price: 89.99,
+    rating: 4.3,
+  },
 ];
 
 export const RadioSearchSubmitPage: React.FC = () => {
@@ -57,7 +297,8 @@ export const RadioSearchSubmitPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [selectedRating, setSelectedRating] = useState("");
-  const [displayedProducts, setDisplayedProducts] = useState<Product[]>(mockProducts);
+  const [displayedProducts, setDisplayedProducts] =
+    useState<Product[]>(mockProducts);
   const [isFiltered, setIsFiltered] = useState(false);
   const [error, setError] = useState("");
   const [useAutocomplete, setUseAutocomplete] = useState(false);
@@ -71,9 +312,9 @@ export const RadioSearchSubmitPage: React.FC = () => {
   // Generate suggestions based on search query
   useEffect(() => {
     if (useAutocomplete && searchQuery.trim()) {
-      const productNames = mockProducts.map(product => product.name);
-      const filteredSuggestions = productNames.filter(name =>
-        name.toLowerCase().includes(searchQuery.toLowerCase())
+      const productNames = mockProducts.map((product) => product.name);
+      const filteredSuggestions = productNames.filter((name) =>
+        name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       setSuggestions(filteredSuggestions);
       setShowSuggestions(filteredSuggestions.length > 0);
@@ -91,18 +332,21 @@ export const RadioSearchSubmitPage: React.FC = () => {
     if (!useAutocomplete || !showSuggestions) return;
 
     switch (e.key) {
-      case 'ArrowDown':
+      case "ArrowDown":
         e.preventDefault();
-        setSelectedSuggestionIndex(prev => 
-          prev < suggestions.length - 1 ? prev + 1 : prev
+        setSelectedSuggestionIndex((prev) =>
+          prev < suggestions.length - 1 ? prev + 1 : prev,
         );
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         e.preventDefault();
-        setSelectedSuggestionIndex(prev => prev > 0 ? prev - 1 : -1);
+        setSelectedSuggestionIndex((prev) => (prev > 0 ? prev - 1 : -1));
         break;
-      case 'Enter':
-        if (selectedSuggestionIndex >= 0 && suggestions[selectedSuggestionIndex]) {
+      case "Enter":
+        if (
+          selectedSuggestionIndex >= 0 &&
+          suggestions[selectedSuggestionIndex]
+        ) {
           e.preventDefault();
           e.stopPropagation();
           const selectedSuggestion = suggestions[selectedSuggestionIndex];
@@ -120,7 +364,7 @@ export const RadioSearchSubmitPage: React.FC = () => {
           setSelectedSuggestionIndex(-1);
         }
         break;
-      case 'Escape':
+      case "Escape":
         e.preventDefault();
         setShowSuggestions(false);
         setSuggestions([]);
@@ -143,14 +387,17 @@ export const RadioSearchSubmitPage: React.FC = () => {
   // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node)) {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target as Node)
+      ) {
         setShowSuggestions(false);
         setSuggestions([]);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   // Handle input focus to show suggestions if there's a query
@@ -179,7 +426,7 @@ export const RadioSearchSubmitPage: React.FC = () => {
       // Let the form submit naturally - don't prevent default
       return;
     }
-    
+
     // Otherwise, handle autocomplete navigation
     handleKeyDown(e);
   };
@@ -187,11 +434,11 @@ export const RadioSearchSubmitPage: React.FC = () => {
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted with query:', searchQuery); // Debug log
-    
+    console.log("Form submitted with query:", searchQuery); // Debug log
+
     setError("");
     setIsFiltered(true);
-    
+
     // Clear all autocomplete state
     setShowSuggestions(false);
     setSuggestions([]);
@@ -202,31 +449,31 @@ export const RadioSearchSubmitPage: React.FC = () => {
 
     // Apply search query filter if provided
     if (searchQuery.trim()) {
-      filteredProducts = filteredProducts.filter(product => 
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      filteredProducts = filteredProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
     // Apply category filter
     if (selectedCategory) {
-      filteredProducts = filteredProducts.filter(product => 
-        product.category === selectedCategory
+      filteredProducts = filteredProducts.filter(
+        (product) => product.category === selectedCategory,
       );
     }
 
     // Apply price range filter
     if (selectedPriceRange) {
-      const [min, max] = selectedPriceRange.split('-').map(Number);
-      filteredProducts = filteredProducts.filter(product => 
-        product.price >= min && product.price <= max
+      const [min, max] = selectedPriceRange.split("-").map(Number);
+      filteredProducts = filteredProducts.filter(
+        (product) => product.price >= min && product.price <= max,
       );
     }
 
     // Apply rating filter
     if (selectedRating) {
       const minRating = Number(selectedRating);
-      filteredProducts = filteredProducts.filter(product => 
-        product.rating >= minRating
+      filteredProducts = filteredProducts.filter(
+        (product) => product.rating >= minRating,
       );
     }
 
@@ -253,7 +500,7 @@ export const RadioSearchSubmitPage: React.FC = () => {
         Product Search & Filter
       </h2>
       <br />
-      
+
       <form onSubmit={handleSubmit} id={`${id}-form`}>
         {/* Search Mode Toggle */}
         <div className={styles.inputGroup} id={`${id}-search-mode-group`}>
@@ -296,16 +543,25 @@ export const RadioSearchSubmitPage: React.FC = () => {
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
                 className={styles.textInput}
-                placeholder={useAutocomplete ? "Type to see suggestions..." : "Enter product name..."}
+                placeholder={
+                  useAutocomplete
+                    ? "Type to see suggestions..."
+                    : "Enter product name..."
+                }
                 ref={searchInputRef}
               />
               {useAutocomplete && showSuggestions && (
-                <div className={styles.suggestionsContainer} ref={suggestionsRef}>
+                <div
+                  className={styles.suggestionsContainer}
+                  ref={suggestionsRef}
+                >
                   {suggestions.map((suggestion, index) => (
                     <div
                       key={suggestion}
                       className={`${styles.suggestionItem} ${
-                        index === selectedSuggestionIndex ? styles.suggestionSelected : ''
+                        index === selectedSuggestionIndex
+                          ? styles.suggestionSelected
+                          : ""
                       }`}
                       onClick={() => handleSuggestionClick(suggestion)}
                     >
@@ -476,9 +732,11 @@ export const RadioSearchSubmitPage: React.FC = () => {
       {/* Products Data Grid */}
       <div className={styles.dataGridContainer} id={`${id}-data-grid`}>
         <h3 className={styles.dataGridTitle}>
-          {isFiltered ? `Search Results (${displayedProducts.length} products found)` : "All Products"}
+          {isFiltered
+            ? `Search Results (${displayedProducts.length} products found)`
+            : "All Products"}
         </h3>
-        
+
         <div className={styles.dataGrid} id={`${id}-products-table`}>
           <table className={styles.productsTable}>
             <thead>
@@ -491,7 +749,7 @@ export const RadioSearchSubmitPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {displayedProducts.map(product => (
+              {displayedProducts.map((product) => (
                 <tr key={product.id} data-product-id={product.id}>
                   <td>{product.id}</td>
                   <td>{product.name}</td>
@@ -503,7 +761,7 @@ export const RadioSearchSubmitPage: React.FC = () => {
             </tbody>
           </table>
         </div>
-        
+
         {displayedProducts.length === 0 && (
           <div className={styles.noResults}>
             <p>No products found matching your criteria.</p>
@@ -512,4 +770,4 @@ export const RadioSearchSubmitPage: React.FC = () => {
       </div>
     </div>
   );
-}; 
+};

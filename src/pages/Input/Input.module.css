@@ -234,12 +234,12 @@ form {
   .productsTable {
     font-size: 0.8rem;
   }
-  
+
   .productsTable th,
   .productsTable td {
     padding: 8px 12px;
   }
-  
+
   .dataGridTitle {
     padding: 12px 16px;
     font-size: 1rem;

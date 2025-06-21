@@ -145,7 +145,10 @@ function App() {
                 />
                 <Route path="/input/checkbox" element={<InputCheckBoxPage />} />
                 <Route path="/input/text" element={<InputTextPage />} />
-                <Route path="/input/radio-search-submit" element={<RadioSearchSubmitPage />} />
+                <Route
+                  path="/input/radio-search-submit"
+                  element={<RadioSearchSubmitPage />}
+                />
                 <Route path="/combobox" element={<ComboBoxExamplePage />} />
                 <Route path="/list-card" element={<CardListPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
