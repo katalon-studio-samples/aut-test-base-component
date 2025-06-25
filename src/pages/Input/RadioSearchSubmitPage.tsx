@@ -533,7 +533,7 @@ export const RadioSearchSubmitPage: React.FC = () => {
         <div className={styles.inputGroup} id={`${id}-search-group`}>
           <label htmlFor={`${id}-search`}>
             Search Products:
-            <div className={styles.searchContainer}>
+            <div className={styles.searchContainer} data-testid="search-container">
               <input
                 id={`${id}-search`}
                 type="search"
@@ -549,11 +549,20 @@ export const RadioSearchSubmitPage: React.FC = () => {
                     : "Enter product name..."
                 }
                 ref={searchInputRef}
+                data-testid="search-input"
+                data-autocomplete-enabled={useAutocomplete}
+                aria-autocomplete={useAutocomplete ? "list" : "none"}
+                aria-expanded={showSuggestions}
+                aria-controls={showSuggestions ? `${id}-suggestions-container` : undefined}
               />
               {useAutocomplete && showSuggestions && (
                 <div
                   className={styles.suggestionsContainer}
                   ref={suggestionsRef}
+                  id={`${id}-suggestions-container`}
+                  data-testid="suggestions-container"
+                  role="listbox"
+                  aria-label="Product suggestions"
                 >
                   {suggestions.map((suggestion, index) => (
                     <div
@@ -564,6 +573,13 @@ export const RadioSearchSubmitPage: React.FC = () => {
                           : ""
                       }`}
                       onClick={() => handleSuggestionClick(suggestion)}
+                      id={`${id}-suggestion-${index}`}
+                      data-testid={`suggestion-item-${index}`}
+                      data-suggestion={suggestion}
+                      data-index={index}
+                      role="option"
+                      aria-selected={index === selectedSuggestionIndex}
+                      tabIndex={0}
                     >
                       {suggestion}
                     </div>
