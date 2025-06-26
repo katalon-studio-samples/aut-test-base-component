@@ -11,6 +11,8 @@ export const FormInputsPage: React.FC = () => {
     ipv6Address: "",
     phone: "",
     zipCode: "",
+    linkedinUrl: "",
+    gender: "",
     password: "",
     confirmPassword: "",
     creditCard: "",
@@ -20,6 +22,7 @@ export const FormInputsPage: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [result, setResult] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captchaVerified, setCaptchaVerified] = useState(false);
   const id = useId();
 
   const validateForm = () => {
@@ -61,6 +64,21 @@ export const FormInputsPage: React.FC = () => {
     // Zip code validation (US format)
     if (formData.zipCode && !/^\d{5}(-\d{4})?$/.test(formData.zipCode)) {
       newErrors.zipCode = "Please enter a valid US zip code (e.g., 12345 or 12345-6789)";
+    }
+
+    // LinkedIn URL validation
+    if (formData.linkedinUrl && !/^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/.test(formData.linkedinUrl)) {
+      newErrors.linkedinUrl = "Please enter a valid LinkedIn profile URL";
+    }
+
+    // Gender validation
+    if (formData.gender && !["male", "female", "other", "prefer-not-to-say"].includes(formData.gender)) {
+      newErrors.gender = "Please select a valid gender option";
+    }
+
+    // CAPTCHA verification
+    if (!captchaVerified) {
+      newErrors.captcha = "Please click the verification image to confirm you are human";
     }
 
     // Password validation (only if change password is checked)
@@ -140,6 +158,14 @@ export const FormInputsPage: React.FC = () => {
     handleInputChange('creditCard', formatted);
   };
 
+  const handleCaptchaClick = () => {
+    setCaptchaVerified(true);
+    // Clear captcha error if it exists
+    if (errors.captcha) {
+      setErrors(prev => ({ ...prev, captcha: "" }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -169,6 +195,8 @@ export const FormInputsPage: React.FC = () => {
       ipv6Address: "",
       phone: "",
       zipCode: "",
+      linkedinUrl: "",
+      gender: "",
       password: "",
       confirmPassword: "",
       creditCard: "",
@@ -177,6 +205,7 @@ export const FormInputsPage: React.FC = () => {
     });
     setErrors({});
     setResult("");
+    setCaptchaVerified(false);
   };
 
   return (
@@ -287,6 +316,42 @@ export const FormInputsPage: React.FC = () => {
             </label>
           </div>
           {errors.zipCode && <div className={styles.error} id={`${id}-zip-error`}>{errors.zipCode}</div>}
+
+          <div className={styles.inputGroup} id={`${id}-linkedin-group`}>
+            <label htmlFor={`${id}-linkedin`}>
+              LinkedIn Profile URL:
+              <input
+                id={`${id}-linkedin`}
+                type="url"
+                value={formData.linkedinUrl}
+                onChange={(e) => handleInputChange('linkedinUrl', e.target.value)}
+                className={styles.textInput}
+                placeholder="https://www.linkedin.com/in/username"
+                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
+              />
+            </label>
+          </div>
+          {errors.linkedinUrl && <div className={styles.error} id={`${id}-linkedin-error`}>{errors.linkedinUrl}</div>}
+
+          <div className={styles.inputGroup} id={`${id}-gender-group`}>
+            <label htmlFor={`${id}-gender`}>
+              Gender:
+              <select
+                id={`${id}-gender`}
+                value={formData.gender}
+                onChange={(e) => handleInputChange('gender', e.target.value)}
+                className={styles.textInput}
+                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
+              >
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+                <option value="prefer-not-to-say">Prefer not to say</option>
+              </select>
+            </label>
+          </div>
+          {errors.gender && <div className={styles.error} id={`${id}-gender-error`}>{errors.gender}</div>}
         </div>
 
         {/* Network Information Section */}
@@ -402,6 +467,65 @@ export const FormInputsPage: React.FC = () => {
           {errors.creditCard && <div className={styles.error} id={`${id}-credit-card-error`}>{errors.creditCard}</div>}
         </div>
 
+        {/* CAPTCHA Verification Section */}
+        <div style={{ marginBottom: '32px' }}>
+          <h3 style={{ color: '#7c3aed', marginBottom: '16px', borderBottom: '2px solid #e5e7eb', paddingBottom: '8px' }}>
+            Human Verification
+          </h3>
+          
+          <div className={styles.inputGroup} id={`${id}-captcha-group`}>
+            <label htmlFor={`${id}-captcha-image`} style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+              Click the image below to verify you are human:
+            </label>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '12px',
+              padding: '16px',
+              backgroundColor: '#f8fafc',
+              border: '1px solid #e2e8f0',
+              borderRadius: '8px'
+            }}>
+              <img
+                id={`${id}-captcha-image`}
+                src={captchaVerified 
+                  ? "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMTIwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiByeD0iOCIgZmlsbD0iIzEwYjk4MSIvPgo8Y2lyY2xlIGN4PSI2MCIgY3k9IjQwIiByPSIzMCIgZmlsbD0iIzEwYjk4MSIvPgo8cGF0aCBkPSJNMzUgNDAgTDUwIDU1IEw4NSAyMCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI0IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+Cg=="
+                  : "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMTIwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjgwIiByeD0iOCIgZmlsbD0iIzM2ODVmNiIvPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjI1IiByPSI4IiBmaWxsPSIjZmZmIi8+CjxjaXJjbGUgY3g9IjkwIiBjeT0iMjUiIHI9IjgiIGZpbGw9IiNmZmYiLz4KPHBhdGggZD0iTTI1IDQ1IFEzMCAzNSwgNjAgMzUgUTkwIDM1LCA5NSA0NSIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz4KPHJlY3QgeD0iMjAiIHk9IjU1IiB3aWR0aD0iODAiIGhlaWdodD0iMTIiIHJ4PSI2IiBmaWxsPSIjZmZmIi8+Cjwvc3ZnPgo="
+                }
+                alt={captchaVerified ? "Verification complete" : "Click to verify you are human"}
+                style={{
+                  width: '120px',
+                  height: '80px',
+                  cursor: captchaVerified ? 'default' : 'pointer',
+                  border: captchaVerified ? '3px solid #10b981' : '3px solid #e5e7eb',
+                  borderRadius: '8px',
+                  transition: 'all 0.3s ease',
+                  opacity: captchaVerified ? 0.9 : 1
+                }}
+                onClick={captchaVerified ? undefined : handleCaptchaClick}
+                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
+              />
+              <div style={{ flex: 1 }}>
+                <div style={{ 
+                  fontSize: '0.9rem', 
+                  fontWeight: '500',
+                  color: captchaVerified ? '#10b981' : '#6b7280',
+                  marginBottom: '4px'
+                }}>
+                  {captchaVerified ? '✓ Verification Complete' : 'Click to verify'}
+                </div>
+                <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>
+                  {captchaVerified 
+                    ? 'You have successfully verified that you are human.' 
+                    : 'Please click the image above to confirm you are not a robot.'
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+          {errors.captcha && <div className={styles.error} id={`${id}-captcha-error`}>{errors.captcha}</div>}
+        </div>
+
         {/* Submit and Reset Buttons */}
         <div className={styles.inputGroup} id={`${id}-buttons-group`}>
           <input
@@ -412,10 +536,10 @@ export const FormInputsPage: React.FC = () => {
             width="80"
             height="48"
             className={`${styles.submitButton} ${styles.focusFlash}`}
-            disabled={isSubmitting}
+            disabled={isSubmitting || !captchaVerified}
             style={{ 
-              cursor: isSubmitting ? 'not-allowed' : 'pointer',
-              opacity: isSubmitting ? 0.6 : 1,
+              cursor: (isSubmitting || !captchaVerified) ? 'not-allowed' : 'pointer',
+              opacity: (isSubmitting || !captchaVerified) ? 0.6 : 1,
               border: 'none',
               borderRadius: '8px'
             }}
