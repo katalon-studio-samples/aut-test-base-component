@@ -1,6 +1,6 @@
 // Create an end-to-end flow to cover various input types with real-world scenarios
 // Input types: email, image, number, password, tel, url
-import React, { useState, useRef, useId } from "react";
+import React, { useState, useRef, useId, useEffect } from "react";
 import styles from "./Input.module.css";
 
 export const FormInputsPage: React.FC = () => {

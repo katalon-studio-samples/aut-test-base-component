@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, ChevronRight } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 
 interface SideNavProps {
   isOpen?: boolean;
@@ -78,6 +79,7 @@ const menuItems = [
 
 export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
   const location = useLocation();
+  const { getFormattedPath } = useTheme();
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
 
   const handleToggle = (key: string) => {
@@ -128,9 +130,9 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                           {item.children.map((child) => (
                             <li key={child.path}>
                               <Link
-                                to={child.path}
+                                to={getFormattedPath(child.path)}
                                 className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                                  location.pathname === child.path
+                                  location.pathname === child.path || location.pathname === getFormattedPath(child.path)
                                     ? "bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300"
                                     : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
                                 }`}
@@ -151,9 +153,9 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                 return (
                   <li key={item.path || key}>
                     <Link
-                      to={item.path}
+                      to={getFormattedPath(item.path)}
                       className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                        location.pathname === item.path
+                        location.pathname === item.path || location.pathname === getFormattedPath(item.path)
                           ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
                           : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                       }`}
@@ -168,9 +170,9 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                         {item.children.map((child) => (
                           <li key={child.path}>
                             <Link
-                              to={child.path}
+                              to={getFormattedPath(child.path)}
                               className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                                location.pathname === child.path
+                                location.pathname === child.path || location.pathname === getFormattedPath(child.path)
                                   ? "bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300"
                                   : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
                               }`}
