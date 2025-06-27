@@ -1,6 +1,7 @@
 // Create an end-to-end flow to cover various input types with real-world scenarios
 // Input types: email, image, number, password, tel, url
 import React, { useState, useRef, useId, useEffect } from "react";
+import { useTheme } from "../../contexts/ThemeContext";
 import styles from "./Input.module.css";
 
 export const FormInputsPage: React.FC = () => {
@@ -23,7 +24,15 @@ export const FormInputsPage: React.FC = () => {
   const [result, setResult] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [captchaVerified, setCaptchaVerified] = useState(false);
+  const { getFormattedPath } = useTheme();
   const id = useId();
+
+  const getKatalonClass = (existingClass?: string) => {
+    if (formData.dontTrackMe) {
+      return existingClass ? `${existingClass} katalon-excluded` : 'katalon-excluded';
+    }
+    return existingClass || '';
+  };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -210,6 +219,38 @@ export const FormInputsPage: React.FC = () => {
 
   return (
     <div className={styles.container} id={`${id}-container`}>
+      {/* Home Navigation Link */}
+      <div style={{ marginBottom: '16px' }}>
+        <a
+          href={getFormattedPath("/")}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#3b82f6',
+            textDecoration: 'none',
+            fontSize: '0.9rem',
+            fontWeight: '500',
+            padding: '8px 12px',
+            borderRadius: '6px',
+            backgroundColor: '#eff6ff',
+            border: '1px solid #dbeafe',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#dbeafe';
+            e.currentTarget.style.borderColor = '#93c5fd';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = '#eff6ff';
+            e.currentTarget.style.borderColor = '#dbeafe';
+          }}
+          id={`${id}-home-link`}
+        >
+          ← Back to Home
+        </a>
+      </div>
+
       <h2 className={styles.h2} id={`${id}-title`}>
         Advanced Form Input Types Demo
       </h2>
@@ -235,6 +276,7 @@ export const FormInputsPage: React.FC = () => {
                 checked={formData.dontTrackMe}
                 onChange={(e) => handleInputChange('dontTrackMe', e.target.checked)}
                 style={{ margin: 0 }}
+                className={getKatalonClass()}
               />
               Don't track me
             </label>
@@ -258,10 +300,9 @@ export const FormInputsPage: React.FC = () => {
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="user@example.com"
                 required
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -275,10 +316,9 @@ export const FormInputsPage: React.FC = () => {
                 type="text"
                 value={formData.ssn}
                 onChange={handleSSNChange}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="123-45-6789"
                 maxLength={11}
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -292,9 +332,8 @@ export const FormInputsPage: React.FC = () => {
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="+1 (555) 123-4567"
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -308,10 +347,9 @@ export const FormInputsPage: React.FC = () => {
                 type="text"
                 value={formData.zipCode}
                 onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="12345 or 12345-6789"
                 maxLength={10}
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -325,9 +363,8 @@ export const FormInputsPage: React.FC = () => {
                 type="url"
                 value={formData.linkedinUrl}
                 onChange={(e) => handleInputChange('linkedinUrl', e.target.value)}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="https://www.linkedin.com/in/username"
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -340,8 +377,7 @@ export const FormInputsPage: React.FC = () => {
                 id={`${id}-gender`}
                 value={formData.gender}
                 onChange={(e) => handleInputChange('gender', e.target.value)}
-                className={styles.textInput}
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
+                className={getKatalonClass(styles.textInput)}
               >
                 <option value="">Select gender</option>
                 <option value="male">Male</option>
@@ -368,9 +404,8 @@ export const FormInputsPage: React.FC = () => {
                 type="text"
                 value={formData.ipv4Address}
                 onChange={(e) => handleInputChange('ipv4Address', e.target.value)}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="192.168.1.1"
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -384,9 +419,8 @@ export const FormInputsPage: React.FC = () => {
                 type="text"
                 value={formData.ipv6Address}
                 onChange={(e) => handleInputChange('ipv6Address', e.target.value)}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="2001:db8::1"
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -407,7 +441,7 @@ export const FormInputsPage: React.FC = () => {
                 checked={formData.changePassword}
                 onChange={(e) => handleInputChange('changePassword', e.target.checked)}
                 style={{ margin: 0 }}
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
+                className={getKatalonClass()}
               />
               Change Password
             </label>
@@ -421,11 +455,10 @@ export const FormInputsPage: React.FC = () => {
                 type="password"
                 value={formData.password}
                 onChange={(e) => handleInputChange('password', e.target.value)}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="Minimum 8 characters with uppercase, lowercase, and number"
                 required={formData.changePassword}
                 disabled={!formData.changePassword}
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -439,11 +472,10 @@ export const FormInputsPage: React.FC = () => {
                 type="password"
                 value={formData.confirmPassword}
                 onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="Re-enter your new password"
                 required={formData.changePassword}
                 disabled={!formData.changePassword}
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -457,10 +489,9 @@ export const FormInputsPage: React.FC = () => {
                 type="text"
                 value={formData.creditCard}
                 onChange={handleCreditCardChange}
-                className={styles.textInput}
+                className={getKatalonClass(styles.textInput)}
                 placeholder="1234 5678 9012 3456"
                 maxLength={19}
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
               />
             </label>
           </div>
@@ -503,7 +534,7 @@ export const FormInputsPage: React.FC = () => {
                   opacity: captchaVerified ? 0.9 : 1
                 }}
                 onClick={captchaVerified ? undefined : handleCaptchaClick}
-                katalon-excluded={formData.dontTrackMe ? "true" : undefined}
+                className={getKatalonClass()}
               />
               <div style={{ flex: 1 }}>
                 <div style={{ 
@@ -535,7 +566,7 @@ export const FormInputsPage: React.FC = () => {
             alt="Submit"
             width="80"
             height="48"
-            className={`${styles.submitButton} ${styles.focusFlash}`}
+            className={getKatalonClass(`${styles.submitButton} ${styles.focusFlash}`)}
             disabled={isSubmitting || !captchaVerified}
             style={{ 
               cursor: (isSubmitting || !captchaVerified) ? 'not-allowed' : 'pointer',
@@ -543,15 +574,13 @@ export const FormInputsPage: React.FC = () => {
               border: 'none',
               borderRadius: '8px'
             }}
-            katalon-excluded={formData.dontTrackMe ? "true" : undefined}
           />
           <input
             id={`${id}-reset`}
             type="reset"
             value="Reset Form"
-            className={styles.resetButton}
+            className={getKatalonClass(styles.resetButton)}
             onClick={handleReset}
-            katalon-excluded={formData.dontTrackMe ? "true" : undefined}
           />
         </div>
       </form>
