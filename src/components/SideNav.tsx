@@ -26,6 +26,7 @@ const menuItems = [
         ],
       },
       { path: "/list-card", label: "List Card" },
+      { path: "/unique-test-data", label: "Numeric Input" },
     ],
   },
   {

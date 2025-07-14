@@ -48,6 +48,7 @@ import { RadioSearchSubmitPage } from "./pages/Input/RadioSearchSubmitPage.tsx";
 import { FormInputsPage } from "./pages/Input/FormInputsPage.tsx";
 import { CardListPage } from "./pages/PII/CardListPage.tsx";
 import { SauceLoginPage } from "./pages/SauceLoginPage";
+import { NumericInputPage } from "./pages/NumericInputPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -137,6 +138,7 @@ function App() {
                 {createRoutes("/input/form-inputs", <FormInputsPage />)}
                 {createRoutes("/combobox", <ComboBoxExamplePage />)}
                 {createRoutes("/list-card", <CardListPage />)}
+                {createRoutes("/unique-test-data", <NumericInputPage />)}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
