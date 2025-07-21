@@ -22,6 +22,7 @@ export const IframeSameDomainPage: React.FC = () => {
         sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"
         data-test="iframe-educenter"
         title="Same Domain Iframe"
+        name="iframe-same-domain"
       />
       <div className="mt-4 text-gray-500 text-sm">
         <div>
