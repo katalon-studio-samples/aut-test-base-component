@@ -533,7 +533,10 @@ export const RadioSearchSubmitPage: React.FC = () => {
         <div className={styles.inputGroup} id={`${id}-search-group`}>
           <label htmlFor={`${id}-search`}>
             Search Products:
-            <div className={styles.searchContainer} data-testid="search-container">
+            <div
+              className={styles.searchContainer}
+              data-testid="search-container"
+            >
               <input
                 id={`${id}-search`}
                 type="search"
@@ -553,7 +556,9 @@ export const RadioSearchSubmitPage: React.FC = () => {
                 data-autocomplete-enabled={useAutocomplete}
                 aria-autocomplete={useAutocomplete ? "list" : "none"}
                 aria-expanded={showSuggestions}
-                aria-controls={showSuggestions ? `${id}-suggestions-container` : undefined}
+                aria-controls={
+                  showSuggestions ? `${id}-suggestions-container` : undefined
+                }
               />
               {useAutocomplete && showSuggestions && (
                 <div

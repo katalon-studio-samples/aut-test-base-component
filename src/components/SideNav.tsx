@@ -133,7 +133,9 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                               <Link
                                 to={getFormattedPath(child.path)}
                                 className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                                  location.pathname === child.path || location.pathname === getFormattedPath(child.path)
+                                  location.pathname === child.path ||
+                                  location.pathname ===
+                                    getFormattedPath(child.path)
                                     ? "bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300"
                                     : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
                                 }`}
@@ -156,7 +158,8 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                     <Link
                       to={getFormattedPath(item.path)}
                       className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                        location.pathname === item.path || location.pathname === getFormattedPath(item.path)
+                        location.pathname === item.path ||
+                        location.pathname === getFormattedPath(item.path)
                           ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
                           : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                       }`}
@@ -173,7 +176,9 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                             <Link
                               to={getFormattedPath(child.path)}
                               className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                                location.pathname === child.path || location.pathname === getFormattedPath(child.path)
+                                location.pathname === child.path ||
+                                location.pathname ===
+                                  getFormattedPath(child.path)
                                   ? "bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300"
                                   : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
                               }`}

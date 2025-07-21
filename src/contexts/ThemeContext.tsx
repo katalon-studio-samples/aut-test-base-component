@@ -16,7 +16,9 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem("theme");
-    return saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return saved
+      ? saved === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
 
   const [urlExtension, setUrlExtension] = useState(() => {
@@ -37,21 +39,27 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     localStorage.setItem("urlExtension", urlExtension);
-    
+
     // Update current URL based on setting
     const currentUrl = window.location.href;
     const pathname = window.location.pathname;
-    
+
     // Remove any existing extensions
-    const urlWithoutExtension = currentUrl.replace(/\.(html|php|asp|aspx|jsp)$/, '');
-    const pathWithoutExtension = pathname.replace(/\.(html|php|asp|aspx|jsp)$/, '');
-    
-    if (urlExtension && !pathname.endsWith(urlExtension) && pathname !== '/') {
+    const urlWithoutExtension = currentUrl.replace(
+      /\.(html|php|asp|aspx|jsp)$/,
+      "",
+    );
+    const pathWithoutExtension = pathname.replace(
+      /\.(html|php|asp|aspx|jsp)$/,
+      "",
+    );
+
+    if (urlExtension && !pathname.endsWith(urlExtension) && pathname !== "/") {
       // Add extension to URL
-      window.history.pushState({}, '', `${urlWithoutExtension}${urlExtension}`);
+      window.history.pushState({}, "", `${urlWithoutExtension}${urlExtension}`);
     } else if (!urlExtension && /\.(html|php|asp|aspx|jsp)$/.test(pathname)) {
       // Remove extension from URL
-      window.history.pushState({}, '', urlWithoutExtension);
+      window.history.pushState({}, "", urlWithoutExtension);
     }
   }, [urlExtension]);
 
@@ -63,20 +71,20 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     if (!urlExtension || path === "/") {
       return path;
     }
-    
+
     // Remove any existing extensions
-    const pathWithoutExtension = path.replace(/\.(html|php|asp|aspx|jsp)$/, '');
+    const pathWithoutExtension = path.replace(/\.(html|php|asp|aspx|jsp)$/, "");
     return `${pathWithoutExtension}${urlExtension}`;
   };
 
   return (
     <ThemeContext.Provider
-      value={{ 
-        isDark, 
-        toggleTheme, 
-        urlExtension, 
-        setUrlExtension, 
-        getFormattedPath 
+      value={{
+        isDark,
+        toggleTheme,
+        urlExtension,
+        setUrlExtension,
+        getFormattedPath,
       }}
     >
       {children}

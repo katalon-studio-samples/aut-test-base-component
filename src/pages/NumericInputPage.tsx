@@ -6,12 +6,12 @@ export const NumericInputPage: React.FC = () => {
 
   const handleChange = (idx: number, value: string) => {
     if (/^\d*$/.test(value)) {
-      setNumbers(prev => prev.map((n, i) => (i === idx ? value : n)));
+      setNumbers((prev) => prev.map((n, i) => (i === idx ? value : n)));
     }
   };
 
   const handleNext = () => {
-    setNumbers(prev => [...prev, ""]);
+    setNumbers((prev) => [...prev, ""]);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -21,7 +21,10 @@ export const NumericInputPage: React.FC = () => {
 
   return (
     <div className="px-4 py-6 sm:px-0" data-test="1001">
-      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white" data-test="1002">
+      <h1
+        className="text-2xl font-bold mb-6 text-gray-900 dark:text-white"
+        data-test="1002"
+      >
         Numeric Input (Number Only)
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4" data-test="1003">
@@ -32,7 +35,7 @@ export const NumericInputPage: React.FC = () => {
               inputMode="numeric"
               pattern="[0-9]*"
               value={num}
-              onChange={e => handleChange(idx, e.target.value)}
+              onChange={(e) => handleChange(idx, e.target.value)}
               className="border rounded px-3 py-2 w-64 mr-2"
               placeholder={`Enter number #${idx + 1}`}
               data-test={1004 + idx}
@@ -61,7 +64,11 @@ export const NumericInputPage: React.FC = () => {
         <div className="mt-6 text-blue-700 dark:text-blue-300" data-test="1006">
           <div className="font-semibold mb-2">Submitted values:</div>
           <pre className="bg-gray-100 dark:bg-gray-800 rounded p-4 text-base font-mono">
-            {JSON.stringify(numbers.filter(n => n !== ""), null, 2)}
+            {JSON.stringify(
+              numbers.filter((n) => n !== ""),
+              null,
+              2,
+            )}
           </pre>
         </div>
       )}

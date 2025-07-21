@@ -35,9 +35,7 @@ export const ThemeToggle: React.FC = () => {
           title="Select URL extension"
         >
           <FileText className="h-4 w-4" />
-          <span className="text-xs font-medium">
-            {urlExtension || "None"}
-          </span>
+          <span className="text-xs font-medium">{urlExtension || "None"}</span>
           <ChevronDown className="h-3 w-3" />
         </button>
 

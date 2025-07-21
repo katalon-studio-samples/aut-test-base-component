@@ -24,8 +24,13 @@ export const IframeSameDomainPage: React.FC = () => {
         title="Same Domain Iframe"
       />
       <div className="mt-4 text-gray-500 text-sm">
-        <div>Iframe src: <span className="font-mono">{src}</span></div>
-        <div>Provide <span className="font-mono">?url=...</span> in the query string to override the iframe source.</div>
+        <div>
+          Iframe src: <span className="font-mono">{src}</span>
+        </div>
+        <div>
+          Provide <span className="font-mono">?url=...</span> in the query
+          string to override the iframe source.
+        </div>
       </div>
     </div>
   );

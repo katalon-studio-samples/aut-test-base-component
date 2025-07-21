@@ -52,8 +52,8 @@ import { NumericInputPage } from "./pages/NumericInputPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
-  const extensions = ['', '.html', '.php', '.asp', '.aspx', '.jsp'];
-  return extensions.map(ext => (
+  const extensions = ["", ".html", ".php", ".asp", ".aspx", ".jsp"];
+  return extensions.map((ext) => (
     <Route key={`${path}${ext}`} path={`${path}${ext}`} element={element} />
   ));
 };
@@ -127,14 +127,29 @@ function App() {
                 {createRoutes("/open-popup", <OpenPopupPage />)}
                 {createRoutes("/popup-form", <PopupFormPage />)}
                 {createRoutes("/key-value-form", <KeyValueFormPage />)}
-                {createRoutes("/iframes/cellphone-demo", <IframeCellphoneDemoPage />)}
-                {createRoutes("/iframes/vinoth-demo", <IframeVinothQADemoPage />)}
-                {createRoutes("/iframes/docs-katalon", <IframeDocsKatalonPage />)}
+                {createRoutes(
+                  "/iframes/cellphone-demo",
+                  <IframeCellphoneDemoPage />,
+                )}
+                {createRoutes(
+                  "/iframes/vinoth-demo",
+                  <IframeVinothQADemoPage />,
+                )}
+                {createRoutes(
+                  "/iframes/docs-katalon",
+                  <IframeDocsKatalonPage />,
+                )}
                 {createRoutes("/iframes/same-domain", <IframeSameDomainPage />)}
-                {createRoutes("/rich-text-editor", <RichTextEditorExamplePage />)}
+                {createRoutes(
+                  "/rich-text-editor",
+                  <RichTextEditorExamplePage />,
+                )}
                 {createRoutes("/input/checkbox", <InputCheckBoxPage />)}
                 {createRoutes("/input/text", <InputTextPage />)}
-                {createRoutes("/input/radio-search-submit", <RadioSearchSubmitPage />)}
+                {createRoutes(
+                  "/input/radio-search-submit",
+                  <RadioSearchSubmitPage />,
+                )}
                 {createRoutes("/input/form-inputs", <FormInputsPage />)}
                 {createRoutes("/combobox", <ComboBoxExamplePage />)}
                 {createRoutes("/list-card", <CardListPage />)}
