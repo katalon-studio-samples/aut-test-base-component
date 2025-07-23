@@ -5,7 +5,9 @@ export class TrueTestDetector {
 
   private constructor() {
     this.initializeDetection();
-    this.loadFromSessionStorage();
+    this.loadFromLocalStorage();
+    this.autoCallSDKIfAttributesExist();
+    this.setupStorageListener();
   }
 
   public static getInstance(): TrueTestDetector {
@@ -57,7 +59,7 @@ export class TrueTestDetector {
 
   public setSessionAttribute(key: string, value: string): void {
     this.sessionData.set(key, value);
-    this.saveToSessionStorage();
+    this.saveToLocalStorage();
 
     // Notify listeners
     this.listeners.forEach((listener) => listener(key, value));
@@ -75,7 +77,7 @@ export class TrueTestDetector {
     Object.entries(attributes).forEach(([key, value]) => {
       this.sessionData.set(key, value);
     });
-    this.saveToSessionStorage();
+    this.saveToLocalStorage();
 
     // Notify listeners for each attribute
     Object.entries(attributes).forEach(([key, value]) => {
@@ -83,14 +85,36 @@ export class TrueTestDetector {
     });
   }
 
+  public setMultipleAttributesAndCallSDK(
+    attributes: Record<string, string>,
+  ): void {
+    // First store the attributes internally
+    this.setMultipleAttributes(attributes);
+
+    // Then call TrueTest.setSessionAttributes which will be detected
+    if (typeof window !== "undefined") {
+      // Ensure TrueTest object exists
+      (window as any).TrueTest = (window as any).TrueTest || {};
+
+      // Call setSessionAttributes - this will be detected by our detector
+      if (typeof (window as any).TrueTest.setSessionAttributes === "function") {
+        (window as any).TrueTest.setSessionAttributes(attributes);
+      } else {
+        console.warn(
+          "TrueTest.setSessionAttributes is not available. Make sure the TrueTest SDK is loaded.",
+        );
+      }
+    }
+  }
+
   public removeSessionAttribute(key: string): void {
     this.sessionData.delete(key);
-    this.saveToSessionStorage();
+    this.saveToLocalStorage();
   }
 
   public clearAllAttributes(): void {
     this.sessionData.clear();
-    this.saveToSessionStorage();
+    this.saveToLocalStorage();
   }
 
   public addListener(callback: (key: string, value: string) => void): void {
@@ -104,19 +128,48 @@ export class TrueTestDetector {
     }
   }
 
-  private saveToSessionStorage(): void {
-    if (typeof window !== "undefined" && window.sessionStorage) {
+  public callTrueTestSetSessionAttributesWithData(
+    attributes: Record<string, string>,
+  ): void {
+    // Use the current session attributes instead of hardcoded test data
+
+    if (typeof window !== "undefined") {
+      // Ensure TrueTest object exists
+      (window as any).TrueTest = (window as any).TrueTest || {};
+
+      // Call setSessionAttributes - this will be detected by our detector
+      if (typeof (window as any).TrueTest.setSessionAttributes === "function") {
+        console.log(
+          "Calling TrueTest.setSessionAttributes with current session attributes...",
+        );
+        (window as any).TrueTest.setSessionAttributes(attributes);
+      } else {
+        console.warn(
+          "TrueTest.setSessionAttributes is not available. Make sure the TrueTest SDK is loaded.",
+        );
+      }
+    }
+  }
+
+  public callTrueTestSetSessionAttributes(): void {
+    // Use the current session attributes from storage
+    const currentAttributes = this.getAllSessionAttributes();
+    this.callTrueTestSetSessionAttributesWithData(currentAttributes);
+  }
+
+  private saveToLocalStorage(): void {
+    if (typeof window !== "undefined" && window.localStorage) {
       const data = Object.fromEntries(this.sessionData);
-      window.sessionStorage.setItem(
+      window.localStorage.setItem(
         "trueTestSessionAttributes",
         JSON.stringify(data),
       );
     }
   }
 
-  private loadFromSessionStorage(): void {
-    if (typeof window !== "undefined" && window.sessionStorage) {
-      const stored = window.sessionStorage.getItem("trueTestSessionAttributes");
+  private loadFromLocalStorage(): void {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const stored = window.localStorage.getItem("trueTestSessionAttributes");
       if (stored) {
         try {
           const data = JSON.parse(stored);
@@ -130,6 +183,28 @@ export class TrueTestDetector {
           );
         }
       }
+    }
+  }
+
+  private autoCallSDKIfAttributesExist(): void {
+    const currentAttributes = this.getAllSessionAttributes();
+    // Always call SDK, even if attributes are empty {} to properly clear/reset TrueTest session
+    this.callTrueTestSetSessionAttributes();
+  }
+
+  private setupStorageListener(): void {
+    if (typeof window !== "undefined" && window.addEventListener) {
+      window.addEventListener("storage", (event) => {
+        if (event.key === "trueTestSessionAttributes") {
+          console.log(
+            "localStorage trueTestSessionAttributes changed, updating TrueTest session...",
+          );
+          // Reload the data from localStorage
+          this.loadFromLocalStorage();
+          // Call TrueTest SDK with the updated values
+          this.autoCallSDKIfAttributesExist();
+        }
+      });
     }
   }
 }

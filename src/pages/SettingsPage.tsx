@@ -23,7 +23,7 @@ export const SettingsPage: React.FC = () => {
   useEffect(() => {
     loadExistingData();
     loadFromQueryParams();
-  }, []);
+  }, [searchParams]);
 
   const loadExistingData = () => {
     const existingData = trueTestDetector.getAllSessionAttributes();
@@ -39,9 +39,33 @@ export const SettingsPage: React.FC = () => {
 
   const loadFromQueryParams = () => {
     const params = Object.fromEntries(searchParams.entries());
+    const hasQueryString = window.location.search.length > 0;
+    const shouldClear =
+      searchParams.has("clear") ||
+      (searchParams.toString() === "" && window.location.href.includes("?"));
+
+    // Handle clear parameter or empty query string
+    if (
+      searchParams.has("clear") ||
+      (Object.keys(params).length === 0 && window.location.href.includes("?"))
+    ) {
+      console.log(
+        "Clearing attributes due to clear parameter or empty query string",
+      );
+      trueTestDetector.clearAllAttributes();
+      trueTestDetector.callTrueTestSetSessionAttributesWithData({});
+      setKeyValuePairs([]);
+
+      showMessage("success", "Cleared all attributes");
+
+      // Clear query params from URL after processing
+      setSearchParams({});
+      return; // Exit early to avoid processing other params
+    }
+
     if (Object.keys(params).length > 0) {
-      // Set the attributes from query params
-      trueTestDetector.setMultipleAttributes(params);
+      // Set the attributes from query params and trigger TrueTest.setSessionAttributes
+      trueTestDetector.setMultipleAttributesAndCallSDK(params);
 
       // Update the display
       const pairs: KeyValuePair[] = Object.entries(params).map(
@@ -122,16 +146,11 @@ export const SettingsPage: React.FC = () => {
         }
       });
 
-      trueTestDetector.setMultipleAttributes(attributes);
-
-      // Trigger TrueTest.setSessionAttributes to demonstrate detection
-      if (typeof window !== "undefined" && (window as any).TrueTest) {
-        (window as any).TrueTest.setSessionAttributes(attributes);
-      }
+      trueTestDetector.setMultipleAttributesAndCallSDK(attributes);
 
       showMessage(
         "success",
-        `Saved ${Object.keys(attributes).length} attributes to session storage`,
+        `Saved ${Object.keys(attributes).length} attributes to local storage`,
       );
     } catch (error) {
       showMessage("error", "Failed to save attributes");
@@ -191,8 +210,8 @@ export const SettingsPage: React.FC = () => {
               </code>
             </li>
             <li>
-              • All data is stored in session storage (cleared when browser
-              closes)
+              • All data is stored in local storage (persists across browser
+              sessions)
             </li>
             <li>
               • The script automatically detects calls to{" "}
