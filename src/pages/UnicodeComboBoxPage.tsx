@@ -261,7 +261,12 @@ export const UnicodeComboBoxPage: React.FC = () => {
                             {category}
                           </div>
                         )}
-                        {options.map((opt) => (
+                        {options.map((opt) => {
+                          // Extract the Unicode character from the label
+                          const unicodeChar = opt.label.split(' ').pop() || '';
+                          const elementId = `unicode-option-${opt.value}-${unicodeChar}`;
+                          
+                          return (
                           <div
                             key={opt.value}
                             className={`option px-4 py-3 hover:bg-blue-50 dark:hover:bg-blue-900/30 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0 transition-colors${
@@ -269,7 +274,9 @@ export const UnicodeComboBoxPage: React.FC = () => {
                                 ? " bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200" 
                                 : " text-gray-700 dark:text-gray-300"
                             }`}
-                            id={`unicode-option-${opt.value}`}
+                            id={elementId}
+                            data-unicode-char={unicodeChar}
+                            data-unicode-value={opt.value}
                             aria-selected={selected?.value === opt.value ? "true" : "false"}
                             onClick={(e) => {
                               e.stopPropagation();
@@ -285,7 +292,8 @@ export const UnicodeComboBoxPage: React.FC = () => {
                               </span>
                             </div>
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     ))
                   )}
@@ -317,14 +325,71 @@ export const UnicodeComboBoxPage: React.FC = () => {
         {/* Test attributes section */}
         <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">
-            Test Attributes
+            Test Attributes & Unicode IDs
           </h3>
-          <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+          <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
             <p><strong>Main Combobox ID:</strong> unicode-combobox-input</p>
             <p><strong>Test ID:</strong> unicode-combobox</p>
             <p><strong>Dropdown ID:</strong> unicode-combobox-dropdown</p>
-            <p><strong>Selected Option ID:</strong> {selected ? `unicode-option-${selected.value}` : 'None'}</p>
+            {selected && (
+              <>
+                <p><strong>Selected Option ID:</strong> {`unicode-option-${selected.value}-${selected.label.split(' ').pop()}`}</p>
+                <p><strong>Unicode Character in ID:</strong> {selected.label.split(' ').pop()}</p>
+                <p><strong>Data Attributes:</strong></p>
+                <ul className="ml-4 space-y-1">
+                  <li>• data-unicode-char="{selected.label.split(' ').pop()}"</li>
+                  <li>• data-unicode-value="{selected.value}"</li>
+                </ul>
+              </>
+            )}
+            {!selected && <p><strong>Selected Option ID:</strong> None selected</p>}
           </div>
+        </div>
+
+        {/* Additional test elements with Unicode IDs */}
+        <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+          <h3 className="text-lg font-semibold text-yellow-800 dark:text-yellow-200 mb-3">
+            Additional Test Elements with Unicode IDs
+          </h3>
+          <div className="space-y-3">
+            <button
+              id="btn-temperature-°C"
+              data-testid="temperature-celsius-°C"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+            >
+              Temperature °C Button
+            </button>
+            <button
+              id="btn-currency-€"
+              data-testid="currency-euro-€"
+              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 mr-2"
+            >
+              Euro € Button
+            </button>
+            <button
+              id="btn-math-π"
+              data-testid="math-pi-π"
+              className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 mr-2"
+            >
+              Pi π Button
+            </button>
+            <input
+              id="input-symbol-★"
+              data-testid="star-input-★"
+              placeholder="Star ★ input field"
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700 dark:text-gray-200 mr-2"
+            />
+            <div
+              id="div-arrow-→"
+              data-testid="arrow-right-→"
+              className="inline-block px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded mr-2"
+            >
+              Arrow → Div
+            </div>
+          </div>
+          <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-3">
+            These elements demonstrate Unicode characters directly in element IDs and test attributes for automation testing scenarios.
+          </p>
         </div>
       </div>
     </div>
