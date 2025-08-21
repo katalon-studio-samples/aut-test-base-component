@@ -62,6 +62,7 @@ const menuItems = [
       { path: "/rich-text-editor", label: "Rich Text Editor" },
       { path: "/combobox", label: "Combo Box" },
       { path: "/unicode-combobox", label: "Unicode Combo Box" },
+      { path: "/xpath-breaking", label: "XPath Breaking Characters" },
     ],
   },
   {
