@@ -19,6 +19,7 @@ export const FormInputsPage: React.FC = () => {
     creditCard: "",
     changePassword: false,
     dontTrackMe: false,
+    trackMe: false,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [result, setResult] = useState("");
@@ -28,12 +29,17 @@ export const FormInputsPage: React.FC = () => {
   const id = useId();
 
   const getKatalonClass = (existingClass?: string) => {
+    let classes = existingClass || "";
+
     if (formData.dontTrackMe) {
-      return existingClass
-        ? `${existingClass} katalon-excluded`
-        : "katalon-excluded";
+      classes = classes ? `${classes} katalon-excluded` : "katalon-excluded";
     }
-    return existingClass || "";
+
+    if (formData.trackMe) {
+      classes = classes ? `${classes} katalon-included` : "katalon-included";
+    }
+
+    return classes;
   };
 
   const validateForm = () => {
@@ -158,7 +164,16 @@ export const FormInputsPage: React.FC = () => {
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    let updatedData = { ...formData, [field]: value };
+
+    // Ensure only one tracking option can be selected at a time
+    if (field === "dontTrackMe" && value === true) {
+      updatedData.trackMe = false;
+    } else if (field === "trackMe" && value === true) {
+      updatedData.dontTrackMe = false;
+    }
+
+    setFormData(updatedData);
     // Clear error when user starts typing
     if (errors[field as keyof typeof errors]) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -233,6 +248,7 @@ export const FormInputsPage: React.FC = () => {
       creditCard: "",
       changePassword: false,
       dontTrackMe: false,
+      trackMe: false,
     });
     setErrors({});
     setResult("");
@@ -325,7 +341,52 @@ export const FormInputsPage: React.FC = () => {
             }}
           >
             When enabled, all form fields will not be tracked by adding
-            attribute "katalon-excluded"
+            attribute "katalon-excluded". Cannot be used with "Enable tracking".
+          </div>
+        </div>
+
+        {/* Track Me Control */}
+        <div
+          style={{
+            marginBottom: "24px",
+            padding: "16px",
+            backgroundColor: "#f0fdf4",
+            border: "1px solid #bbf7d0",
+            borderRadius: "8px",
+            borderLeft: "4px solid #10b981",
+          }}
+        >
+          <div className={styles.inputGroup} id={`${id}-track-group`}>
+            <label
+              htmlFor={`${id}-track`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                fontWeight: "500",
+              }}
+            >
+              <input
+                id={`${id}-track`}
+                type="checkbox"
+                checked={formData.trackMe}
+                onChange={(e) => handleInputChange("trackMe", e.target.checked)}
+                style={{ margin: 0 }}
+                className={getKatalonClass()}
+              />
+              Enable tracking for me
+            </label>
+          </div>
+          <div
+            style={{
+              fontSize: "0.8rem",
+              color: "#059669",
+              marginTop: "4px",
+              marginLeft: "24px",
+            }}
+          >
+            When enabled, all form fields will be tracked by adding attribute
+            "katalon-included". Cannot be used with "Don't track me".
           </div>
         </div>
 

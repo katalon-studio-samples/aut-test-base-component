@@ -50,6 +50,8 @@ import { CardListPage } from "./pages/PII/CardListPage.tsx";
 import { SauceLoginPage } from "./pages/SauceLoginPage";
 import { NumericInputPage } from "./pages/NumericInputPage";
 import { SettingsPage } from "./pages/SettingsPage";
+import { UnicodeComboBoxPage } from "./pages/UnicodeComboBoxPage";
+import { XPathBreakingPage } from "./pages/XPathBreakingPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -153,6 +155,8 @@ function App() {
                 )}
                 {createRoutes("/input/form-inputs", <FormInputsPage />)}
                 {createRoutes("/combobox", <ComboBoxExamplePage />)}
+                {createRoutes("/unicode-combobox", <UnicodeComboBoxPage />)}
+                {createRoutes("/xpath-breaking", <XPathBreakingPage />)}
                 {createRoutes("/list-card", <CardListPage />)}
                 {createRoutes("/unique-test-data", <NumericInputPage />)}
                 {createRoutes("/settings", <SettingsPage />)}
