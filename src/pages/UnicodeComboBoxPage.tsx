@@ -5,7 +5,7 @@ const unicodeOptions = [
   { value: "celsius", label: "Temperature °C", category: "Temperature" },
   { value: "fahrenheit", label: "Temperature °F", category: "Temperature" },
   { value: "kelvin", label: "Temperature K", category: "Temperature" },
-  
+
   // Currency
   { value: "usd", label: "US Dollar $", category: "Currency" },
   { value: "eur", label: "Euro €", category: "Currency" },
@@ -15,7 +15,7 @@ const unicodeOptions = [
   { value: "inr", label: "Indian Rupee ₹", category: "Currency" },
   { value: "krw", label: "Korean Won ₩", category: "Currency" },
   { value: "btc", label: "Bitcoin ₿", category: "Currency" },
-  
+
   // Mathematical symbols
   { value: "infinity", label: "Infinity ∞", category: "Math" },
   { value: "pi", label: "Pi π", category: "Math" },
@@ -29,7 +29,7 @@ const unicodeOptions = [
   { value: "lambda", label: "Lambda λ", category: "Math" },
   { value: "mu", label: "Mu μ", category: "Math" },
   { value: "phi", label: "Phi φ", category: "Math" },
-  
+
   // Arrows and symbols
   { value: "arrow-up", label: "Arrow Up ↑", category: "Arrows" },
   { value: "arrow-down", label: "Arrow Down ↓", category: "Arrows" },
@@ -37,7 +37,7 @@ const unicodeOptions = [
   { value: "arrow-right", label: "Arrow Right →", category: "Arrows" },
   { value: "arrow-up-down", label: "Up-Down ↕", category: "Arrows" },
   { value: "arrow-left-right", label: "Left-Right ↔", category: "Arrows" },
-  
+
   // Miscellaneous symbols
   { value: "copyright", label: "Copyright ©", category: "Symbols" },
   { value: "registered", label: "Registered ®", category: "Symbols" },
@@ -49,26 +49,26 @@ const unicodeOptions = [
   { value: "ellipsis", label: "Ellipsis …", category: "Symbols" },
   { value: "dagger", label: "Dagger †", category: "Symbols" },
   { value: "double-dagger", label: "Double Dagger ‡", category: "Symbols" },
-  
+
   // Fractions
   { value: "half", label: "One Half ½", category: "Fractions" },
   { value: "third", label: "One Third ⅓", category: "Fractions" },
   { value: "quarter", label: "One Quarter ¼", category: "Fractions" },
   { value: "three-quarters", label: "Three Quarters ¾", category: "Fractions" },
   { value: "two-thirds", label: "Two Thirds ⅔", category: "Fractions" },
-  
+
   // Superscript and subscript
   { value: "squared", label: "Squared ²", category: "Superscript" },
   { value: "cubed", label: "Cubed ³", category: "Superscript" },
   { value: "power-4", label: "Power 4 ⁴", category: "Superscript" },
   { value: "power-5", label: "Power 5 ⁵", category: "Superscript" },
-  
+
   // Playing card suits
   { value: "spades", label: "Spades ♠", category: "Cards" },
   { value: "hearts", label: "Hearts ♥", category: "Cards" },
   { value: "diamonds", label: "Diamonds ♦", category: "Cards" },
   { value: "clubs", label: "Clubs ♣", category: "Cards" },
-  
+
   // Zodiac signs
   { value: "aries", label: "Aries ♈", category: "Zodiac" },
   { value: "taurus", label: "Taurus ♉", category: "Zodiac" },
@@ -76,13 +76,13 @@ const unicodeOptions = [
   { value: "cancer", label: "Cancer ♋", category: "Zodiac" },
   { value: "leo", label: "Leo ♌", category: "Zodiac" },
   { value: "virgo", label: "Virgo ♍", category: "Zodiac" },
-  
+
   // Music symbols
   { value: "treble-clef", label: "Treble Clef 𝄞", category: "Music" },
   { value: "sharp", label: "Sharp ♯", category: "Music" },
   { value: "flat", label: "Flat ♭", category: "Music" },
   { value: "natural", label: "Natural ♮", category: "Music" },
-  
+
   // Emoji-style symbols
   { value: "star", label: "Star ★", category: "Shapes" },
   { value: "heart", label: "Heart ♡", category: "Shapes" },
@@ -105,7 +105,10 @@ export const UnicodeComboBoxPage: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Get unique categories
-  const categories = ["all", ...Array.from(new Set(unicodeOptions.map(opt => opt.category)))];
+  const categories = [
+    "all",
+    ...Array.from(new Set(unicodeOptions.map((opt) => opt.category))),
+  ];
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -128,29 +131,34 @@ export const UnicodeComboBoxPage: React.FC = () => {
 
   // Filter options based on search and category
   const filteredOptions = unicodeOptions.filter((opt) => {
-    const matchesSearch = opt.label.toLowerCase().includes(search.toLowerCase()) ||
-                         opt.value.toLowerCase().includes(search.toLowerCase()) ||
-                         opt.category.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || opt.category === selectedCategory;
+    const matchesSearch =
+      opt.label.toLowerCase().includes(search.toLowerCase()) ||
+      opt.value.toLowerCase().includes(search.toLowerCase()) ||
+      opt.category.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "all" || opt.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   // Group options by category for display
-  const groupedOptions = filteredOptions.reduce((groups, option) => {
-    const category = option.category;
-    if (!groups[category]) {
-      groups[category] = [];
-    }
-    groups[category].push(option);
-    return groups;
-  }, {} as Record<string, typeof filteredOptions>);
+  const groupedOptions = filteredOptions.reduce(
+    (groups, option) => {
+      const category = option.category;
+      if (!groups[category]) {
+        groups[category] = [];
+      }
+      groups[category].push(option);
+      return groups;
+    },
+    {} as Record<string, typeof filteredOptions>,
+  );
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">
         Unicode Combobox Example
       </h1>
-      
+
       <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
         <p className="text-sm text-blue-700 dark:text-blue-300 mb-2">
           This combobox demonstrates various Unicode characters including:
@@ -188,23 +196,23 @@ export const UnicodeComboBoxPage: React.FC = () => {
               {selected ? selected.label : "Select a Unicode symbol..."}
             </span>
             <span className="combo-box__controls flex gap-2 items-center absolute right-3 top-1/2 -translate-y-1/2">
-              <svg 
-                width="20" 
-                height="20" 
-                fill="none" 
+              <svg
+                width="20"
+                height="20"
+                fill="none"
                 viewBox="0 0 20 20"
-                className={`transform transition-transform ${open ? 'rotate-180' : ''}`}
+                className={`transform transition-transform ${open ? "rotate-180" : ""}`}
               >
-                <path 
-                  d="M5 8l5 5 5-5" 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  fill="none" 
+                <path
+                  d="M5 8l5 5 5-5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
                   className="text-gray-500 dark:text-gray-400"
                 />
               </svg>
             </span>
-            
+
             {open && (
               <div
                 className="absolute left-0 top-full mt-2 w-full bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 rounded-lg shadow-xl z-20 max-h-96 overflow-hidden"
@@ -236,7 +244,7 @@ export const UnicodeComboBoxPage: React.FC = () => {
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    {categories.map(category => (
+                    {categories.map((category) => (
                       <option key={category} value={category}>
                         {category === "all" ? "All Categories" : category}
                       </option>
@@ -254,48 +262,55 @@ export const UnicodeComboBoxPage: React.FC = () => {
                       No symbols found
                     </div>
                   ) : (
-                    Object.entries(groupedOptions).map(([category, options]) => (
-                      <div key={category}>
-                        {selectedCategory === "all" && (
-                          <div className="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                            {category}
-                          </div>
-                        )}
-                        {options.map((opt) => {
-                          // Extract the Unicode character from the label
-                          const unicodeChar = opt.label.split(' ').pop() || '';
-                          const elementId = `unicode-option-${opt.value}-${unicodeChar}`;
-                          
-                          return (
-                          <div
-                            key={opt.value}
-                            className={`option px-4 py-3 hover:bg-blue-50 dark:hover:bg-blue-900/30 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0 transition-colors${
-                              selected?.value === opt.value 
-                                ? " bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200" 
-                                : " text-gray-700 dark:text-gray-300"
-                            }`}
-                            id={elementId}
-                            data-unicode-char={unicodeChar}
-                            data-unicode-value={opt.value}
-                            aria-selected={selected?.value === opt.value ? "true" : "false"}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelected(opt);
-                              setOpen(false);
-                              setSearch("");
-                            }}
-                          >
-                            <div className="flex items-center justify-between">
-                              <span className="text-lg">{opt.label}</span>
-                              <span className="text-xs text-gray-400 dark:text-gray-500">
-                                {opt.category}
-                              </span>
+                    Object.entries(groupedOptions).map(
+                      ([category, options]) => (
+                        <div key={category}>
+                          {selectedCategory === "all" && (
+                            <div className="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+                              {category}
                             </div>
-                          </div>
-                          );
-                        })}
-                      </div>
-                    ))
+                          )}
+                          {options.map((opt) => {
+                            // Extract the Unicode character from the label
+                            const unicodeChar =
+                              opt.label.split(" ").pop() || "";
+                            const elementId = `unicode-option-${opt.value}-${unicodeChar}`;
+
+                            return (
+                              <div
+                                key={opt.value}
+                                className={`option px-4 py-3 hover:bg-blue-50 dark:hover:bg-blue-900/30 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-b-0 transition-colors${
+                                  selected?.value === opt.value
+                                    ? " bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200"
+                                    : " text-gray-700 dark:text-gray-300"
+                                }`}
+                                id={elementId}
+                                data-unicode-char={unicodeChar}
+                                data-unicode-value={opt.value}
+                                aria-selected={
+                                  selected?.value === opt.value
+                                    ? "true"
+                                    : "false"
+                                }
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelected(opt);
+                                  setOpen(false);
+                                  setSearch("");
+                                }}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <span className="text-lg">{opt.label}</span>
+                                  <span className="text-xs text-gray-400 dark:text-gray-500">
+                                    {opt.category}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ),
+                    )
                   )}
                 </div>
               </div>
@@ -314,9 +329,16 @@ export const UnicodeComboBoxPage: React.FC = () => {
                 {selected.label}
               </p>
               <div className="text-sm text-green-600 dark:text-green-400 space-y-1">
-                <p><strong>Value:</strong> {selected.value}</p>
-                <p><strong>Category:</strong> {selected.category}</p>
-                <p><strong>Unicode Character:</strong> {selected.label.split(' ').pop()}</p>
+                <p>
+                  <strong>Value:</strong> {selected.value}
+                </p>
+                <p>
+                  <strong>Category:</strong> {selected.category}
+                </p>
+                <p>
+                  <strong>Unicode Character:</strong>{" "}
+                  {selected.label.split(" ").pop()}
+                </p>
               </div>
             </div>
           </div>
@@ -328,21 +350,41 @@ export const UnicodeComboBoxPage: React.FC = () => {
             Test Attributes & Unicode IDs
           </h3>
           <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
-            <p><strong>Main Combobox ID:</strong> unicode-combobox-input</p>
-            <p><strong>Test ID:</strong> unicode-combobox</p>
-            <p><strong>Dropdown ID:</strong> unicode-combobox-dropdown</p>
+            <p>
+              <strong>Main Combobox ID:</strong> unicode-combobox-input
+            </p>
+            <p>
+              <strong>Test ID:</strong> unicode-combobox
+            </p>
+            <p>
+              <strong>Dropdown ID:</strong> unicode-combobox-dropdown
+            </p>
             {selected && (
               <>
-                <p><strong>Selected Option ID:</strong> {`unicode-option-${selected.value}-${selected.label.split(' ').pop()}`}</p>
-                <p><strong>Unicode Character in ID:</strong> {selected.label.split(' ').pop()}</p>
-                <p><strong>Data Attributes:</strong></p>
+                <p>
+                  <strong>Selected Option ID:</strong>{" "}
+                  {`unicode-option-${selected.value}-${selected.label.split(" ").pop()}`}
+                </p>
+                <p>
+                  <strong>Unicode Character in ID:</strong>{" "}
+                  {selected.label.split(" ").pop()}
+                </p>
+                <p>
+                  <strong>Data Attributes:</strong>
+                </p>
                 <ul className="ml-4 space-y-1">
-                  <li>• data-unicode-char="{selected.label.split(' ').pop()}"</li>
+                  <li>
+                    • data-unicode-char="{selected.label.split(" ").pop()}"
+                  </li>
                   <li>• data-unicode-value="{selected.value}"</li>
                 </ul>
               </>
             )}
-            {!selected && <p><strong>Selected Option ID:</strong> None selected</p>}
+            {!selected && (
+              <p>
+                <strong>Selected Option ID:</strong> None selected
+              </p>
+            )}
           </div>
         </div>
 
@@ -388,7 +430,8 @@ export const UnicodeComboBoxPage: React.FC = () => {
             </div>
           </div>
           <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-3">
-            These elements demonstrate Unicode characters directly in element IDs and test attributes for automation testing scenarios.
+            These elements demonstrate Unicode characters directly in element
+            IDs and test attributes for automation testing scenarios.
           </p>
         </div>
       </div>
