@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 
 interface SideNavProps {
@@ -12,6 +12,7 @@ const menuItems = [
   {
     category: "Basic",
     items: [
+      { path: "/native-element", label: "Native HTML Elements" },
       { path: "/about", label: "About" },
       { path: "/forms", label: "Forms" },
       { path: "/sauce-login", label: "Sauce Login" },
