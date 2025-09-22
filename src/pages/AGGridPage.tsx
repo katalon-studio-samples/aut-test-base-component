@@ -7,11 +7,14 @@ import {
   ModuleRegistry, 
   AllCommunityModule,
   ValueGetterParams,
-  ValueSetterParams
+  ValueSetterParams,
+  setupAgTestIds
 } from 'ag-grid-community';
 
 
 ModuleRegistry.registerModules([AllCommunityModule]);
+
+setupAgTestIds();
 
 // Shadow DOM Cell Renderer Component
 class ShadowCellRenderer {
@@ -66,41 +69,41 @@ class ShadowCellRenderer {
     
     switch (cellType) {
       case 'input':
-        content.innerHTML = `<input type="text" value="${value || ''}" />`;
+        content.innerHTML = `<input type="text" value="${value || ''}" data-testid="input-${data.id}" />`;
         break;
       case 'slider':
-        content.innerHTML = `<input type="range" min="0" max="100" value="${value || 50}" />`;
+        content.innerHTML = `<input type="range" min="0" max="100" value="${value || 50}" data-testid="slider-${data.id}" />`;
         break;
       case 'doubleSlider':
         content.innerHTML = `
           <div class="range-container">
-            <input type="range" min="0" max="100" value="${value?.min || 0}" />
-            <input type="range" min="0" max="100" value="${value?.max || 100}" />
+            <input type="range" min="0" max="100" value="${value?.min || 0}" data-testid="slider-min-${data.id}" />
+            <input type="range" min="0" max="100" value="${value?.max || 100}" data-testid="slider-max-${data.id}" />
           </div>`;
         break;
 
       case 'checkbox':
-        content.innerHTML = `<input type="checkbox" ${value ? 'checked' : ''} />`;
+        content.innerHTML = `<input type="checkbox" ${value ? 'checked' : ''} data-testid="checkbox-${data.id}" />`;
         break;
       case 'radio':
         content.innerHTML = `
           <div class="radio-group">
-            <label><input type="radio" name="category-${data.id}" value="A" ${value === 'A' ? 'checked' : ''} />A</label>
-            <label><input type="radio" name="category-${data.id}" value="B" ${value === 'B' ? 'checked' : ''} />B</label>
+            <label><input type="radio" name="category-${data.id}" value="A" ${value === 'A' ? 'checked' : ''} data-testid="radio-a-${data.id}" />A</label>
+            <label><input type="radio" name="category-${data.id}" value="B" ${value === 'B' ? 'checked' : ''} data-testid="radio-b-${data.id}" />B</label>
           </div>`;
         break;
       case 'svg':
         const stars = '★'.repeat(value || 0) + '☆'.repeat(5 - (value || 0));
-        content.innerHTML = `<span class="stars">${stars}</span>`;
+        content.innerHTML = `<span class="stars" data-testid="rating-${data.id}">${stars}</span>`;
         break;
       case 'download':
-        content.innerHTML = `<button data-action="download" title="Download row data">📥</button>`;
+        content.innerHTML = `<button data-action="download" data-testid="download-btn-${data.id}" title="Download row data">📥</button>`;
         break;
       case 'newTab':
-        content.innerHTML = `<button data-action="newTab" title="Open in new tab">🔗</button>`;
+        content.innerHTML = `<button data-action="newTab" data-testid="link-btn-${data.id}" title="Open in new tab">🔗</button>`;
         break;
       default:
-        content.innerHTML = `<span class="text-display">${value || ''}</span>`;
+        content.innerHTML = `<span class="text-display" data-testid="text-${data.id}">${value || ''}</span>`;
     }
   }
 
@@ -143,13 +146,11 @@ const generateData = (count: number) => {
     id: i + 1,
     name: `User ${i + 1}`,
     email: `user${i + 1}@example.com`,
-
     score: Math.floor(Math.random() * 100),
     active: Math.random() > 0.5,
     category: ['A', 'B', 'C'][Math.floor(Math.random() * 3)],
     rating: Math.floor(Math.random() * 5) + 1,
     range: { min: Math.floor(Math.random() * 50), max: Math.floor(Math.random() * 50) + 50 },
-
     status: ['Active', 'Inactive', 'Pending'][Math.floor(Math.random() * 3)],
   }));
 };
@@ -160,6 +161,7 @@ const AGGridPage: React.FC = () => {
 
   const columnDefs = useMemo<ColDef[]>(() => [
     {
+      colId: 'id',
       headerName: 'ID',
       field: 'id',
       width: 80,
@@ -169,6 +171,7 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'text' }
     },
     {
+      colId: 'name',
       headerName: 'Name',
       field: 'name',
       width: 150,
@@ -179,6 +182,7 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'input' }
     },
     {
+      colId: 'email',
       headerName: 'Email',
       field: 'email',
       width: 200,
@@ -187,8 +191,8 @@ const AGGridPage: React.FC = () => {
       cellRenderer: ShadowCellRenderer,
       cellRendererParams: { cellType: 'text' }
     },
-
     {
+      colId: 'score',
       headerName: 'Score',
       field: 'score',
       width: 100,
@@ -198,6 +202,7 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'text' }
     },
     {
+      colId: 'range',
       headerName: 'Range',
       field: 'range',
       width: 180,
@@ -215,6 +220,7 @@ const AGGridPage: React.FC = () => {
       }
     },
     {
+      colId: 'active',
       headerName: 'Active',
       field: 'active',
       width: 100,
@@ -227,6 +233,7 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'checkbox' }
     },
     {
+      colId: 'category',
       headerName: 'Category',
       field: 'category',
       width: 120,
@@ -237,6 +244,7 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'radio' }
     },
     {
+      colId: 'rating',
       headerName: 'Rating',
       field: 'rating',
       width: 100,
@@ -246,6 +254,7 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'svg' }
     },
     {
+      colId: 'status',
       headerName: 'Status',
       field: 'status',
       width: 120,
@@ -255,6 +264,7 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'text' }
     },
     {
+      colId: 'download',
       headerName: 'Download',
       field: 'id',
       width: 100,
@@ -266,6 +276,7 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'download' }
     },
     {
+      colId: 'link',
       headerName: 'Link',
       field: 'id', 
       width: 80,
@@ -300,7 +311,7 @@ const AGGridPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="p-6" data-testid="ag-grid-page">
       <div className="mb-8">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
           AG Grid with Shadow DOM
@@ -312,20 +323,23 @@ const AGGridPage: React.FC = () => {
         <button
           className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
           onClick={exportCsv}
-
+          data-testid="export-csv-btn"
         >
           📊 Export CSV
         </button>
         <button
           className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg hover:from-green-600 hover:to-green-700 font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
           onClick={clearFilters}
-
+          data-testid="clear-filters-btn"
         >
           🔄 Clear Filters
         </button>
       </div>
 
-      <div style={{ height: '600px', width: '100%', border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden' }}>
+      <div 
+        style={{ height: '600px', width: '100%', border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden' }}
+        data-testid="ag-grid-container"
+      >
         <AgGridReact
           ref={gridRef}
           rowData={rowData}
