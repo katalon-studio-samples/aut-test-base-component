@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { 
   ColDef, 
@@ -96,6 +96,9 @@ class ShadowCellRenderer {
         const stars = '★'.repeat(value || 0) + '☆'.repeat(5 - (value || 0));
         content.innerHTML = `<span class="stars" data-testid="rating-${data.id}">${stars}</span>`;
         break;
+      case 'image':
+        content.innerHTML = `<button data-action="image" data-testid="image-btn-${data.id}" title="View image"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></button>`;
+        break;
       case 'download':
         content.innerHTML = `<button data-action="download" data-testid="download-btn-${data.id}" title="Download row data">📥</button>`;
         break;
@@ -125,7 +128,7 @@ class ShadowCellRenderer {
 
     this.shadow.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;
-      const action = target.dataset.action;
+      const action = target.dataset.action || target.closest('button')?.dataset.action;
       if (action === 'download') {
         const blob = new Blob([JSON.stringify(this.params.data, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
@@ -136,6 +139,9 @@ class ShadowCellRenderer {
         URL.revokeObjectURL(url);
       } else if (action === 'newTab') {
         window.open(`https://example.com?id=${this.params.data.id}`, '_blank');
+      } else if (action === 'image') {
+        const event = new CustomEvent('openImageDialog', { bubbles: true });
+        document.dispatchEvent(event);
       }
     });
   }
@@ -158,6 +164,13 @@ const generateData = (count: number) => {
 const AGGridPage: React.FC = () => {
   const gridRef = useRef<AgGridReact>(null);
   const [rowData] = useState(() => generateData(1000));
+  const [showDialog, setShowDialog] = useState(false);
+
+  useEffect(() => {
+    const handleOpenDialog = () => setShowDialog(true);
+    document.addEventListener('openImageDialog', handleOpenDialog);
+    return () => document.removeEventListener('openImageDialog', handleOpenDialog);
+  }, []);
 
   const columnDefs = useMemo<ColDef[]>(() => [
     {
@@ -264,6 +277,16 @@ const AGGridPage: React.FC = () => {
       cellRendererParams: { cellType: 'text' }
     },
     {
+      colId: 'image',
+      headerName: 'Image',
+      field: 'id',
+      width: 80,
+      minWidth: 60,
+      sortable: false,
+      cellRenderer: ShadowCellRenderer,
+      cellRendererParams: { cellType: 'image' }
+    },
+    {
       colId: 'download',
       headerName: 'Download',
       field: 'id',
@@ -352,6 +375,29 @@ const AGGridPage: React.FC = () => {
         />
       </div>
 
+      {showDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" data-testid="image-dialog">
+          <div className="bg-white rounded-lg p-4 max-w-md">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Sample Photo</h3>
+              <button 
+                onClick={() => setShowDialog(false)}
+                className="text-gray-500 hover:text-gray-700"
+                data-testid="close-dialog-btn"
+              >
+                ✕
+              </button>
+            </div>
+            <img 
+              src="https://picsum.photos/300/200" 
+              alt="Sample" 
+              className="w-full rounded"
+              data-testid="dialog-image"
+            />
+          </div>
+        </div>
+      )}
+
       <div className="mt-6 p-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl border border-gray-200">
         <h3 className="font-semibold text-gray-800 mb-3">✨ Features Implemented</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-600">
@@ -360,6 +406,7 @@ const AGGridPage: React.FC = () => {
           <div>🎚️ Range Sliders</div>
           <div>☑️ Interactive Controls</div>
           <div>⭐ Star Ratings</div>
+          <div>🖼️ Image Dialog</div>
           <div>📥 File Downloads</div>
           <div>🔗 External Links</div>
           <div>🔍 Advanced Filtering</div>
