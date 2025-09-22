@@ -53,6 +53,7 @@ import { NumericInputPage } from "./pages/NumericInputPage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { UnicodeComboBoxPage } from "./pages/UnicodeComboBoxPage";
 import { XPathBreakingPage } from "./pages/XPathBreakingPage";
+import AGGridPage from "./pages/AGGridPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -99,7 +100,7 @@ function App() {
           <SideNav isOpen={sidebarOpen} onClose={toggleSidebar}/>
 
           {/* Main content */}
-          <div className="flex-1 md:ml-64 pt-16 md:pt-0">
+          <div className="flex-1 pt-16 md:pt-0">
             <ThemeToggle/>
             <main className="p-4 md:p-6">
               <Routes>
@@ -162,6 +163,7 @@ function App() {
                 {createRoutes("/list-card", <CardListPage/>)}
                 {createRoutes("/unique-test-data", <NumericInputPage/>)}
                 {createRoutes("/settings", <SettingsPage/>)}
+                {createRoutes("/ag-grid", <AGGridPage/>)}
                 <Route path="*" element={<Navigate to="/" replace/>}/>
               </Routes>
             </main>

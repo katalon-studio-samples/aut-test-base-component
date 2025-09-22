@@ -17,6 +17,7 @@ const menuItems = [
       { path: "/forms", label: "Forms" },
       { path: "/sauce-login", label: "Sauce Login" },
       { path: "/tables", label: "Tables" },
+      { path: "/ag-grid", label: "AG Grid Table" },
       {
         label: "Input",
         children: [
