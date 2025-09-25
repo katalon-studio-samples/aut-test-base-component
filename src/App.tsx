@@ -82,9 +82,9 @@ function App() {
             data-test="mobile-menu-button"
           >
             {sidebarOpen ? (
-              <X className="h-6 w-6 text-gray-600 dark:text-gray-300"/>
+              <X className="h-6 w-6 text-gray-600 dark:text-gray-300" />
             ) : (
-              <Menu className="h-6 w-6 text-gray-600 dark:text-gray-300"/>
+              <Menu className="h-6 w-6 text-gray-600 dark:text-gray-300" />
             )}
           </button>
 
@@ -97,74 +97,74 @@ function App() {
           />
 
           {/* Sidebar */}
-          <SideNav isOpen={sidebarOpen} onClose={toggleSidebar}/>
+          <SideNav isOpen={sidebarOpen} onClose={toggleSidebar} />
 
           {/* Main content */}
           <div className="flex-1 pt-16 md:pt-0">
-            <ThemeToggle/>
+            <ThemeToggle />
             <main className="p-4 md:p-6">
               <Routes>
-                {createRoutes("/", <Home/>)}
+                {createRoutes("/", <Home />)}
                 {createRoutes("/native-element", <NativeElementsPage />)}
-                {createRoutes("/about", <AboutPage/>)}
-                {createRoutes("/forms", <FormsPage/>)}
-                {createRoutes("/tables", <TablesPage/>)}
-                {createRoutes("/drag-drop", <DragDropPage/>)}
-                {createRoutes("/dynamic-elements", <DynamicElementsPage/>)}
-                {createRoutes("/file-upload", <FileUploadPage/>)}
-                {createRoutes("/file-download", <FileDownloadPage/>)}
-                {createRoutes("/iframes", <IframePage/>)}
-                {createRoutes("/iframes-1", <IframePageNested1Level/>)}
-                {createRoutes("/iframes-2", <IframePageNested2Level/>)}
-                {createRoutes("/context-menu", <ContextMenuPage/>)}
-                {createRoutes("/multi-tiered-menu", <MultiTieredMenuPage/>)}
-                {createRoutes("/hover", <HoverPage/>)}
-                {createRoutes("/notifications", <NotificationsPage/>)}
-                {createRoutes("/ab-testing", <ABTestingPage/>)}
-                {createRoutes("/auth", <AuthPage/>)}
-                {createRoutes("/sauce-login", <SauceLoginPage/>)}
-                {createRoutes("/broken-images", <BrokenImagesPage/>)}
-                {createRoutes("/checkboxes", <CheckboxesPage/>)}
-                {createRoutes("/exit-intent", <ExitIntentPage/>)}
-                {createRoutes("/slider", <SliderPage/>)}
-                {createRoutes("/alerts", <AlertsPage/>)}
-                {createRoutes("/key-press", <KeyPressPage/>)}
-                {createRoutes("/shadow-dom", <ShadowDOMPage/>)}
-                {createRoutes("/open-popup", <OpenPopupPage/>)}
-                {createRoutes("/popup-form", <PopupFormPage/>)}
-                {createRoutes("/key-value-form", <KeyValueFormPage/>)}
+                {createRoutes("/about", <AboutPage />)}
+                {createRoutes("/forms", <FormsPage />)}
+                {createRoutes("/tables", <TablesPage />)}
+                {createRoutes("/drag-drop", <DragDropPage />)}
+                {createRoutes("/dynamic-elements", <DynamicElementsPage />)}
+                {createRoutes("/file-upload", <FileUploadPage />)}
+                {createRoutes("/file-download", <FileDownloadPage />)}
+                {createRoutes("/iframes", <IframePage />)}
+                {createRoutes("/iframes-1", <IframePageNested1Level />)}
+                {createRoutes("/iframes-2", <IframePageNested2Level />)}
+                {createRoutes("/context-menu", <ContextMenuPage />)}
+                {createRoutes("/multi-tiered-menu", <MultiTieredMenuPage />)}
+                {createRoutes("/hover", <HoverPage />)}
+                {createRoutes("/notifications", <NotificationsPage />)}
+                {createRoutes("/ab-testing", <ABTestingPage />)}
+                {createRoutes("/auth", <AuthPage />)}
+                {createRoutes("/sauce-login", <SauceLoginPage />)}
+                {createRoutes("/broken-images", <BrokenImagesPage />)}
+                {createRoutes("/checkboxes", <CheckboxesPage />)}
+                {createRoutes("/exit-intent", <ExitIntentPage />)}
+                {createRoutes("/slider", <SliderPage />)}
+                {createRoutes("/alerts", <AlertsPage />)}
+                {createRoutes("/key-press", <KeyPressPage />)}
+                {createRoutes("/shadow-dom", <ShadowDOMPage />)}
+                {createRoutes("/open-popup", <OpenPopupPage />)}
+                {createRoutes("/popup-form", <PopupFormPage />)}
+                {createRoutes("/key-value-form", <KeyValueFormPage />)}
                 {createRoutes(
                   "/iframes/cellphone-demo",
-                  <IframeCellphoneDemoPage/>,
+                  <IframeCellphoneDemoPage />,
                 )}
                 {createRoutes(
                   "/iframes/vinoth-demo",
-                  <IframeVinothQADemoPage/>,
+                  <IframeVinothQADemoPage />,
                 )}
                 {createRoutes(
                   "/iframes/docs-katalon",
-                  <IframeDocsKatalonPage/>,
+                  <IframeDocsKatalonPage />,
                 )}
-                {createRoutes("/iframes/same-domain", <IframeSameDomainPage/>)}
+                {createRoutes("/iframes/same-domain", <IframeSameDomainPage />)}
                 {createRoutes(
                   "/rich-text-editor",
-                  <RichTextEditorExamplePage/>,
+                  <RichTextEditorExamplePage />,
                 )}
-                {createRoutes("/input/checkbox", <InputCheckBoxPage/>)}
-                {createRoutes("/input/text", <InputTextPage/>)}
+                {createRoutes("/input/checkbox", <InputCheckBoxPage />)}
+                {createRoutes("/input/text", <InputTextPage />)}
                 {createRoutes(
                   "/input/radio-search-submit",
-                  <RadioSearchSubmitPage/>,
+                  <RadioSearchSubmitPage />,
                 )}
-                {createRoutes("/input/form-inputs", <FormInputsPage/>)}
-                {createRoutes("/combobox", <ComboBoxExamplePage/>)}
-                {createRoutes("/unicode-combobox", <UnicodeComboBoxPage/>)}
-                {createRoutes("/xpath-breaking", <XPathBreakingPage/>)}
-                {createRoutes("/list-card", <CardListPage/>)}
-                {createRoutes("/unique-test-data", <NumericInputPage/>)}
-                {createRoutes("/settings", <SettingsPage/>)}
-                {createRoutes("/ag-grid", <AGGridPage/>)}
-                <Route path="*" element={<Navigate to="/" replace/>}/>
+                {createRoutes("/input/form-inputs", <FormInputsPage />)}
+                {createRoutes("/combobox", <ComboBoxExamplePage />)}
+                {createRoutes("/unicode-combobox", <UnicodeComboBoxPage />)}
+                {createRoutes("/xpath-breaking", <XPathBreakingPage />)}
+                {createRoutes("/list-card", <CardListPage />)}
+                {createRoutes("/unique-test-data", <NumericInputPage />)}
+                {createRoutes("/settings", <SettingsPage />)}
+                {createRoutes("/ag-grid", <AGGridPage />)}
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
           </div>

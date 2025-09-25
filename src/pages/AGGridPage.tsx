@@ -1,16 +1,21 @@
-import React, { useCallback, useMemo, useRef, useState, useEffect } from 'react';
-import { AgGridReact } from 'ag-grid-react';
-import { 
-  ColDef, 
+import React, {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
+import { AgGridReact } from "ag-grid-react";
+import {
+  ColDef,
   GridReadyEvent,
   ICellRendererParams,
-  ModuleRegistry, 
+  ModuleRegistry,
   AllCommunityModule,
   ValueGetterParams,
   ValueSetterParams,
-  setupAgTestIds
-} from 'ag-grid-community';
-
+  setupAgTestIds,
+} from "ag-grid-community";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -24,10 +29,9 @@ class ShadowCellRenderer {
 
   init(params: ICellRendererParams & { cellType: string }) {
     this.params = params;
-    this.eGui = document.createElement('div');
+    this.eGui = document.createElement("div");
 
-    
-    this.shadow = this.eGui.attachShadow({ mode: 'open' });
+    this.shadow = this.eGui.attachShadow({ mode: "open" });
     this.shadow.innerHTML = `
       <style>
         :host { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 4px; }
@@ -48,7 +52,7 @@ class ShadowCellRenderer {
       </style>
       <div id="content"></div>
     `;
-    
+
     this.updateContent();
     this.addEventListeners();
   }
@@ -64,17 +68,17 @@ class ShadowCellRenderer {
   }
 
   private updateContent() {
-    const content = this.shadow.getElementById('content')!;
+    const content = this.shadow.getElementById("content")!;
     const { cellType, value, data, rowIndex } = this.params;
-    
+
     switch (cellType) {
-      case 'input':
-        content.innerHTML = `<input type="text" value="${value || ''}" data-testid="input-${data.id}" />`;
+      case "input":
+        content.innerHTML = `<input type="text" value="${value || ""}" data-testid="input-${data.id}" />`;
         break;
-      case 'slider':
+      case "slider":
         content.innerHTML = `<input type="range" min="0" max="100" value="${value || 50}" data-testid="slider-${data.id}" />`;
         break;
-      case 'doubleSlider':
+      case "doubleSlider":
         content.innerHTML = `
           <div class="range-container">
             <input type="range" min="0" max="100" value="${value?.min || 0}" data-testid="slider-min-${data.id}" />
@@ -82,65 +86,73 @@ class ShadowCellRenderer {
           </div>`;
         break;
 
-      case 'checkbox':
-        content.innerHTML = `<input type="checkbox" ${value ? 'checked' : ''} data-testid="checkbox-${data.id}" />`;
+      case "checkbox":
+        content.innerHTML = `<input type="checkbox" ${value ? "checked" : ""} data-testid="checkbox-${data.id}" />`;
         break;
-      case 'radio':
+      case "radio":
         content.innerHTML = `
           <div class="radio-group">
-            <label><input type="radio" name="category-${data.id}" value="A" ${value === 'A' ? 'checked' : ''} data-testid="radio-a-${data.id}" />A</label>
-            <label><input type="radio" name="category-${data.id}" value="B" ${value === 'B' ? 'checked' : ''} data-testid="radio-b-${data.id}" />B</label>
+            <label><input type="radio" name="category-${data.id}" value="A" ${value === "A" ? "checked" : ""} data-testid="radio-a-${data.id}" />A</label>
+            <label><input type="radio" name="category-${data.id}" value="B" ${value === "B" ? "checked" : ""} data-testid="radio-b-${data.id}" />B</label>
           </div>`;
         break;
-      case 'svg':
-        const stars = '★'.repeat(value || 0) + '☆'.repeat(5 - (value || 0));
+      case "svg":
+        const stars = "★".repeat(value || 0) + "☆".repeat(5 - (value || 0));
         content.innerHTML = `<span class="stars" data-testid="rating-${data.id}">${stars}</span>`;
         break;
-      case 'image':
+      case "image":
         content.innerHTML = `<button data-action="image" data-testid="image-btn-${data.id}" title="View image"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></button>`;
         break;
-      case 'download':
+      case "download":
         content.innerHTML = `<button data-action="download" data-testid="download-btn-${data.id}" title="Download row data">📥</button>`;
         break;
-      case 'newTab':
+      case "newTab":
         content.innerHTML = `<button data-action="newTab" data-testid="link-btn-${data.id}" title="Open in new tab">🔗</button>`;
         break;
       default:
-        content.innerHTML = `<span class="text-display" data-testid="text-${data.id}">${value || ''}</span>`;
+        content.innerHTML = `<span class="text-display" data-testid="text-${data.id}">${value || ""}</span>`;
     }
   }
 
   private addEventListeners() {
-    this.shadow.addEventListener('change', (e) => {
+    this.shadow.addEventListener("change", (e) => {
       const target = e.target as HTMLInputElement;
       let newValue: any = target.value;
-      
-      if (target.type === 'checkbox') {
+
+      if (target.type === "checkbox") {
         newValue = target.checked;
-      } else if (target.type === 'range' && this.params.cellType === 'doubleSlider') {
+      } else if (
+        target.type === "range" &&
+        this.params.cellType === "doubleSlider"
+      ) {
         const isMin = target === content.querySelector('input[type="range"]');
         const currentValue = this.params.value || { min: 0, max: 100 };
-        newValue = isMin ? { ...currentValue, min: parseInt(target.value) } : { ...currentValue, max: parseInt(target.value) };
+        newValue = isMin
+          ? { ...currentValue, min: parseInt(target.value) }
+          : { ...currentValue, max: parseInt(target.value) };
       }
-      
+
       this.params.setValue(newValue);
     });
 
-    this.shadow.addEventListener('click', (e) => {
+    this.shadow.addEventListener("click", (e) => {
       const target = e.target as HTMLElement;
-      const action = target.dataset.action || target.closest('button')?.dataset.action;
-      if (action === 'download') {
-        const blob = new Blob([JSON.stringify(this.params.data, null, 2)], { type: 'application/json' });
+      const action =
+        target.dataset.action || target.closest("button")?.dataset.action;
+      if (action === "download") {
+        const blob = new Blob([JSON.stringify(this.params.data, null, 2)], {
+          type: "application/json",
+        });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
         a.download = `row-${this.params.data.id}.json`;
         a.click();
         URL.revokeObjectURL(url);
-      } else if (action === 'newTab') {
-        window.open(`https://example.com?id=${this.params.data.id}`, '_blank');
-      } else if (action === 'image') {
-        const event = new CustomEvent('openImageDialog', { bubbles: true });
+      } else if (action === "newTab") {
+        window.open(`https://example.com?id=${this.params.data.id}`, "_blank");
+      } else if (action === "image") {
+        const event = new CustomEvent("openImageDialog", { bubbles: true });
         document.dispatchEvent(event);
       }
     });
@@ -154,10 +166,13 @@ const generateData = (count: number) => {
     email: `user${i + 1}@example.com`,
     score: Math.floor(Math.random() * 100),
     active: Math.random() > 0.5,
-    category: ['A', 'B', 'C'][Math.floor(Math.random() * 3)],
+    category: ["A", "B", "C"][Math.floor(Math.random() * 3)],
     rating: Math.floor(Math.random() * 5) + 1,
-    range: { min: Math.floor(Math.random() * 50), max: Math.floor(Math.random() * 50) + 50 },
-    status: ['Active', 'Inactive', 'Pending'][Math.floor(Math.random() * 3)],
+    range: {
+      min: Math.floor(Math.random() * 50),
+      max: Math.floor(Math.random() * 50) + 50,
+    },
+    status: ["Active", "Inactive", "Pending"][Math.floor(Math.random() * 3)],
   }));
 };
 
@@ -168,157 +183,166 @@ const AGGridPage: React.FC = () => {
 
   useEffect(() => {
     const handleOpenDialog = () => setShowDialog(true);
-    document.addEventListener('openImageDialog', handleOpenDialog);
-    return () => document.removeEventListener('openImageDialog', handleOpenDialog);
+    document.addEventListener("openImageDialog", handleOpenDialog);
+    return () =>
+      document.removeEventListener("openImageDialog", handleOpenDialog);
   }, []);
 
-  const columnDefs = useMemo<ColDef[]>(() => [
-    {
-      colId: 'id',
-      headerName: 'ID',
-      field: 'id',
-      width: 80,
-      minWidth: 80,
-      filter: 'agNumberColumnFilter',
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'text' }
-    },
-    {
-      colId: 'name',
-      headerName: 'Name',
-      field: 'name',
-      width: 150,
-      minWidth: 120,
-      filter: 'agTextColumnFilter',
-      editable: true,
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'input' }
-    },
-    {
-      colId: 'email',
-      headerName: 'Email',
-      field: 'email',
-      width: 200,
-      minWidth: 150,
-      filter: 'agTextColumnFilter',
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'text' }
-    },
-    {
-      colId: 'score',
-      headerName: 'Score',
-      field: 'score',
-      width: 100,
-      minWidth: 80,
-      filter: 'agNumberColumnFilter',
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'text' }
-    },
-    {
-      colId: 'range',
-      headerName: 'Range',
-      field: 'range',
-      width: 180,
-      minWidth: 150,
-      filter: 'agTextColumnFilter',
-      filterValueGetter: (params) => `${params.data.range?.min || 0}-${params.data.range?.max || 100}`,
-      valueFormatter: (params) => `${params.value?.min || 0}-${params.value?.max || 100}`,
-      editable: true,
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'doubleSlider' },
-      valueGetter: (params: ValueGetterParams) => params.data?.range,
-      valueSetter: (params: ValueSetterParams) => {
-        params.data.range = params.newValue;
-        return true;
-      }
-    },
-    {
-      colId: 'active',
-      headerName: 'Active',
-      field: 'active',
-      width: 100,
-      minWidth: 80,
-      filter: 'agTextColumnFilter',
-      valueFormatter: (params) => params.value ? 'Yes' : 'No',
-      filterValueGetter: (params) => params.data.active ? 'Yes' : 'No',
-      editable: true,
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'checkbox' }
-    },
-    {
-      colId: 'category',
-      headerName: 'Category',
-      field: 'category',
-      width: 120,
-      minWidth: 100,
-      filter: 'agTextColumnFilter',
-      editable: true,
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'radio' }
-    },
-    {
-      colId: 'rating',
-      headerName: 'Rating',
-      field: 'rating',
-      width: 100,
-      minWidth: 80,
-      filter: 'agNumberColumnFilter',
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'svg' }
-    },
-    {
-      colId: 'status',
-      headerName: 'Status',
-      field: 'status',
-      width: 120,
-      minWidth: 100,
-      filter: 'agTextColumnFilter',
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'text' }
-    },
-    {
-      colId: 'image',
-      headerName: 'Image',
-      field: 'id',
-      width: 80,
-      minWidth: 60,
-      sortable: false,
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'image' }
-    },
-    {
-      colId: 'download',
-      headerName: 'Download',
-      field: 'id',
-      width: 100,
-      minWidth: 80,
-      filter: 'agNumberColumnFilter',
-      valueFormatter: () => 'Download',
-      sortable: false,
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'download' }
-    },
-    {
-      colId: 'link',
-      headerName: 'Link',
-      field: 'id', 
-      width: 80,
-      minWidth: 60,
-      filter: 'agNumberColumnFilter',
-      valueFormatter: () => 'Link',
-      sortable: false,
-      cellRenderer: ShadowCellRenderer,
-      cellRendererParams: { cellType: 'newTab' }
-    }
-  ], []);
+  const columnDefs = useMemo<ColDef[]>(
+    () => [
+      {
+        colId: "id",
+        headerName: "ID",
+        field: "id",
+        width: 80,
+        minWidth: 80,
+        filter: "agNumberColumnFilter",
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "text" },
+      },
+      {
+        colId: "name",
+        headerName: "Name",
+        field: "name",
+        width: 150,
+        minWidth: 120,
+        filter: "agTextColumnFilter",
+        editable: true,
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "input" },
+      },
+      {
+        colId: "email",
+        headerName: "Email",
+        field: "email",
+        width: 200,
+        minWidth: 150,
+        filter: "agTextColumnFilter",
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "text" },
+      },
+      {
+        colId: "score",
+        headerName: "Score",
+        field: "score",
+        width: 100,
+        minWidth: 80,
+        filter: "agNumberColumnFilter",
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "text" },
+      },
+      {
+        colId: "range",
+        headerName: "Range",
+        field: "range",
+        width: 180,
+        minWidth: 150,
+        filter: "agTextColumnFilter",
+        filterValueGetter: (params) =>
+          `${params.data.range?.min || 0}-${params.data.range?.max || 100}`,
+        valueFormatter: (params) =>
+          `${params.value?.min || 0}-${params.value?.max || 100}`,
+        editable: true,
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "doubleSlider" },
+        valueGetter: (params: ValueGetterParams) => params.data?.range,
+        valueSetter: (params: ValueSetterParams) => {
+          params.data.range = params.newValue;
+          return true;
+        },
+      },
+      {
+        colId: "active",
+        headerName: "Active",
+        field: "active",
+        width: 100,
+        minWidth: 80,
+        filter: "agTextColumnFilter",
+        valueFormatter: (params) => (params.value ? "Yes" : "No"),
+        filterValueGetter: (params) => (params.data.active ? "Yes" : "No"),
+        editable: true,
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "checkbox" },
+      },
+      {
+        colId: "category",
+        headerName: "Category",
+        field: "category",
+        width: 120,
+        minWidth: 100,
+        filter: "agTextColumnFilter",
+        editable: true,
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "radio" },
+      },
+      {
+        colId: "rating",
+        headerName: "Rating",
+        field: "rating",
+        width: 100,
+        minWidth: 80,
+        filter: "agNumberColumnFilter",
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "svg" },
+      },
+      {
+        colId: "status",
+        headerName: "Status",
+        field: "status",
+        width: 120,
+        minWidth: 100,
+        filter: "agTextColumnFilter",
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "text" },
+      },
+      {
+        colId: "image",
+        headerName: "Image",
+        field: "id",
+        width: 80,
+        minWidth: 60,
+        sortable: false,
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "image" },
+      },
+      {
+        colId: "download",
+        headerName: "Download",
+        field: "id",
+        width: 100,
+        minWidth: 80,
+        filter: "agNumberColumnFilter",
+        valueFormatter: () => "Download",
+        sortable: false,
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "download" },
+      },
+      {
+        colId: "link",
+        headerName: "Link",
+        field: "id",
+        width: 80,
+        minWidth: 60,
+        filter: "agNumberColumnFilter",
+        valueFormatter: () => "Link",
+        sortable: false,
+        cellRenderer: ShadowCellRenderer,
+        cellRendererParams: { cellType: "newTab" },
+      },
+    ],
+    [],
+  );
 
-  const defaultColDef = useMemo(() => ({
-    resizable: true,
-    sortable: true,
-    filter: true,
-    floatingFilter: true,
-    suppressSizeToFit: false
-  }), []);
+  const defaultColDef = useMemo(
+    () => ({
+      resizable: true,
+      sortable: true,
+      filter: true,
+      floatingFilter: true,
+      suppressSizeToFit: false,
+    }),
+    [],
+  );
 
   const onGridReady = useCallback((params: GridReadyEvent) => {
     // Grid is ready - columns will use their defined widths
@@ -339,9 +363,12 @@ const AGGridPage: React.FC = () => {
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
           AG Grid with Shadow DOM
         </h1>
-        <p className="text-gray-600 text-lg">Advanced data grid with protected shadow DOM cells and comprehensive filtering</p>
+        <p className="text-gray-600 text-lg">
+          Advanced data grid with protected shadow DOM cells and comprehensive
+          filtering
+        </p>
       </div>
-      
+
       <div className="mb-6 flex gap-4">
         <button
           className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 font-medium shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
@@ -359,8 +386,14 @@ const AGGridPage: React.FC = () => {
         </button>
       </div>
 
-      <div 
-        style={{ height: '600px', width: '100%', border: '1px solid #e5e7eb', borderRadius: '8px', overflow: 'hidden' }}
+      <div
+        style={{
+          height: "600px",
+          width: "100%",
+          border: "1px solid #e5e7eb",
+          borderRadius: "8px",
+          overflow: "hidden",
+        }}
         data-testid="ag-grid-container"
       >
         <AgGridReact
@@ -376,11 +409,14 @@ const AGGridPage: React.FC = () => {
       </div>
 
       {showDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" data-testid="image-dialog">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          data-testid="image-dialog"
+        >
           <div className="bg-white rounded-lg p-4 max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold">Sample Photo</h3>
-              <button 
+              <button
                 onClick={() => setShowDialog(false)}
                 className="text-gray-500 hover:text-gray-700"
                 data-testid="close-dialog-btn"
@@ -388,9 +424,9 @@ const AGGridPage: React.FC = () => {
                 ✕
               </button>
             </div>
-            <img 
-              src="https://picsum.photos/300/200" 
-              alt="Sample" 
+            <img
+              src="https://picsum.photos/300/200"
+              alt="Sample"
               className="w-full rounded"
               data-testid="dialog-image"
             />
@@ -399,7 +435,9 @@ const AGGridPage: React.FC = () => {
       )}
 
       <div className="mt-6 p-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl border border-gray-200">
-        <h3 className="font-semibold text-gray-800 mb-3">✨ Features Implemented</h3>
+        <h3 className="font-semibold text-gray-800 mb-3">
+          ✨ Features Implemented
+        </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-600">
           <div>🛡️ Shadow DOM Protection</div>
           <div>📝 Editable Inputs</div>
