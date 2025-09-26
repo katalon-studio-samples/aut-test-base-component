@@ -60,6 +60,7 @@ const menuItems = [
       },
       { path: "/broken-images", label: "Broken Images" },
       { path: "/shadow-dom", label: "Shadow DOM" },
+      { path: "/tinymce-shadow-dom", label: "TinyMCE Shadow DOM" },
       { path: "/key-value-form", label: "Key-Value Form" },
       { path: "/rich-text-editor", label: "Rich Text Editor" },
       { path: "/combobox", label: "Combo Box" },

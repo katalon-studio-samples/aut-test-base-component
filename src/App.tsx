@@ -54,6 +54,7 @@ import { SettingsPage } from "./pages/SettingsPage";
 import { UnicodeComboBoxPage } from "./pages/UnicodeComboBoxPage";
 import { XPathBreakingPage } from "./pages/XPathBreakingPage";
 import AGGridPage from "./pages/AGGridPage";
+import { TinyMCEShadowDOMPage } from "./pages/TinyMCEShadowDOMPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -164,6 +165,7 @@ function App() {
                 {createRoutes("/unique-test-data", <NumericInputPage />)}
                 {createRoutes("/settings", <SettingsPage />)}
                 {createRoutes("/ag-grid", <AGGridPage />)}
+                {createRoutes("/tinymce-shadow-dom", <TinyMCEShadowDOMPage />)}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
