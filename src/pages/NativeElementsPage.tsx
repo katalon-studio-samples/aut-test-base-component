@@ -2,15 +2,15 @@ import React from "react";
 
 export const NativeElementsPage: React.FC = () => {
   // Get current date in YYYY-MM-DD format for default values
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
   // Calculate dates for min/max restrictions
   const oneMonthAgo = new Date();
   oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-  const oneMonthAgoStr = oneMonthAgo.toISOString().split('T')[0];
+  const oneMonthAgoStr = oneMonthAgo.toISOString().split("T")[0];
 
   const oneYearAhead = new Date();
   oneYearAhead.setFullYear(oneYearAhead.getFullYear() + 1);
-  const oneYearAheadStr = oneYearAhead.toISOString().split('T')[0];
+  const oneYearAheadStr = oneYearAhead.toISOString().split("T")[0];
 
   return (
     <div className="px-4 py-6 sm:px-0">
@@ -24,7 +24,8 @@ export const NativeElementsPage: React.FC = () => {
               Input Native Elements
             </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              This section showcases various native HTML input elements with different configurations and attributes.
+              This section showcases various native HTML input elements with
+              different configurations and attributes.
             </p>
 
             {/* Date Inputs Section */}
@@ -35,7 +36,10 @@ export const NativeElementsPage: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Basic date input */}
                 <div className="space-y-2">
-                  <label htmlFor="basic-date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label
+                    htmlFor="basic-date"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     Basic Date Input
                   </label>
                   <input
@@ -48,7 +52,10 @@ export const NativeElementsPage: React.FC = () => {
 
                 {/* Date with default value */}
                 <div className="space-y-2">
-                  <label htmlFor="default-date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label
+                    htmlFor="default-date"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     Date Input with Default Value (Today)
                   </label>
                   <input
@@ -62,7 +69,10 @@ export const NativeElementsPage: React.FC = () => {
 
                 {/* Date with min/max */}
                 <div className="space-y-2">
-                  <label htmlFor="restricted-date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label
+                    htmlFor="restricted-date"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     Date Input with Range Restriction
                   </label>
                   <input
@@ -80,7 +90,10 @@ export const NativeElementsPage: React.FC = () => {
 
                 {/* Required date */}
                 <div className="space-y-2">
-                  <label htmlFor="required-date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label
+                    htmlFor="required-date"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     Required Date Input
                   </label>
                   <input
@@ -94,7 +107,10 @@ export const NativeElementsPage: React.FC = () => {
 
                 {/* Datetime-local input */}
                 <div className="space-y-2">
-                  <label htmlFor="datetime-local" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label
+                    htmlFor="datetime-local"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     Date and Time Input
                   </label>
                   <input
@@ -107,7 +123,10 @@ export const NativeElementsPage: React.FC = () => {
 
                 {/* Week input */}
                 <div className="space-y-2">
-                  <label htmlFor="week-input" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label
+                    htmlFor="week-input"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     Week Selector
                   </label>
                   <input
@@ -120,7 +139,10 @@ export const NativeElementsPage: React.FC = () => {
 
                 {/* Month input */}
                 <div className="space-y-2">
-                  <label htmlFor="month-input" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label
+                    htmlFor="month-input"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     Month Selector
                   </label>
                   <input
@@ -133,7 +155,10 @@ export const NativeElementsPage: React.FC = () => {
 
                 {/* Disabled date input */}
                 <div className="space-y-2">
-                  <label htmlFor="disabled-date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label
+                    htmlFor="disabled-date"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
                     Disabled Date Input
                   </label>
                   <input
