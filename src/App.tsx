@@ -55,6 +55,7 @@ import { UnicodeComboBoxPage } from "./pages/UnicodeComboBoxPage";
 import { XPathBreakingPage } from "./pages/XPathBreakingPage";
 import AGGridPage from "./pages/AGGridPage";
 import { TinyMCEShadowDOMPage } from "./pages/TinyMCEShadowDOMPage";
+import { DynamicIDLocatorPage } from "./pages/DynamicIDLocatorPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -166,6 +167,7 @@ function App() {
                 {createRoutes("/settings", <SettingsPage />)}
                 {createRoutes("/ag-grid", <AGGridPage />)}
                 {createRoutes("/tinymce-shadow-dom", <TinyMCEShadowDOMPage />)}
+                {createRoutes("/dynamic-id-locator", <DynamicIDLocatorPage />)}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

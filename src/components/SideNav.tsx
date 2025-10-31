@@ -66,6 +66,7 @@ const menuItems = [
       { path: "/combobox", label: "Combo Box" },
       { path: "/unicode-combobox", label: "Unicode Combo Box" },
       { path: "/xpath-breaking", label: "XPath Breaking Characters" },
+      { path: "/dynamic-id-locator", label: "Dynamic ID Locator" },
     ],
   },
   {
