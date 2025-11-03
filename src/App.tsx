@@ -16,6 +16,7 @@ import { TablesPage } from "./pages/TablesPage";
 import { DragDropPage } from "./pages/DragDropPage";
 import { DynamicElementsPage } from "./pages/DynamicElementsPage";
 import { FileUploadPage } from "./pages/FileUploadPage";
+import { ESFileUploadPage } from "./pages/ESFileUploadPage";
 import { FileDownloadPage } from "./pages/FileDownloadPage";
 import { IframePage } from "./pages/IframePage";
 import { ContextMenuPage } from "./pages/ContextMenuPage";
@@ -114,6 +115,7 @@ function App() {
                 {createRoutes("/drag-drop", <DragDropPage />)}
                 {createRoutes("/dynamic-elements", <DynamicElementsPage />)}
                 {createRoutes("/file-upload", <FileUploadPage />)}
+                {createRoutes("/file-upload/es", <ESFileUploadPage />)}
                 {createRoutes("/file-download", <FileDownloadPage />)}
                 {createRoutes("/iframes", <IframePage />)}
                 {createRoutes("/iframes-1", <IframePageNested1Level />)}
