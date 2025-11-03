@@ -46,6 +46,7 @@ const menuItems = [
     category: "Content",
     items: [
       { path: "/file-upload", label: "File Upload" },
+      { path: "/file-upload/es", label: "File Upload (ES DOM)" },
       { path: "/file-download", label: "File Download" },
       {
         path: "/iframes",
