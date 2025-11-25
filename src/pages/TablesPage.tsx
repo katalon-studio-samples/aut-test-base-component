@@ -53,6 +53,8 @@ const mockData1 = [
   },
 ];
 
+<<<<<<< Updated upstream
+=======
 const mockData2 = [
   {
     __: "1",
@@ -77,7 +79,7 @@ const mockData2 = [
   },
 ];
 
-
+>>>>>>> Stashed changes
 export const TablesPage: React.FC = () => {
   return (
     <div className="px-4 py-6 sm:px-0">
@@ -93,14 +95,6 @@ export const TablesPage: React.FC = () => {
         Dynamic Tables Have Input
       </h1>
       <DynamicTableInput data={mockData1} />
-      <h1 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white mt-3.5">
-        Dynamic Tables V2
-      </h1>
-      <p className="mb-6 text-gray-600 dark:text-gray-300">
-        Practice working with sortable tables, data grids, and dynamic content.
-        Click on column headers to sort the data.
-      </p>
-      <DynamicTable data={mockData2} />
     </div>
   );
 };
