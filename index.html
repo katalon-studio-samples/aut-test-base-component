@@ -5,8 +5,39 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Automation Practices (Web and Mobile Web)</title>
-    <script src="https://static.staging.katalon.com/libs/traffic-agent/v1/truetest-sdk.min.js"></script>
-    <script defer async client-code="KA-14-020" src="https://static.qa.katalon.com/libs/traffic-agent/v1/traffic-agent.min.js"></script>
+    <script src="https://static.qa.katalon.com/libs/traffic-agent/v1/truetest-sdk.min.js"></script>
+    <script>
+      // Load traffic-agent script with dynamic client-code from URL or localStorage
+      (function () {
+        // Get client-code from URL query parameter first
+        var urlParams = new URLSearchParams(window.location.search);
+        var clientCode =
+          urlParams.get("client-code") || urlParams.get("clientCode");
+
+        // Fall back to localStorage if not in URL
+        if (!clientCode) {
+          clientCode = localStorage.getItem("katalon-client-code");
+        }
+
+        // Only load script if client-code is set
+        if (clientCode) {
+          // Create and inject the script tag
+          var script = document.createElement("script");
+          script.defer = true;
+          script.async = true;
+          script.setAttribute("client-code", clientCode);
+          script.src =
+            "https://static.qa.katalon.com/libs/traffic-agent/v1/traffic-agent.min.js";
+
+          // Append to head
+          document.head.appendChild(script);
+
+          console.log("Traffic agent loaded with client-code:", clientCode);
+        } else {
+          console.log("Traffic agent not loaded: no client-code set");
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -53,33 +53,6 @@ const mockData1 = [
   },
 ];
 
-<<<<<<< Updated upstream
-=======
-const mockData2 = [
-  {
-    __: "1",
-    3000: "John Doe",
-    true: "john@example.com",
-    0.123: "Active",
-    role: "Admin",
-  },
-  {
-    __: "2",
-    3000: "Jane Smith",
-    true: "jane@example.com",
-    0.123: "Inactive",
-    role: "User",
-  },
-  {
-    __: "3",
-    3000: "Bob Johnson",
-    true: "bob@example.com",
-    0.123: "Active",
-    role: "Editor",
-  },
-];
-
->>>>>>> Stashed changes
 export const TablesPage: React.FC = () => {
   return (
     <div className="px-4 py-6 sm:px-0">
