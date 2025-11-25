@@ -300,44 +300,40 @@ export const ScenarioTogglePage: React.FC = () => {
             <div className="space-y-3 mt-4">
               {/* Enable/Disable Toggle */}
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">
-                  {scenario.enabled ? "Enabled" : "Disabled"}
-                </span>
-                <button
-                  onClick={() => handleToggleEnabled(scenario.id)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${
-                    scenario.enabled ? "bg-green-500" : "bg-gray-300"
-                  }`}
-                  data-testid={`toggle-enabled-${scenario.id}`}
-                  aria-label={`Toggle ${scenario.name} enabled state`}
+                <label
+                  htmlFor={`enabled-${scenario.id}`}
+                  className="text-sm font-medium text-gray-700"
                 >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      scenario.enabled ? "translate-x-6" : "translate-x-1"
-                    }`}
-                  />
-                </button>
+                  {scenario.enabled ? "Enabled" : "Disabled"}
+                </label>
+                <input
+                  id={`enabled-${scenario.id}`}
+                  type="checkbox"
+                  role="switch"
+                  checked={scenario.enabled}
+                  onChange={() => handleToggleEnabled(scenario.id)}
+                  data-testid={`enabled_value=${scenario.enabled}`}
+                  className="h-6 w-11 appearance-none rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 relative cursor-pointer checked:bg-green-500 bg-gray-300 before:content-[''] before:absolute before:top-1 before:left-1 before:h-4 before:w-4 before:rounded-full before:bg-white before:transition-transform checked:before:translate-x-5"
+                />
               </div>
 
               {/* Bypass Toggle */}
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">
-                  {scenario.bypassed ? "Bypassed" : "Not Bypassed"}
-                </span>
-                <button
-                  onClick={() => handleToggleBypassed(scenario.id)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 ${
-                    scenario.bypassed ? "bg-yellow-500" : "bg-gray-300"
-                  }`}
-                  data-testid={`toggle-bypass-${scenario.id}`}
-                  aria-label={`Toggle ${scenario.name} bypass state`}
+                <label
+                  htmlFor={`bypassed-${scenario.id}`}
+                  className="text-sm font-medium text-gray-700"
                 >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                      scenario.bypassed ? "translate-x-6" : "translate-x-1"
-                    }`}
-                  />
-                </button>
+                  {scenario.bypassed ? "Bypassed" : "Not Bypassed"}
+                </label>
+                <input
+                  id={`bypassed-${scenario.id}`}
+                  type="checkbox"
+                  role="switch"
+                  checked={scenario.bypassed}
+                  onChange={() => handleToggleBypassed(scenario.id)}
+                  data-testid={`bypassed_value=${scenario.bypassed}`}
+                  className="h-6 w-11 appearance-none rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 relative cursor-pointer checked:bg-yellow-500 bg-gray-300 before:content-[''] before:absolute before:top-1 before:left-1 before:h-4 before:w-4 before:rounded-full before:bg-white before:transition-transform checked:before:translate-x-5"
+                />
               </div>
             </div>
           </div>
