@@ -5,37 +5,138 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Automation Practices (Web and Mobile Web)</title>
-    <script src="https://static.qa.katalon.com/libs/traffic-agent/v1/truetest-sdk.min.js"></script>
     <script>
-      // Load traffic-agent script with dynamic client-code from URL or localStorage
+      // Load traffic-agent scripts with dynamic environment and client-code
       (function () {
-        // Get client-code from URL query parameter first
         var urlParams = new URLSearchParams(window.location.search);
+
+        // Get environment from URL or localStorage (prod, qa, staging)
+        var env = urlParams.get("env") || urlParams.get("environment");
+        if (!env) {
+          env = localStorage.getItem("katalon-env");
+        } else {
+          localStorage.setItem("katalon-env", env);
+        }
+
+        // Build base URL based on environment
+        var baseUrl;
+        if (env === null) {
+          baseUrl = "https://static.katalon.com";
+        } else if (env === "qa") {
+          baseUrl = "https://static.qa.katalon.com";
+        } else if (env === "staging") {
+          baseUrl = "https://static.staging.katalon.com";
+        } else {
+          baseUrl = `https://static.${env}.katalon.com`;
+        }
+
+        // Load truetest-sdk script
+        var sdkScript = document.createElement("script");
+        sdkScript.src = baseUrl + "/libs/traffic-agent/v1/truetest-sdk.min.js";
+        document.head.appendChild(sdkScript);
+
+        // Get client-code from URL query parameter first
         var clientCode =
           urlParams.get("client-code") || urlParams.get("clientCode");
 
         // Fall back to localStorage if not in URL
         if (!clientCode) {
           clientCode = localStorage.getItem("katalon-client-code");
-        }
-
-        // Only load script if client-code is set
-        if (clientCode) {
-          // Create and inject the script tag
-          var script = document.createElement("script");
-          script.defer = true;
-          script.async = true;
-          script.setAttribute("client-code", clientCode);
-          script.src =
-            "https://static.qa.katalon.com/libs/traffic-agent/v1/traffic-agent.min.js";
-
-          // Append to head
-          document.head.appendChild(script);
-
-          console.log("Traffic agent loaded with client-code:", clientCode);
         } else {
-          console.log("Traffic agent not loaded: no client-code set");
+          localStorage.setItem("katalon-client-code", clientCode);
         }
+
+        // Only load traffic-agent script if client-code is set
+        if (clientCode) {
+          var agentScript = document.createElement("script");
+          agentScript.defer = true;
+          agentScript.async = true;
+          agentScript.setAttribute("client-code", clientCode);
+          agentScript.src =
+            baseUrl + "/libs/traffic-agent/v1/traffic-agent.min.js";
+          document.head.appendChild(agentScript);
+
+          console.log("Traffic agent loaded:", {
+            env: env,
+            clientCode: clientCode,
+            baseUrl: baseUrl,
+          });
+        } else {
+          console.log(
+            "Traffic agent not loaded: no client-code set (env:",
+            env + ")",
+          );
+        }
+      })();
+    </script>
+    <script>
+      // Create configuration banner
+      (function () {
+        window.addEventListener("DOMContentLoaded", function () {
+          var urlParams = new URLSearchParams(window.location.search);
+          var env = localStorage.getItem("katalon-env");
+          var clientCode = localStorage.getItem("katalon-client-code");
+
+          // Create banner element
+          var banner = document.createElement("div");
+          banner.id = "katalon-config-banner";
+          banner.style.cssText =
+            "position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);";
+
+          var content = document.createElement("div");
+          content.style.cssText =
+            "max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;";
+
+          // Current config section
+          var configInfo = document.createElement("div");
+          configInfo.style.cssText =
+            "display: flex; gap: 20px; flex-wrap: wrap;";
+          configInfo.innerHTML =
+            '<div><strong>Environment:</strong> <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-family: monospace;">' +
+            (env || "Not set") +
+            "</span></div>" +
+            '<div><strong>Client Code:</strong> <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-family: monospace;">' +
+            (clientCode || "Not set") +
+            "</span></div>";
+
+          // Instructions section
+          var instructions = document.createElement("div");
+          instructions.style.cssText = "font-size: 12px; opacity: 0.9;";
+          instructions.innerHTML =
+            '💡 Set via URL: <code style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 3px;">?env=qa&clientCode=KA-xxx-x</code>';
+
+          // Close button
+          var closeBtn = document.createElement("button");
+          closeBtn.innerHTML = "✕";
+          closeBtn.style.cssText =
+            "background: rgba(255,255,255,0.2); border: none; color: white; cursor: pointer; padding: 4px 10px; border-radius: 4px; font-size: 16px; transition: background 0.2s;";
+          closeBtn.onmouseover = function () {
+            this.style.background = "rgba(255,255,255,0.3)";
+          };
+          closeBtn.onmouseout = function () {
+            this.style.background = "rgba(255,255,255,0.2)";
+          };
+          closeBtn.onclick = function () {
+            banner.style.display = "none";
+            // Adjust root padding
+            var root = document.getElementById("root");
+            if (root) root.style.paddingTop = "0";
+          };
+
+          content.appendChild(configInfo);
+          content.appendChild(instructions);
+          content.appendChild(closeBtn);
+          banner.appendChild(content);
+
+          // Insert banner at the top of body
+          document.body.insertBefore(banner, document.body.firstChild);
+
+          // Add padding to root to prevent content overlap
+          var root = document.getElementById("root");
+          if (root) {
+            root.style.paddingTop = "60px";
+          }
+        });
       })();
     </script>
   </head>
