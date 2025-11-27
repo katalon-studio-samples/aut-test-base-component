@@ -53,7 +53,7 @@
           agentScript.async = true;
           agentScript.setAttribute("client-code", clientCode);
           agentScript.src =
-            baseUrl + "/libs/traffic-agent/v1/traffic-agent.min.js";
+            baseUrl + "/libs/traffic-agent/v1/traffic-agent.min.js?q=" + Math.floor(Math.random() * 1000000);
           document.head.appendChild(agentScript);
 
           console.log("Traffic agent loaded:", {

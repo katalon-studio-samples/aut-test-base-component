@@ -36,6 +36,7 @@ const menuItems = [
     category: "Interaction",
     items: [
       { path: "/drag-drop", label: "Drag & Drop" },
+      { path: "/form-builder", label: "Advanced Form Builder" },
       { path: "/dynamic-elements", label: "Dynamic Elements" },
       { path: "/hover", label: "Hover States" },
       { path: "/key-press", label: "Key Press" },
