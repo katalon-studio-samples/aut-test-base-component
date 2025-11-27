@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DndContext,
   DragEndEvent,
@@ -245,6 +245,8 @@ const DraggableComponent: React.FC<{
         isInSection ? "border-gray-300" : "border-blue-200 bg-blue-50"
       } ${isSortableDragging ? "shadow-lg" : ""}`}
       data-testid={`component-${component.id}`}
+      data-dragzone="true"
+      data-drag-type="component"
     >
       <div
         {...attributes}
@@ -327,6 +329,8 @@ const DraggableSection: React.FC<{
           : ""
       }`}
       data-testid={`section-${section.id}`}
+      data-dragzone="true"
+      data-drag-type="section"
     >
       <div className="flex items-center gap-2 p-3 border-b bg-gray-50">
         <div
@@ -442,6 +446,9 @@ const SectionDropZone: React.FC<{
             : ""
       }`}
       data-testid={`drop-zone-${position}`}
+      data-dragzone="true"
+      data-drop-zone="true"
+      data-drop-position={position}
     >
       {isActive && (
         <div className="flex flex-col items-center justify-center h-full gap-2">
@@ -476,6 +483,147 @@ export const FormBuilderPage: React.FC = () => {
   const [isOverDropZone, setIsOverDropZone] = useState(false);
   const [showLivePreview, setShowLivePreview] = useState(false);
 
+  // Add event listeners for demonstration/testing
+  useEffect(() => {
+    let mouseDownTarget: EventTarget | null = null;
+    let mouseDownTime: number = 0;
+    let isDragging = false;
+
+    const handleMouseDown = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      // Check if mousedown is on a drag zone
+      const dragZone = target.closest('[data-dragzone="true"]');
+
+      if (dragZone) {
+        mouseDownTarget = dragZone;
+        mouseDownTime = Date.now();
+        isDragging = false;
+
+        const dragType = dragZone.getAttribute("data-drag-type");
+        const testId = dragZone.getAttribute("data-testid");
+
+        console.log("[Mouse Down on Drag Zone]", {
+          type: "mousedown",
+          target: testId,
+          dragType: dragType,
+          timestamp: new Date().toISOString(),
+          clientX: e.clientX,
+          clientY: e.clientY,
+        });
+
+        // Store in window for automation tools
+        (window as any).lastMouseDownData = {
+          type: "mousedown",
+          target: testId,
+          dragType: dragType,
+          timestamp: new Date().toISOString(),
+          clientX: e.clientX,
+          clientY: e.clientY,
+        };
+      }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (mouseDownTarget && !isDragging) {
+        // Consider it a drag if moved more than 8px
+        const moved = Math.abs(e.movementX) > 2 || Math.abs(e.movementY) > 2;
+        if (moved) {
+          isDragging = true;
+          console.log("[Drag Started - Mouse Move Detected]");
+        }
+      }
+    };
+
+    const handleMouseUp = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const dropZone = target.closest('[data-dragzone="true"]');
+      const duration = mouseDownTarget ? Date.now() - mouseDownTime : 0;
+
+      if (mouseDownTarget || isDragging) {
+        const dropTarget = dropZone?.getAttribute("data-testid") || null;
+        const dropType =
+          dropZone?.getAttribute("data-drag-type") ||
+          dropZone?.getAttribute("data-drop-zone") ||
+          null;
+
+        console.log("[Mouse Up after Drag]", {
+          type: "mouseup",
+          dropTarget: dropTarget,
+          dropType: dropType,
+          wasDragging: isDragging,
+          duration: duration,
+          timestamp: new Date().toISOString(),
+          clientX: e.clientX,
+          clientY: e.clientY,
+        });
+
+        // Store in window for automation tools
+        (window as any).lastMouseUpData = {
+          type: "mouseup",
+          dropTarget: dropTarget,
+          dropType: dropType,
+          wasDragging: isDragging,
+          duration: duration,
+          timestamp: new Date().toISOString(),
+          clientX: e.clientX,
+          clientY: e.clientY,
+        };
+      }
+
+      mouseDownTarget = null;
+      isDragging = false;
+    };
+
+    const handleDragStart = (e: Event) => {
+      console.log("[Standard dragstart event captured]", e.type);
+    };
+
+    const handleDrop = (e: Event) => {
+      const dropEvent = e as DragEvent & { dropData?: any };
+      console.log("[Standard drop event captured]", e.type, dropEvent.dropData);
+    };
+
+    const handleDragEnd = (e: Event) => {
+      const dragEndEvent = e as DragEvent & { dropData?: any };
+      console.log(
+        "[Standard dragend event captured]",
+        e.type,
+        dragEndEvent.dropData,
+      );
+
+      // Also check window.lastDropData
+      if ((window as any).lastDropData) {
+        console.log(
+          "[Drop data from window.lastDropData]",
+          (window as any).lastDropData,
+        );
+      }
+    };
+
+    // Listen for mouse events
+    document.addEventListener("mousedown", handleMouseDown, true);
+    document.addEventListener("mousemove", handleMouseMove, true);
+    document.addEventListener("mouseup", handleMouseUp, true);
+
+    // Listen on both window and document to catch bubbled events
+    window.addEventListener("dragstart", handleDragStart, true);
+    window.addEventListener("drop", handleDrop, true);
+    window.addEventListener("dragend", handleDragEnd, true);
+    document.addEventListener("drop", handleDrop, true);
+    document.addEventListener("dragend", handleDragEnd, true);
+
+    return () => {
+      document.removeEventListener("mousedown", handleMouseDown, true);
+      document.removeEventListener("mousemove", handleMouseMove, true);
+      document.removeEventListener("mouseup", handleMouseUp, true);
+      window.removeEventListener("dragstart", handleDragStart, true);
+      window.removeEventListener("drop", handleDrop, true);
+      window.removeEventListener("dragend", handleDragEnd, true);
+      document.removeEventListener("drop", handleDrop, true);
+      document.removeEventListener("dragend", handleDragEnd, true);
+    };
+  }, []);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -488,10 +636,19 @@ export const FormBuilderPage: React.FC = () => {
     setActiveId(event.active.id as string);
 
     // Determine if dragging a section or component
+    let itemType = "unknown";
+    let itemLabel = "";
+
     if (sectionLibrary.find((s) => s.id === event.active.id)) {
       setDragType("section");
+      itemType = "section";
+      const section = sectionLibrary.find((s) => s.id === event.active.id);
+      itemLabel = section?.title || "";
     } else if (componentLibrary.find((c) => c.id === event.active.id)) {
       setDragType("component");
+      itemType = "component";
+      const component = componentLibrary.find((c) => c.id === event.active.id);
+      itemLabel = component?.label || "";
     } else {
       // Check if it's a component within a section (already dropped)
       const isComponentInSection = droppedSections.some((section) =>
@@ -499,8 +656,62 @@ export const FormBuilderPage: React.FC = () => {
       );
       if (isComponentInSection) {
         setDragType("component");
+        itemType = "component";
+        // Find the component label
+        for (const section of droppedSections) {
+          const component = section.components.find(
+            (c) => c.id === event.active.id,
+          );
+          if (component) {
+            itemLabel = component.label;
+            break;
+          }
+        }
       }
     }
+
+    // Dispatch standard HTML5 dragstart event
+    const dragStartEvent = new DragEvent("dragstart", {
+      bubbles: true,
+      cancelable: true,
+      dataTransfer: new DataTransfer(),
+    });
+
+    // Store data in dataTransfer for automation tools
+    if (dragStartEvent.dataTransfer) {
+      dragStartEvent.dataTransfer.setData(
+        "text/plain",
+        JSON.stringify({
+          itemId: event.active.id,
+          itemType: itemType,
+          itemLabel: itemLabel,
+          timestamp: new Date().toISOString(),
+        }),
+      );
+      dragStartEvent.dataTransfer.effectAllowed = "move";
+    }
+
+    // Dispatch to window for global listeners
+    window.dispatchEvent(dragStartEvent);
+
+    // Also dispatch a custom event with more details for convenience
+    const customDragStart = new CustomEvent("katalon:dragstart", {
+      bubbles: true,
+      detail: {
+        itemId: event.active.id,
+        itemType: itemType,
+        itemLabel: itemLabel,
+        timestamp: new Date().toISOString(),
+      },
+    });
+    window.dispatchEvent(customDragStart);
+
+    console.log("[Drag Start]", {
+      itemId: event.active.id,
+      itemType: itemType,
+      itemLabel: itemLabel,
+      timestamp: new Date().toISOString(),
+    });
   };
 
   const handleDragOver = (event: DragOverEvent) => {
@@ -523,8 +734,64 @@ export const FormBuilderPage: React.FC = () => {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+    const dragStartTime = Date.now();
 
     if (!over) {
+      // Create cancelled drop data
+      const dropData = {
+        itemId: active.id,
+        itemType: dragType,
+        dropTarget: null,
+        dropLocator: null,
+        dropLocatorXPath: null,
+        dropSuccess: false,
+        timestamp: new Date().toISOString(),
+      };
+
+      // Dispatch standard HTML5 dragend event for cancelled drop
+      const dragEndEvent = new DragEvent("dragend", {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+      });
+
+      // Store drop data on dragend
+      Object.defineProperty(dragEndEvent, "dropData", {
+        value: dropData,
+        writable: false,
+        enumerable: true,
+      });
+
+      window.dispatchEvent(dragEndEvent);
+
+      // Store in window for automation tools
+      (window as any).lastDropData = dropData;
+
+      // Dispatch custom event with details
+      const dropEvent = new CustomEvent("katalon:drop", {
+        bubbles: true,
+        detail: {
+          itemId: active.id,
+          itemType: dragType,
+          dropTarget: null,
+          dropLocator: null,
+          dropLocatorXPath: null,
+          dropSuccess: false,
+          timestamp: new Date().toISOString(),
+        },
+      });
+      window.dispatchEvent(dropEvent);
+
+      console.log("[Drop Cancelled]", {
+        itemId: active.id,
+        itemType: dragType,
+        dropTarget: null,
+        dropLocator: null,
+        dropLocatorXPath: null,
+        dropSuccess: false,
+        timestamp: new Date().toISOString(),
+      });
+
       setActiveId(null);
       setDragType(null);
       setOverId(null);
@@ -713,6 +980,103 @@ export const FormBuilderPage: React.FC = () => {
         }
       }
     }
+
+    // Generate locator for the drop target
+    let dropLocator = "";
+    let dropLocatorXPath = "";
+
+    if (overIdStr.startsWith("drop-zone-")) {
+      // Drop zone locator
+      dropLocator = `[data-testid="${overIdStr}"]`;
+      dropLocatorXPath = `//*[@data-testid="${overIdStr}"]`;
+    } else if (dragType === "section") {
+      // Section locator
+      dropLocator = `[data-testid="section-${overIdStr}"]`;
+      dropLocatorXPath = `//*[@data-testid="section-${overIdStr}"]`;
+    } else if (dragType === "component") {
+      // Component locator
+      dropLocator = `[data-testid="component-${overIdStr}"]`;
+      dropLocatorXPath = `//*[@data-testid="component-${overIdStr}"]`;
+    }
+
+    // Find the actual DOM element where drop occurred
+    const dropTargetElement = document.querySelector(dropLocator);
+
+    // Create drop event data
+    const dropData = {
+      itemId: active.id,
+      itemType: dragType,
+      dropTarget: overIdStr,
+      dropLocator: dropLocator,
+      dropLocatorXPath: dropLocatorXPath,
+      dropSuccess: true,
+      timestamp: new Date().toISOString(),
+    };
+
+    // Dispatch standard HTML5 drop event on the target element
+    const dropEvent = new DragEvent("drop", {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+
+    // Store drop data as a property on the event for easy access
+    Object.defineProperty(dropEvent, "dropData", {
+      value: dropData,
+      writable: false,
+      enumerable: true,
+    });
+
+    // Dispatch on the actual drop target element if found, otherwise on window
+    if (dropTargetElement) {
+      dropTargetElement.dispatchEvent(dropEvent);
+    } else {
+      window.dispatchEvent(dropEvent);
+    }
+
+    // Dispatch standard HTML5 dragend event
+    const dragEndEvent = new DragEvent("dragend", {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+    });
+
+    // Store drop data on dragend as well
+    Object.defineProperty(dragEndEvent, "dropData", {
+      value: dropData,
+      writable: false,
+      enumerable: true,
+    });
+
+    window.dispatchEvent(dragEndEvent);
+
+    // Also store in window for easy access by automation tools
+    (window as any).lastDropData = dropData;
+
+    // Also dispatch custom event with more details for convenience
+    const customDropEvent = new CustomEvent("katalon:drop", {
+      bubbles: true,
+      detail: {
+        itemId: active.id,
+        itemType: dragType,
+        dropTarget: overIdStr,
+        dropLocator: dropLocator,
+        dropLocatorXPath: dropLocatorXPath,
+        dropSuccess: true,
+        timestamp: new Date().toISOString(),
+      },
+    });
+    window.dispatchEvent(customDropEvent);
+
+    console.log("[Drop Success]", {
+      itemId: active.id,
+      itemType: dragType,
+      dropTarget: overIdStr,
+      dropLocator: dropLocator,
+      dropLocatorXPath: dropLocatorXPath,
+      dropSuccess: true,
+      timestamp: new Date().toISOString(),
+    });
 
     setActiveId(null);
     setDragType(null);

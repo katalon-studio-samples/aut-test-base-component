@@ -58,7 +58,7 @@ import AGGridPage from "./pages/AGGridPage";
 import { TinyMCEShadowDOMPage } from "./pages/TinyMCEShadowDOMPage";
 import { DynamicIDLocatorPage } from "./pages/DynamicIDLocatorPage";
 import { ScenarioTogglePage } from "./pages/ScenarioTogglePage";
-import { FormBuilderPage } from "./pages/FormBuilderPage";
+import { FormBuilderPageHTML5 } from "./pages/FormBuilderPageHTML5";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -173,7 +173,7 @@ function App() {
                 {createRoutes("/tinymce-shadow-dom", <TinyMCEShadowDOMPage />)}
                 {createRoutes("/dynamic-id-locator", <DynamicIDLocatorPage />)}
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
-                {createRoutes("/form-builder", <FormBuilderPage />)}
+                {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
