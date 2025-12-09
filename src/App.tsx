@@ -59,6 +59,7 @@ import { TinyMCEShadowDOMPage } from "./pages/TinyMCEShadowDOMPage";
 import { DynamicIDLocatorPage } from "./pages/DynamicIDLocatorPage";
 import { ScenarioTogglePage } from "./pages/ScenarioTogglePage";
 import { FormBuilderPageHTML5 } from "./pages/FormBuilderPageHTML5";
+import DropdownListPage from "./pages/DropdownListPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -113,6 +114,7 @@ function App() {
                 {createRoutes("/native-element", <NativeElementsPage />)}
                 {createRoutes("/about", <AboutPage />)}
                 {createRoutes("/forms", <FormsPage />)}
+                {createRoutes("/msu-simulation-form", <DropdownListPage />)}
                 {createRoutes("/tables", <TablesPage />)}
                 {createRoutes("/drag-drop", <DragDropPage />)}
                 {createRoutes("/dynamic-elements", <DynamicElementsPage />)}

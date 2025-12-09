@@ -15,6 +15,7 @@ const menuItems = [
       { path: "/native-element", label: "Native HTML Elements" },
       { path: "/about", label: "About" },
       { path: "/forms", label: "Forms" },
+      { path: "/msu-simulation-form", label: "MSU Simulation Form" },
       { path: "/sauce-login", label: "Sauce Login" },
       { path: "/tables", label: "Tables" },
       { path: "/ag-grid", label: "AG Grid Table" },
