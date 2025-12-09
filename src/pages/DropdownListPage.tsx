@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface CustomDropdownProps {
   id: string;
@@ -42,6 +42,23 @@ const CustomDropdown = ({
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
+  const randomSuffix = useMemo(
+    () =>
+      [
+        Math.random().toString(36).slice(2),
+        Math.random().toString(36).slice(2),
+        Math.random().toString(36).slice(2),
+      ].join("-"),
+    [id, options.length],
+  );
+
+  const getOptionIds = (index: number) => {
+    const base = `application-${id}-segment-${randomSuffix}-stack-${index + 1}`;
+    const itemId = `__item${index + 1}-${base}-form-${randomSuffix}-select-${index + 1}`;
+    const sapUiId = `${itemId}-sap-ui`;
+    return { itemId, sapUiId };
+  };
+
   return (
     <div className="space-y-1" ref={dropdownRef}>
       <label
@@ -59,7 +76,6 @@ const CustomDropdown = ({
           className="mt-1 w-full flex items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-700"
           aria-haspopup="listbox"
           aria-expanded={isOpen}
-          data-test={`${id}-dropdown-toggle`}
         >
           <span className={value ? "" : "text-gray-400"}>
             {value || placeholder}
@@ -83,18 +99,21 @@ const CustomDropdown = ({
           className={`absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800 ${
             isOpen ? "block" : "hidden"
           }`}
-          data-test={`${id}-dropdown-list`}
         >
-          {options.map((option) => {
-            const optionId = `${id}-option-${option
-              .toLowerCase()
-              .replace(/\s+/g, "-")}`;
+          {options.map((option, index) => {
+            const optionId = `${id}-option-${index + 1}`;
+            const { itemId, sapUiId } = getOptionIds(index);
             const isSelected = option === value;
             return (
               <li
                 key={optionId}
                 role="option"
                 aria-selected={isSelected}
+                aria-setsize={options.length}
+                aria-posinset={index + 1}
+                tabIndex={-1}
+                id={itemId}
+                data-sap-ui={sapUiId}
                 className={`cursor-pointer px-3 py-2 text-sm ${
                   isSelected
                     ? "bg-blue-50 text-blue-700 dark:bg-blue-900/50 dark:text-blue-200"
@@ -104,7 +123,6 @@ const CustomDropdown = ({
                   e.preventDefault();
                   handleSelect(option);
                 }}
-                data-test={optionId}
               >
                 {option}
               </li>
@@ -134,7 +152,7 @@ export const DropdownListPage = () => {
         <div className="mt-2 h-[1px] w-full bg-gray-200 dark:bg-gray-700" />
       </div>
 
-      <div className="card p-6 space-y-6" data-test="custom-dropdown-page">
+      <div className="card p-6 space-y-6">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-[180px_1fr] md:items-start">
           <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
             Note:
@@ -159,7 +177,6 @@ export const DropdownListPage = () => {
               type="text"
               placeholder="11 Tardis"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              data-test="address-line-1-input"
             />
           </div>
 
@@ -174,7 +191,6 @@ export const DropdownListPage = () => {
               id="address-line-2"
               type="text"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              data-test="address-line-2-input"
             />
           </div>
 
@@ -228,7 +244,6 @@ export const DropdownListPage = () => {
               id="zip-code"
               type="text"
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              data-test="zip-code-input"
             />
           </div>
 
@@ -261,7 +276,6 @@ export const DropdownListPage = () => {
                 id="phone"
                 type="text"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                data-test="phone-input"
               />
               <span className="text-xs text-gray-500 dark:text-gray-400">
                 (Format: 5173551234)
@@ -277,7 +291,6 @@ export const DropdownListPage = () => {
               id="restrict-address"
               type="checkbox"
               className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700"
-              data-test="restrict-address-checkbox"
             />
           </div>
 
@@ -289,7 +302,6 @@ export const DropdownListPage = () => {
               id="restrict-phone"
               type="checkbox"
               className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700"
-              data-test="restrict-phone-checkbox"
             />
           </div>
         </div>
@@ -302,7 +314,7 @@ export const DropdownListPage = () => {
         <div className="mt-2 h-[1px] w-full bg-gray-200 dark:bg-gray-700" />
       </div>
 
-      <div className="card p-6 space-y-6" data-test="legal-name-section">
+      <div className="card p-6 space-y-6">
         <div className="grid grid-cols-1 gap-3 md:grid-cols-[180px_1fr] md:items-start">
           <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
             Note:
@@ -319,7 +331,6 @@ export const DropdownListPage = () => {
             </span>
             <div
               className="mt-1 rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
-              data-test="action-static"
             >
               Hire
             </div>
@@ -337,7 +348,6 @@ export const DropdownListPage = () => {
               type="text"
               placeholder="11/26/2025"
               className="mt-1 block w-full rounded-md border border-dashed border-gray-300 bg-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              data-test="effective-date-input"
             />
           </div>
 
@@ -353,7 +363,6 @@ export const DropdownListPage = () => {
               id="legal-first-name"
               type="text"
               className="mt-1 block w-full rounded-md border border-dashed border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              data-test="legal-first-name-input"
             />
           </div>
 
@@ -368,7 +377,6 @@ export const DropdownListPage = () => {
               id="legal-middle-name"
               type="text"
               className="mt-1 block w-full rounded-md border border-dashed border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              data-test="legal-middle-name-input"
             />
           </div>
 
@@ -384,7 +392,6 @@ export const DropdownListPage = () => {
               id="legal-last-name"
               type="text"
               className="mt-1 block w-full rounded-md border border-dashed border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              data-test="legal-last-name-input"
             />
           </div>
 
@@ -413,7 +420,6 @@ export const DropdownListPage = () => {
               id="zpid"
               type="text"
               className="mt-1 block w-full rounded-md border border-dashed border-gray-300 bg-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-              data-test="zpid-input"
             />
           </div>
 
@@ -447,7 +453,6 @@ export const DropdownListPage = () => {
                 type="text"
                 placeholder="e.g. 12/31/2025"
                 className="mt-1 block w-full rounded-md border border-dashed border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                data-test="dob-input"
               />
             </div>
           </div>
