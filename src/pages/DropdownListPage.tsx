@@ -329,9 +329,7 @@ export const DropdownListPage = () => {
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Action:
             </span>
-            <div
-              className="mt-1 rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
-            >
+            <div className="mt-1 rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
               Hire
             </div>
           </div>

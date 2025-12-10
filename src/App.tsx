@@ -60,6 +60,7 @@ import { DynamicIDLocatorPage } from "./pages/DynamicIDLocatorPage";
 import { ScenarioTogglePage } from "./pages/ScenarioTogglePage";
 import { FormBuilderPageHTML5 } from "./pages/FormBuilderPageHTML5";
 import DropdownListPage from "./pages/DropdownListPage";
+import { ToastNotificationScenarioPage } from "./pages/ToastNotificationScenarioPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -128,6 +129,10 @@ function App() {
                 {createRoutes("/multi-tiered-menu", <MultiTieredMenuPage />)}
                 {createRoutes("/hover", <HoverPage />)}
                 {createRoutes("/notifications", <NotificationsPage />)}
+                {createRoutes(
+                  "/toast-delay-scenario",
+                  <ToastNotificationScenarioPage />,
+                )}
                 {createRoutes("/ab-testing", <ABTestingPage />)}
                 {createRoutes("/auth", <AuthPage />)}
                 {createRoutes("/sauce-login", <SauceLoginPage />)}
