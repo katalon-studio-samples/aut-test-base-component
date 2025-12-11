@@ -134,6 +134,14 @@ const CustomDropdown = ({
   );
 };
 
+const padOptions = (values: string[], pad = 2) => {
+  const paddingChunk = " ".repeat(pad);
+  return values.map(
+    (value, index) =>
+      `${paddingChunk.repeat((index % 2) + 1)}${value}${paddingChunk.repeat(((values.length - index - 1) % 2) + 1)}`,
+  );
+};
+
 export const DropdownListPage = () => {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -142,6 +150,46 @@ export const DropdownListPage = () => {
   const [citizenshipStatus, setCitizenshipStatus] = useState("");
   const [i9Status, setI9Status] = useState("I-9 Not on File");
   const [suffix, setSuffix] = useState("");
+  const cityOptions = useMemo(
+    () =>
+      padOptions(
+        ["Los Angeles", "New York", "Boston", "San Francisco", "Seattle"],
+        3,
+      ),
+    [],
+  );
+  const stateOptions = useMemo(
+    () => padOptions(["CA", "NY", "MA", "WA", "TX", "MI", "OH"], 2),
+    [],
+  );
+  const countryOptions = useMemo(
+    () => padOptions(["USA", "Canada", "United Kingdom", "Germany", "Japan"], 3),
+    [],
+  );
+  const genderOptions = useMemo(
+    () => padOptions(["Female", "Male", "Non-binary", "Prefer not to say"], 2),
+    [],
+  );
+  const citizenshipOptions = useMemo(
+    () =>
+      padOptions(
+        ["U.S. Citizen", "Permanent Resident", "Work Visa", "Student Visa", "Other"],
+        2,
+      ),
+    [],
+  );
+  const i9Options = useMemo(
+    () =>
+      padOptions(
+        ["I-9 Not on File", "I-9 Complete", "I-9 Expired", "Reverification Required"],
+        2,
+      ),
+    [],
+  );
+  const suffixOptions = useMemo(
+    () => padOptions(["Jr.", "Sr.", "II", "III", "IV", "PhD", "MD"], 2),
+    [],
+  );
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -204,13 +252,7 @@ export const DropdownListPage = () => {
               label="City"
               required
               value={city}
-              options={[
-                "Los Angeles",
-                "New York",
-                "Boston",
-                "San Francisco",
-                "Seattle",
-              ]}
+              options={cityOptions}
               onChange={setCity}
               placeholder="Select a city"
             />
@@ -226,7 +268,7 @@ export const DropdownListPage = () => {
               label="State"
               required
               value={state}
-              options={["CA", "NY", "MA", "WA", "TX", "MI", "OH"]}
+              options={stateOptions}
               onChange={setState}
               placeholder="Select a state"
             />
@@ -257,7 +299,7 @@ export const DropdownListPage = () => {
               label="Country"
               required
               value={country}
-              options={["USA", "Canada", "United Kingdom", "Germany", "Japan"]}
+              options={countryOptions}
               onChange={setCountry}
               placeholder="Select a country"
             />
@@ -401,7 +443,7 @@ export const DropdownListPage = () => {
               id="legal-suffix"
               label="Legal Suffix"
               value={suffix}
-              options={["Jr.", "Sr.", "II", "III", "IV", "PhD", "MD"]}
+              options={suffixOptions}
               onChange={setSuffix}
               placeholder="Select a suffix"
             />
@@ -431,7 +473,7 @@ export const DropdownListPage = () => {
               label="Gender"
               required
               value={gender}
-              options={["Female", "Male", "Non-binary", "Prefer not to say"]}
+              options={genderOptions}
               onChange={setGender}
               placeholder="Select gender"
             />
@@ -465,13 +507,7 @@ export const DropdownListPage = () => {
               label="Citizenship Status"
               required
               value={citizenshipStatus}
-              options={[
-                "U.S. Citizen",
-                "Permanent Resident",
-                "Work Visa",
-                "Student Visa",
-                "Other",
-              ]}
+              options={citizenshipOptions}
               onChange={setCitizenshipStatus}
               placeholder="Select status"
             />
@@ -485,12 +521,7 @@ export const DropdownListPage = () => {
               id="i9-status"
               label="I-9 Status"
               value={i9Status}
-              options={[
-                "I-9 Not on File",
-                "I-9 Complete",
-                "I-9 Expired",
-                "Reverification Required",
-              ]}
+              options={i9Options}
               onChange={setI9Status}
               placeholder="Select I-9 status"
             />
