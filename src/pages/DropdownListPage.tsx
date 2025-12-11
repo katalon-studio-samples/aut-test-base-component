@@ -77,7 +77,14 @@ const CustomDropdown = ({
           aria-haspopup="listbox"
           aria-expanded={isOpen}
         >
-          <span className={value ? "" : "text-gray-400"}>
+          <span
+            className={`${
+              value
+                ? "text-gray-900 dark:text-white"
+                : "text-gray-400 dark:text-gray-500"
+            } whitespace-pre font-mono`}
+            data-test={`${id}-selected-value`}
+          >
             {value || placeholder}
           </span>
           <svg
@@ -114,11 +121,12 @@ const CustomDropdown = ({
                 tabIndex={-1}
                 id={itemId}
                 data-sap-ui={sapUiId}
-                className={`cursor-pointer px-3 py-2 text-sm ${
+                className={`cursor-pointer px-3 py-2 text-sm font-mono whitespace-pre ${
                   isSelected
                     ? "bg-blue-50 text-blue-700 dark:bg-blue-900/50 dark:text-blue-200"
                     : "text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
                 }`}
+                data-test={`${id}-option-${index + 1}`}
                 onMouseDown={(e) => {
                   e.preventDefault();
                   handleSelect(option);
