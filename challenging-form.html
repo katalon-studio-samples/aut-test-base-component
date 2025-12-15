@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Challenging Test Automation Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      .form-container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+      }
+
+      .custom-dropdown {
+        position: relative;
+        width: 100%;
+      }
+
+      .dropdown-header {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: white;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .dropdown-header:hover {
+        border-color: #999;
+      }
+
+      .dropdown-arrow {
+        transition: transform 0.3s;
+      }
+
+      .dropdown-header.open .dropdown-arrow {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+      }
+
+      .dropdown-list.show {
+        display: block;
+      }
+
+      .dropdown-list p {
+        margin: 0;
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .dropdown-list p:hover {
+        background-color: #f0f0f0;
+      }
+
+      .dropdown-list p.selected {
+        background-color: #e3f2fd;
+        color: #1976d2;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e8f5e9;
+        border-radius: 4px;
+        display: none;
+      }
+
+      .challenge-note {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+      }
+
+      .challenge-note h3 {
+        margin-top: 0;
+        color: #856404;
+      }
+
+      .challenge-note ul {
+        margin-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>🎯 Test Automation Challenge Form</h1>
+
+      <div class="challenge-note">
+        <h3>Automation Challenges:</h3>
+        <ul>
+          <li>All element IDs are dynamically generated on page load</li>
+          <li>
+            All CSS classes are dynamically generated with random suffixes
+          </li>
+          <li>NO data-testid or data-value attributes available</li>
+          <li>
+            Dropdown options use &lt;p&gt; tags instead of standard
+            &lt;option&gt;
+          </li>
+          <li>Custom dropdown implementation (not native &lt;select&gt;)</li>
+          <li>IDs and classes change every time the page is refreshed</li>
+        </ul>
+      </div>
+
+      <form id="challengeForm">
+        <div class="form-group">
+          <label>Full Name:</label>
+          <input type="text" placeholder="Enter your full name" />
+        </div>
+
+        <div class="form-group">
+          <label>Email Address:</label>
+          <input type="email" placeholder="Enter your email" />
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number:</label>
+          <input type="tel" placeholder="Enter your phone number" />
+        </div>
+
+        <div class="form-group">
+          <label>Country (Custom Dropdown with &lt;p&gt; tags):</label>
+          <div class="custom-dropdown">
+            <div class="dropdown-header">
+              <span class="selected-value">Select a country</span>
+              <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="dropdown-list">
+              <p>United States</p>
+              <p>United Kingdom</p>
+              <p>Canada</p>
+              <p>Australia</p>
+              <p>Germany</p>
+              <p>France</p>
+              <p>Japan</p>
+              <p>Singapore</p>
+            </div>
+          </div>
+          <input type="hidden" name="country" />
+        </div>
+
+        <div class="form-group">
+          <label>Experience Level (Another Custom Dropdown):</label>
+          <div class="custom-dropdown">
+            <div class="dropdown-header">
+              <span class="selected-value">Select experience level</span>
+              <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="dropdown-list">
+              <p>Beginner (0-1 years)</p>
+              <p>Intermediate (2-4 years)</p>
+              <p>Advanced (5-7 years)</p>
+              <p>Expert (8+ years)</p>
+            </div>
+          </div>
+          <input type="hidden" name="experience" />
+        </div>
+
+        <div class="form-group">
+          <label>Programming Language (Dynamic ID Dropdown):</label>
+          <div class="custom-dropdown">
+            <div class="dropdown-header">
+              <span class="selected-value">Select programming language</span>
+              <span class="dropdown-arrow">▼</span>
+            </div>
+            <div class="dropdown-list">
+              <p>JavaScript</p>
+              <p>Python</p>
+              <p>Java</p>
+              <p>C#</p>
+              <p>Ruby</p>
+              <p>Go</p>
+              <p>Rust</p>
+              <p>TypeScript</p>
+            </div>
+          </div>
+          <input type="hidden" name="language" />
+        </div>
+
+        <button type="submit">Submit Form</button>
+      </form>
+
+      <div class="result">
+        <h3>Form Submitted Successfully! ✅</h3>
+        <div id="submittedData"></div>
+      </div>
+    </div>
+
+    <script>
+      function generateDynamicId() {
+        return (
+          "id_" + Math.random().toString(36).substr(2, 9) + "_" + Date.now()
+        );
+      }
+
+      function generateDynamicClass(base) {
+        return base + "_" + Math.random().toString(36).substr(2, 6);
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Generate dynamic classes
+        const inputClass = generateDynamicClass("input");
+        const dropdownHeaderClass = generateDynamicClass("dropdown");
+        const dropdownListClass = generateDynamicClass("list");
+        const dropdownOptionClass = generateDynamicClass("option");
+        const buttonClass = generateDynamicClass("btn");
+
+        // Apply dynamic IDs and classes to input fields
+        const inputs = document.querySelectorAll(
+          'input[type="text"], input[type="email"], input[type="tel"]',
+        );
+        inputs.forEach((input) => {
+          input.id = generateDynamicId();
+          input.className = inputClass;
+        });
+
+        // Apply dynamic IDs and classes to dropdown headers
+        const dropdownHeaders = document.querySelectorAll(".dropdown-header");
+        dropdownHeaders.forEach((header) => {
+          header.id = generateDynamicId();
+          header.className = dropdownHeaderClass;
+
+          // Add back the arrow span
+          const arrow = document.createElement("span");
+          arrow.className = "dropdown-arrow";
+          arrow.textContent = "▼";
+          if (!header.querySelector(".dropdown-arrow")) {
+            header.appendChild(arrow);
+          }
+        });
+
+        // Apply dynamic IDs and classes to dropdown lists
+        const dropdownLists = document.querySelectorAll(".dropdown-list");
+        dropdownLists.forEach((list) => {
+          list.id = generateDynamicId();
+          list.className = dropdownListClass;
+        });
+
+        // Apply dynamic IDs and classes to all p tags in dropdowns
+        const dropdownOptions = document.querySelectorAll(".dropdown-list p");
+        dropdownOptions.forEach((option) => {
+          option.id = generateDynamicId();
+          option.className = dropdownOptionClass;
+        });
+
+        // Apply dynamic ID and class to submit button
+        const submitBtn = document.querySelector('button[type="submit"]');
+        submitBtn.id = generateDynamicId();
+        submitBtn.className = buttonClass;
+
+        // Apply dynamic ID to result div
+        const resultDiv = document.querySelector(".result");
+        resultDiv.id = generateDynamicId();
+
+        console.log(
+          "Dynamic IDs and classes generated! All element IDs and classes have changed.",
+        );
+      });
+
+      // Custom dropdown functionality
+      document.querySelectorAll(".custom-dropdown").forEach((dropdown) => {
+        const header = dropdown.querySelector('[class*="dropdown"]');
+        const list = dropdown.querySelector('[class*="list"]');
+        const selectedValue = dropdown.querySelector(".selected-value");
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+
+        setTimeout(() => {
+          const options = dropdown.querySelectorAll(
+            '[class*="list"] [class*="option"]',
+          );
+
+          header.addEventListener("click", function (e) {
+            e.stopPropagation();
+
+            document.querySelectorAll('[class*="list"]').forEach((l) => {
+              if (l !== list) {
+                l.style.display = "none";
+              }
+            });
+
+            list.style.display =
+              list.style.display === "block" ? "none" : "block";
+          });
+
+          options.forEach((option) => {
+            option.addEventListener("click", function (e) {
+              e.stopPropagation();
+
+              options.forEach((opt) => opt.classList.remove("selected"));
+              this.classList.add("selected");
+
+              selectedValue.textContent = this.textContent;
+
+              if (hiddenInput) {
+                hiddenInput.value = this.textContent;
+              }
+
+              list.style.display = "none";
+            });
+          });
+        }, 100);
+      });
+
+      document.addEventListener("click", function () {
+        document.querySelectorAll('[class*="list"]').forEach((list) => {
+          list.style.display = "none";
+        });
+      });
+
+      document
+        .getElementById("challengeForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const formData = {
+            name: document.querySelector('input[type="text"]').value,
+            email: document.querySelector('input[type="email"]').value,
+            phone: document.querySelector('input[type="tel"]').value,
+            country: document.querySelector('[name="country"]').value,
+            experience: document.querySelector('[name="experience"]').value,
+            language: document.querySelector('[name="language"]').value,
+          };
+
+          const submittedData = document.getElementById("submittedData");
+          submittedData.innerHTML = `
+                <p><strong>Name:</strong> ${formData.name}</p>
+                <p><strong>Email:</strong> ${formData.email}</p>
+                <p><strong>Phone:</strong> ${formData.phone}</p>
+                <p><strong>Country:</strong> ${formData.country}</p>
+                <p><strong>Experience:</strong> ${formData.experience}</p>
+                <p><strong>Language:</strong> ${formData.language}</p>
+            `;
+
+          document.querySelector(".result").style.display = "block";
+
+          console.log("Form submitted:", formData);
+        });
+    </script>
+  </body>
+</html>
