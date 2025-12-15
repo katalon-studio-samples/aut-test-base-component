@@ -61,6 +61,7 @@ import { ScenarioTogglePage } from "./pages/ScenarioTogglePage";
 import { FormBuilderPageHTML5 } from "./pages/FormBuilderPageHTML5";
 import DropdownListPage from "./pages/DropdownListPage";
 import { ToastNotificationScenarioPage } from "./pages/ToastNotificationScenarioPage";
+import { ChallengingFormPage } from "./pages/ChallengingFormPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -181,6 +182,7 @@ function App() {
                 {createRoutes("/dynamic-id-locator", <DynamicIDLocatorPage />)}
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
+                {createRoutes("/challenging-form", <ChallengingFormPage />)}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

@@ -171,7 +171,8 @@ export const DropdownListPage = () => {
     [],
   );
   const countryOptions = useMemo(
-    () => padOptions(["USA", "Canada", "United Kingdom", "Germany", "Japan"], 3),
+    () =>
+      padOptions(["USA", "Canada", "United Kingdom", "Germany", "Japan"], 3),
     [],
   );
   const genderOptions = useMemo(
@@ -181,7 +182,13 @@ export const DropdownListPage = () => {
   const citizenshipOptions = useMemo(
     () =>
       padOptions(
-        ["U.S. Citizen", "Permanent Resident", "Work Visa", "Student Visa", "Other"],
+        [
+          "U.S. Citizen",
+          "Permanent Resident",
+          "Work Visa",
+          "Student Visa",
+          "Other",
+        ],
         2,
       ),
     [],
@@ -189,7 +196,12 @@ export const DropdownListPage = () => {
   const i9Options = useMemo(
     () =>
       padOptions(
-        ["I-9 Not on File", "I-9 Complete", "I-9 Expired", "Reverification Required"],
+        [
+          "I-9 Not on File",
+          "I-9 Complete",
+          "I-9 Expired",
+          "Reverification Required",
+        ],
         2,
       ),
     [],
