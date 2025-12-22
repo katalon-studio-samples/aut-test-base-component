@@ -86,6 +86,7 @@ const menuItems = [
       { path: "/exit-intent", label: "Exit Intent" },
       { path: "/alerts", label: "Alerts" },
       { path: "/open-popup", label: "Open Popup" },
+      { path: "/open-new-tab", label: "Open New Tab" },
       { path: "/challenging-form", label: "Challenging Form" },
     ],
   },
