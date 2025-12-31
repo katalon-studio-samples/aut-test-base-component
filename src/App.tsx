@@ -62,6 +62,7 @@ import { FormBuilderPageHTML5 } from "./pages/FormBuilderPageHTML5";
 import DropdownListPage from "./pages/DropdownListPage";
 import { ToastNotificationScenarioPage } from "./pages/ToastNotificationScenarioPage";
 import { ChallengingFormPage } from "./pages/ChallengingFormPage";
+import { OpenNewTabPage } from "./pages/OpenNewTabPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -145,6 +146,7 @@ function App() {
                 {createRoutes("/key-press", <KeyPressPage />)}
                 {createRoutes("/shadow-dom", <ShadowDOMPage />)}
                 {createRoutes("/open-popup", <OpenPopupPage />)}
+                {createRoutes("/open-new-tab", <OpenNewTabPage />)}
                 {createRoutes("/popup-form", <PopupFormPage />)}
                 {createRoutes("/key-value-form", <KeyValueFormPage />)}
                 {createRoutes(
