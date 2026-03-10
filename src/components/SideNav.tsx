@@ -88,6 +88,7 @@ const menuItems = [
       { path: "/open-popup", label: "Open Popup" },
       { path: "/open-new-tab", label: "Open New Tab" },
       { path: "/challenging-form", label: "Challenging Form" },
+      { path: "/ctrl-click-table", label: "Ctrl+Click Table" },
     ],
   },
 ];
