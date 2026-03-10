@@ -63,6 +63,7 @@ import DropdownListPage from "./pages/DropdownListPage";
 import { ToastNotificationScenarioPage } from "./pages/ToastNotificationScenarioPage";
 import { ChallengingFormPage } from "./pages/ChallengingFormPage";
 import { OpenNewTabPage } from "./pages/OpenNewTabPage";
+import { CtrlClickTablePage } from "./pages/CtrlClickTablePage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -185,6 +186,7 @@ function App() {
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
                 {createRoutes("/challenging-form", <ChallengingFormPage />)}
+                {createRoutes("/ctrl-click-table", <CtrlClickTablePage />)}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
