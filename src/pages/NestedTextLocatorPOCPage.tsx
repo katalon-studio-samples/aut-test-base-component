@@ -209,26 +209,36 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
                 )}
 
                 {scenario.id === "nested-title-subtitle-option" && (
-                  <nav>
-                    <ul className="space-y-3">
-                      <li>
+                  <nav className="rounded-xl border border-gray-200 bg-slate-50 p-3 dark:border-gray-700 dark:bg-gray-950/40">
+                    <ul role="listbox" className="space-y-3">
+                      <li
+                        role="option"
+                        aria-selected="false"
+                        data-poc={scenario.id}
+                        tabIndex={0}
+                        className="list-none cursor-pointer rounded-xl border border-gray-300 bg-white p-2 outline-none hover:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:focus:ring-blue-900/60"
+                        onClick={() => {
+                          setSelectedScenario(scenario.id);
+                        }}
+                      >
                         <div
-                          role="option"
-                          data-poc={scenario.id}
-                          tabIndex={0}
-                          className="block cursor-pointer rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none hover:border-blue-400 hover:bg-blue-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-800"
-                          onClick={() => {
-                            setSelectedScenario(scenario.id);
-                          }}
+                          tabIndex={-1}
+                          className="wrapper pointer-events-none rounded-lg"
                         >
-                          <div className="flex flex-col gap-1">
-                            <span className="pointer-events-none text-xs text-gray-500 dark:text-gray-400">
-                              Relationship Management / Customer Relationship
-                              Management / Account
-                            </span>
-                            <span className="pointer-events-none text-sm font-semibold text-gray-900 dark:text-white">
-                              {scenario.text}
-                            </span>
+                          <div className="navigator pointer-events-none">
+                            <div className="link-item pointer-events-none">
+                              <div className="holder rounded-lg px-3 py-2 transition hover:bg-blue-50 dark:hover:bg-gray-700">
+                                <div className="label flex flex-col gap-1">
+                                  <span className="subtitle pointer-events-none text-xs text-gray-500 dark:text-gray-400">
+                                    Relationship Management / Customer
+                                    Relationship Management / Account
+                                  </span>
+                                  <span className="title pointer-events-none text-sm font-semibold text-gray-900 dark:text-white">
+                                    {scenario.text}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </li>

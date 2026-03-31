@@ -179,7 +179,7 @@ function App() {
                 {createRoutes("/unicode-combobox", <UnicodeComboBoxPage />)}
                 {createRoutes("/xpath-breaking", <XPathBreakingPage />)}
                 {createRoutes(
-                  "/nested-text-locator-poc-v2",
+                  "/nested-text-locator-poc",
                   <NestedTextLocatorPOCPage />,
                 )}
                 {createRoutes("/list-card", <CardListPage />)}
