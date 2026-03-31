@@ -25,11 +25,11 @@ const scenarios: Scenario[] = [
     checks: [
       {
         label: "Direct text predicate",
-        xpath: "//*[@data-poc='direct-text-option' and @role='option' and text()='Direct Text Option']",
+        xpath: "//*[@role='option' and text()='Direct Text Option']",
       },
       {
         label: "Normalized descendant text predicate",
-        xpath: "//*[@data-poc='direct-text-option' and @role='option' and normalize-space(.)='Direct Text Option']",
+        xpath: "//*[@role='option' and normalize-space(.)='Direct Text Option']",
       },
     ],
   },
@@ -43,15 +43,15 @@ const scenarios: Scenario[] = [
     checks: [
       {
         label: "Broken parent text() predicate",
-        xpath: "//*[@data-poc='nested-title-option' and @role='option' and text()='Nested Text Option']",
+        xpath: "//*[@role='option' and text()='Nested Text Option']",
       },
       {
         label: "Normalized descendant text predicate",
-        xpath: "//*[@data-poc='nested-title-option' and @role='option' and normalize-space(.)='Nested Text Option']",
+        xpath: "//*[@role='option' and normalize-space(.)='Nested Text Option']",
       },
       {
         label: "Target child span text",
-        xpath: "//*[@data-poc='nested-title-option' and @role='option'][.//span[normalize-space()='Nested Text Option']]",
+        xpath: "//*[@role='option'][.//span[normalize-space()='Nested Text Option']]",
       },
     ],
   },
@@ -65,15 +65,15 @@ const scenarios: Scenario[] = [
     checks: [
       {
         label: "Broken parent text() predicate",
-        xpath: "//*[@data-poc='nested-title-subtitle-option' and @role='option' and text()='Accounts - CRM']",
+        xpath: "//*[@role='option' and text()='Accounts - CRM']",
       },
       {
         label: "Target title descendant",
-        xpath: "//*[@data-poc='nested-title-subtitle-option' and @role='option'][.//span[normalize-space()='Accounts - CRM']]",
+        xpath: "//*[@role='option'][.//span[normalize-space()='Accounts - CRM']]",
       },
       {
         label: "Contains full descendant text",
-        xpath: "//*[@data-poc='nested-title-subtitle-option' and @role='option' and contains(normalize-space(.), 'Accounts - CRM')]",
+        xpath: "//*[@role='option' and contains(normalize-space(.), 'Accounts - CRM')]",
       },
     ],
   },
@@ -176,7 +176,6 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
                   >
                     <li
                       role="option"
-                      data-poc={scenario.id}
                       tabIndex={0}
                       className="cursor-pointer rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-900 outline-none hover:border-blue-400 hover:bg-blue-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-800"
                       onClick={() => setSelectedScenario(scenario.id)}
@@ -193,7 +192,6 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
                   >
                     <div
                       role="option"
-                      data-poc={scenario.id}
                       tabIndex={0}
                       className="cursor-pointer rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none hover:border-blue-400 hover:bg-blue-50 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-800"
                       onClick={() => setSelectedScenario(scenario.id)}
@@ -214,7 +212,6 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
                       <li
                         role="option"
                         aria-selected="false"
-                        data-poc={scenario.id}
                         tabIndex={0}
                         className="list-none cursor-pointer rounded-xl border border-gray-300 bg-white p-2 outline-none hover:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:focus:ring-blue-900/60"
                         onClick={() => {
@@ -273,9 +270,6 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
                     <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                       {scenario.title}
                     </h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">
-                      data-poc="{scenario.id}"
-                    </p>
                   </div>
 
                   <div className="space-y-3">
