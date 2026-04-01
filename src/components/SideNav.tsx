@@ -87,6 +87,7 @@ const menuItems = [
       { path: "/alerts", label: "Alerts" },
       { path: "/open-popup", label: "Open Popup" },
       { path: "/open-new-tab", label: "Open New Tab" },
+      { path: "/same-tab-url-transition", label: "Same-Tab URL Transition" },
       { path: "/challenging-form", label: "Challenging Form" },
       { path: "/ctrl-click-table", label: "Ctrl+Click Table" },
     ],

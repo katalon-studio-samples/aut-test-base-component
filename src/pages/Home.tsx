@@ -20,6 +20,7 @@ import {
   Box,
   Download,
   Info,
+  Route,
 } from "lucide-react";
 
 const categories = [
@@ -166,6 +167,12 @@ const categories = [
         path: "/alerts",
         description: "Work with different alert types",
         icon: <AlertCircle className="w-6 h-6" />,
+      },
+      {
+        title: "Same-Tab URL Transition",
+        path: "/same-tab-url-transition",
+        description: "Validate replay-safe same-tab navigation transitions",
+        icon: <Route className="w-6 h-6" />,
       },
     ],
   },
