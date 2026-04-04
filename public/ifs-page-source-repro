@@ -170,7 +170,6 @@
         <div class="results">
           <div class="result">
             <a
-              data-poc="ifs-account-crm-link"
               href="#account-crm"
             >
               <div class="holder">
@@ -187,7 +186,6 @@
 
           <div class="result">
             <a
-              data-poc="ifs-accounts-crm-link"
               href="#accounts-crm"
             >
               <div class="holder">
