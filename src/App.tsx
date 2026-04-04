@@ -54,6 +54,7 @@ import { NumericInputPage } from "./pages/NumericInputPage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { UnicodeComboBoxPage } from "./pages/UnicodeComboBoxPage";
 import { XPathBreakingPage } from "./pages/XPathBreakingPage";
+import { NestedTextLocatorPOCPage } from "./pages/NestedTextLocatorPOCPage";
 import AGGridPage from "./pages/AGGridPage";
 import { TinyMCEShadowDOMPage } from "./pages/TinyMCEShadowDOMPage";
 import { DynamicIDLocatorPage } from "./pages/DynamicIDLocatorPage";
@@ -178,6 +179,10 @@ function App() {
                 {createRoutes("/combobox", <ComboBoxExamplePage />)}
                 {createRoutes("/unicode-combobox", <UnicodeComboBoxPage />)}
                 {createRoutes("/xpath-breaking", <XPathBreakingPage />)}
+                {createRoutes(
+                  "/nested-text-locator-poc",
+                  <NestedTextLocatorPOCPage />,
+                )}
                 {createRoutes("/list-card", <CardListPage />)}
                 {createRoutes("/unique-test-data", <NumericInputPage />)}
                 {createRoutes("/settings", <SettingsPage />)}
