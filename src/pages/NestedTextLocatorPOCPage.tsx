@@ -77,6 +77,31 @@ const scenarios: Scenario[] = [
       },
     ],
   },
+  {
+    id: "compound-field-pairs-option",
+    title: "Compound text from nested field pairs",
+    description:
+      "IFS-like object card: the option text is effectively composed from 3 child rows, each with a value span plus a label span.",
+    text: "Overseas Automobile Sales (Account) (No value) (Description) Larry Homes (Contact Name)",
+    role: "option",
+    checks: [
+      {
+        label: "Broken parent text() predicate",
+        xpath:
+          "//*[@role='option' and text()='Overseas Automobile Sales (Account) (No value) (Description) Larry Homes (Contact Name)']",
+      },
+      {
+        label: "Exact compound descendant text",
+        xpath:
+          "//*[@role='option' and normalize-space(.)='Overseas Automobile Sales (Account) (No value) (Description) Larry Homes (Contact Name)']",
+      },
+      {
+        label: "Target field rows by descendant spans",
+        xpath:
+          "//*[@role='option'][.//span[normalize-space()='Overseas Automobile Sales'] and .//span[normalize-space()='(Account)'] and .//span[normalize-space()='(No value)'] and .//span[normalize-space()='(Description)'] and .//span[normalize-space()='Larry Homes'] and .//span[normalize-space()='(Contact Name)']]",
+      },
+    ],
+  },
 ];
 
 const evaluateXPath = (xpath: string) => {
@@ -236,6 +261,55 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
                                 </div>
                               </div>
                             </div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </nav>
+                )}
+
+                {scenario.id === "compound-field-pairs-option" && (
+                  <nav className="rounded-xl border border-gray-200 bg-slate-50 p-3 dark:border-gray-700 dark:bg-gray-950/40">
+                    <ul role="listbox" className="space-y-3">
+                      <li
+                        role="option"
+                        aria-selected="false"
+                        tabIndex={0}
+                        className="list-none cursor-pointer rounded-xl border border-gray-300 bg-white p-2 outline-none hover:border-blue-400 focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:focus:ring-blue-900/60"
+                        onClick={() => {
+                          setSelectedScenario(scenario.id);
+                        }}
+                      >
+                        <div className="pointer-events-none rounded-lg px-3 py-2">
+                          <div className="mb-3">
+                            <span className="block text-sm text-gray-900 dark:text-white">
+                              <span className="font-medium">
+                                Overseas Automobile Sales
+                              </span>{" "}
+                              <span className="text-gray-500 dark:text-gray-400">
+                                (Account)
+                              </span>
+                            </span>
+                          </div>
+
+                          <div className="mb-3">
+                            <span className="block text-sm text-gray-900 dark:text-white">
+                              <span className="text-gray-500 dark:text-gray-400">
+                                (No value)
+                              </span>{" "}
+                              <span className="text-gray-500 dark:text-gray-400">
+                                (Description)
+                              </span>
+                            </span>
+                          </div>
+
+                          <div>
+                            <span className="block text-sm text-gray-900 dark:text-white">
+                              <span className="font-medium">Larry Homes</span>{" "}
+                              <span className="text-gray-500 dark:text-gray-400">
+                                (Contact Name)
+                              </span>
+                            </span>
                           </div>
                         </div>
                       </li>
