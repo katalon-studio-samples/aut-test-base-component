@@ -65,6 +65,7 @@ import { ToastNotificationScenarioPage } from "./pages/ToastNotificationScenario
 import { ChallengingFormPage } from "./pages/ChallengingFormPage";
 import { OpenNewTabPage } from "./pages/OpenNewTabPage";
 import { CtrlClickTablePage } from "./pages/CtrlClickTablePage";
+import { SameTabUrlTransitionPage } from "./pages/SameTabUrlTransitionPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -192,6 +193,50 @@ function App() {
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
                 {createRoutes("/challenging-form", <ChallengingFormPage />)}
                 {createRoutes("/ctrl-click-table", <CtrlClickTablePage />)}
+                {createRoutes(
+                  "/same-tab-url-transition",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/manual-source",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/orders/123",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/role-switch",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/dropdown-route-state",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/admin/dashboard",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/login-redirect",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/session-review",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/guarded-reports",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/access-review",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/unsupported-scope",
+                  <SameTabUrlTransitionPage />,
+                )}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
