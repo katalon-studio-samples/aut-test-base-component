@@ -66,6 +66,7 @@ const menuItems = [
       { path: "/tinymce-shadow-dom", label: "TinyMCE Shadow DOM" },
       { path: "/key-value-form", label: "Key-Value Form" },
       { path: "/rich-text-editor", label: "Rich Text Editor" },
+      { path: "/monaco-editor", label: "Monaco Editor" },
       { path: "/combobox", label: "Combo Box" },
       { path: "/unicode-combobox", label: "Unicode Combo Box" },
       { path: "/xpath-breaking", label: "XPath Breaking Characters" },

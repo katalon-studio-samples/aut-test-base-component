@@ -66,6 +66,7 @@ import { ChallengingFormPage } from "./pages/ChallengingFormPage";
 import { OpenNewTabPage } from "./pages/OpenNewTabPage";
 import { CtrlClickTablePage } from "./pages/CtrlClickTablePage";
 import { SameTabUrlTransitionPage } from "./pages/SameTabUrlTransitionPage";
+import { MonacoEditorPage } from "./pages/MonacoEditorPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -169,6 +170,7 @@ function App() {
                   "/rich-text-editor",
                   <RichTextEditorExamplePage />,
                 )}
+                {createRoutes("/monaco-editor", <MonacoEditorPage />)}
                 {createRoutes("/input/checkbox", <InputCheckBoxPage />)}
                 {createRoutes("/input/text", <InputTextPage />)}
                 {createRoutes(
