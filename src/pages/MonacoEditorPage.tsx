@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 
 type EditorLanguage = "javascript" | "typescript" | "json" | "html";
@@ -34,6 +34,8 @@ export const MonacoEditorPage = () => {
   const [language, setLanguage] = useState<EditorLanguage>("javascript");
   const [theme, setTheme] = useState<EditorTheme>("vs-light");
   const [value, setValue] = useState(initialCodeByLanguage.javascript);
+  const editorContainerRef = useRef<HTMLDivElement | null>(null);
+  const skipNextMonacoInputEventRef = useRef(false);
 
   const currentInitialCode = useMemo(
     () => initialCodeByLanguage[language],
@@ -42,11 +44,36 @@ export const MonacoEditorPage = () => {
 
   const handleLanguageChange = (nextLanguage: EditorLanguage) => {
     setLanguage(nextLanguage);
+    skipNextMonacoInputEventRef.current = true;
     setValue(initialCodeByLanguage[nextLanguage]);
   };
 
   const handleReset = () => {
+    skipNextMonacoInputEventRef.current = true;
     setValue(currentInitialCode);
+  };
+
+  const emitDocumentInputEvent = () => {
+    const container = editorContainerRef.current;
+    if (!container) {
+      return;
+    }
+
+    try {
+      container.dispatchEvent(
+        new InputEvent("input", {
+          bubbles: true,
+          composed: true,
+        }),
+      );
+    } catch {
+      container.dispatchEvent(
+        new Event("input", {
+          bubbles: true,
+          composed: true,
+        }),
+      );
+    }
   };
 
   return (
@@ -93,13 +120,26 @@ export const MonacoEditorPage = () => {
         </button>
       </div>
 
-      <div className="border rounded overflow-hidden" data-test="monaco-editor">
+      <div
+        ref={editorContainerRef}
+        className="border rounded overflow-hidden"
+        data-test="monaco-editor"
+      >
         <Editor
           height="520px"
           language={language}
           theme={theme}
           value={value}
-          onChange={(nextValue) => setValue(nextValue ?? "")}
+          onChange={(nextValue) => {
+            setValue(nextValue ?? "");
+
+            if (skipNextMonacoInputEventRef.current) {
+              skipNextMonacoInputEventRef.current = false;
+              return;
+            }
+
+            emitDocumentInputEvent();
+          }}
           options={{
             minimap: { enabled: true },
             fontSize: 14,
