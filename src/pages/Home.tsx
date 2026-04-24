@@ -20,6 +20,7 @@ import {
   Box,
   Download,
   Info,
+  Route,
 } from "lucide-react";
 
 const categories = [
@@ -132,6 +133,13 @@ const categories = [
         icon: <MousePointer2 className="w-6 h-6" />,
       },
       {
+        title: "Menu InnerText",
+        path: "/multi-tiered-menu-innertext",
+        description:
+          "Inspect parent menu items whose text comes from descendants",
+        icon: <MousePointer2 className="w-6 h-6" />,
+      },
+      {
         title: "Notifications",
         path: "/notifications",
         description: "Test notification systems",
@@ -166,6 +174,12 @@ const categories = [
         path: "/alerts",
         description: "Work with different alert types",
         icon: <AlertCircle className="w-6 h-6" />,
+      },
+      {
+        title: "Same-Tab URL Transition",
+        path: "/same-tab-url-transition",
+        description: "Validate replay-safe same-tab navigation transitions",
+        icon: <Route className="w-6 h-6" />,
       },
     ],
   },
