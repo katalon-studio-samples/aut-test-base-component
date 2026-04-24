@@ -66,9 +66,11 @@ const menuItems = [
       { path: "/tinymce-shadow-dom", label: "TinyMCE Shadow DOM" },
       { path: "/key-value-form", label: "Key-Value Form" },
       { path: "/rich-text-editor", label: "Rich Text Editor" },
+      { path: "/monaco-editor", label: "Monaco Editor" },
       { path: "/combobox", label: "Combo Box" },
       { path: "/unicode-combobox", label: "Unicode Combo Box" },
       { path: "/xpath-breaking", label: "XPath Breaking Characters" },
+      { path: "/nested-text-locator-poc", label: "Nested Text Locator POC" },
       { path: "/dynamic-id-locator", label: "Dynamic ID Locator" },
       { path: "/scenario-toggle", label: "Scenario Toggle" },
     ],
@@ -78,6 +80,10 @@ const menuItems = [
     items: [
       { path: "/context-menu", label: "Context Menu" },
       { path: "/multi-tiered-menu", label: "Multi Tiered Menu" },
+      {
+        path: "/multi-tiered-menu-innertext",
+        label: "Multi Tiered Menu InnerText",
+      },
       { path: "/notifications", label: "Notifications" },
       { path: "/toast-delay-scenario", label: "Toast Delay Scenario" },
       { path: "/ab-testing", label: "A/B Testing" },
@@ -87,7 +93,9 @@ const menuItems = [
       { path: "/alerts", label: "Alerts" },
       { path: "/open-popup", label: "Open Popup" },
       { path: "/open-new-tab", label: "Open New Tab" },
+      { path: "/same-tab-url-transition", label: "Same-Tab URL Transition" },
       { path: "/challenging-form", label: "Challenging Form" },
+      { path: "/ctrl-click-table", label: "Ctrl+Click Table" },
     ],
   },
 ];

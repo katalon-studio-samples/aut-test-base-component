@@ -6,13 +6,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/[name].js',
-        chunkFileNames: 'assets/[name].js',
+        entryFileNames: "assets/[name].js",
+        chunkFileNames: "assets/[name].js",
         assetFileNames: (info) =>
-          info.name?.endsWith('.css')
-            ? 'assets/main.css'
-            : 'assets/[name][extname]'
-      }
-    }
-  }
+          info.name?.endsWith(".css")
+            ? "assets/main.css"
+            : "assets/[name][extname]",
+      },
+    },
+  },
 });

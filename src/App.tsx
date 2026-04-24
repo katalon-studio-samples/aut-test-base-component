@@ -54,6 +54,7 @@ import { NumericInputPage } from "./pages/NumericInputPage";
 import { SettingsPage } from "./pages/SettingsPage";
 import { UnicodeComboBoxPage } from "./pages/UnicodeComboBoxPage";
 import { XPathBreakingPage } from "./pages/XPathBreakingPage";
+import { NestedTextLocatorPOCPage } from "./pages/NestedTextLocatorPOCPage";
 import AGGridPage from "./pages/AGGridPage";
 import { TinyMCEShadowDOMPage } from "./pages/TinyMCEShadowDOMPage";
 import { DynamicIDLocatorPage } from "./pages/DynamicIDLocatorPage";
@@ -63,6 +64,10 @@ import DropdownListPage from "./pages/DropdownListPage";
 import { ToastNotificationScenarioPage } from "./pages/ToastNotificationScenarioPage";
 import { ChallengingFormPage } from "./pages/ChallengingFormPage";
 import { OpenNewTabPage } from "./pages/OpenNewTabPage";
+import { CtrlClickTablePage } from "./pages/CtrlClickTablePage";
+import { SameTabUrlTransitionPage } from "./pages/SameTabUrlTransitionPage";
+import { MonacoEditorPage } from "./pages/MonacoEditorPage";
+import { MultiTieredMenuInnerTextPage } from "./pages/MultiTieredMenuInnerTextPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -129,6 +134,10 @@ function App() {
                 {createRoutes("/iframes-2", <IframePageNested2Level />)}
                 {createRoutes("/context-menu", <ContextMenuPage />)}
                 {createRoutes("/multi-tiered-menu", <MultiTieredMenuPage />)}
+                {createRoutes(
+                  "/multi-tiered-menu-innertext",
+                  <MultiTieredMenuInnerTextPage />,
+                )}
                 {createRoutes("/hover", <HoverPage />)}
                 {createRoutes("/notifications", <NotificationsPage />)}
                 {createRoutes(
@@ -166,6 +175,7 @@ function App() {
                   "/rich-text-editor",
                   <RichTextEditorExamplePage />,
                 )}
+                {createRoutes("/monaco-editor", <MonacoEditorPage />)}
                 {createRoutes("/input/checkbox", <InputCheckBoxPage />)}
                 {createRoutes("/input/text", <InputTextPage />)}
                 {createRoutes(
@@ -176,6 +186,10 @@ function App() {
                 {createRoutes("/combobox", <ComboBoxExamplePage />)}
                 {createRoutes("/unicode-combobox", <UnicodeComboBoxPage />)}
                 {createRoutes("/xpath-breaking", <XPathBreakingPage />)}
+                {createRoutes(
+                  "/nested-text-locator-poc",
+                  <NestedTextLocatorPOCPage />,
+                )}
                 {createRoutes("/list-card", <CardListPage />)}
                 {createRoutes("/unique-test-data", <NumericInputPage />)}
                 {createRoutes("/settings", <SettingsPage />)}
@@ -185,6 +199,51 @@ function App() {
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
                 {createRoutes("/challenging-form", <ChallengingFormPage />)}
+                {createRoutes("/ctrl-click-table", <CtrlClickTablePage />)}
+                {createRoutes(
+                  "/same-tab-url-transition",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/manual-source",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/orders/123",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/role-switch",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/dropdown-route-state",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/admin/dashboard",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/login-redirect",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/session-review",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/guarded-reports",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/access-review",
+                  <SameTabUrlTransitionPage />,
+                )}
+                {createRoutes(
+                  "/same-tab-url-transition/unsupported-scope",
+                  <SameTabUrlTransitionPage />,
+                )}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
