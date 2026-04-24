@@ -80,6 +80,10 @@ const menuItems = [
     items: [
       { path: "/context-menu", label: "Context Menu" },
       { path: "/multi-tiered-menu", label: "Multi Tiered Menu" },
+      {
+        path: "/multi-tiered-menu-innertext",
+        label: "Multi Tiered Menu InnerText",
+      },
       { path: "/notifications", label: "Notifications" },
       { path: "/toast-delay-scenario", label: "Toast Delay Scenario" },
       { path: "/ab-testing", label: "A/B Testing" },

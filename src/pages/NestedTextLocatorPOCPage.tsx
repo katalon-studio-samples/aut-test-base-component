@@ -29,7 +29,8 @@ const scenarios: Scenario[] = [
       },
       {
         label: "Normalized descendant text predicate",
-        xpath: "//*[@role='option' and normalize-space(.)='Direct Text Option']",
+        xpath:
+          "//*[@role='option' and normalize-space(.)='Direct Text Option']",
       },
     ],
   },
@@ -47,11 +48,13 @@ const scenarios: Scenario[] = [
       },
       {
         label: "Normalized descendant text predicate",
-        xpath: "//*[@role='option' and normalize-space(.)='Nested Text Option']",
+        xpath:
+          "//*[@role='option' and normalize-space(.)='Nested Text Option']",
       },
       {
         label: "Target child span text",
-        xpath: "//*[@role='option'][.//span[normalize-space()='Nested Text Option']]",
+        xpath:
+          "//*[@role='option'][.//span[normalize-space()='Nested Text Option']]",
       },
     ],
   },
@@ -69,11 +72,13 @@ const scenarios: Scenario[] = [
       },
       {
         label: "Target title descendant",
-        xpath: "//*[@role='option'][.//span[normalize-space()='Accounts - CRM']]",
+        xpath:
+          "//*[@role='option'][.//span[normalize-space()='Accounts - CRM']]",
       },
       {
         label: "Contains full descendant text",
-        xpath: "//*[@role='option' and contains(normalize-space(.), 'Accounts - CRM')]",
+        xpath:
+          "//*[@role='option' and contains(normalize-space(.), 'Accounts - CRM')]",
       },
     ],
   },
@@ -156,7 +161,9 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
           How to use this page
         </h2>
         <ol className="list-decimal space-y-2 pl-5 text-sm text-gray-700 dark:text-gray-300">
-          <li>Open this page in the AUT test app and record clicks on each card.</li>
+          <li>
+            Open this page in the AUT test app and record clicks on each card.
+          </li>
           <li>Inspect the emitted primary XPath for the selected target.</li>
           <li>
             Compare the recorded XPath with the on-page check table to see
@@ -195,10 +202,7 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
                 </div>
 
                 {scenario.id === "direct-text-option" && (
-                  <ul
-                    role="listbox"
-                    className="space-y-3"
-                  >
+                  <ul role="listbox" className="space-y-3">
                     <li
                       role="option"
                       tabIndex={0}
@@ -211,10 +215,7 @@ export const NestedTextLocatorPOCPage: React.FC = () => {
                 )}
 
                 {scenario.id === "nested-title-option" && (
-                  <ul
-                    role="listbox"
-                    className="space-y-3"
-                  >
+                  <ul role="listbox" className="space-y-3">
                     <div
                       role="option"
                       tabIndex={0}

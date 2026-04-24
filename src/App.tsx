@@ -67,6 +67,7 @@ import { OpenNewTabPage } from "./pages/OpenNewTabPage";
 import { CtrlClickTablePage } from "./pages/CtrlClickTablePage";
 import { SameTabUrlTransitionPage } from "./pages/SameTabUrlTransitionPage";
 import { MonacoEditorPage } from "./pages/MonacoEditorPage";
+import { MultiTieredMenuInnerTextPage } from "./pages/MultiTieredMenuInnerTextPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -133,6 +134,10 @@ function App() {
                 {createRoutes("/iframes-2", <IframePageNested2Level />)}
                 {createRoutes("/context-menu", <ContextMenuPage />)}
                 {createRoutes("/multi-tiered-menu", <MultiTieredMenuPage />)}
+                {createRoutes(
+                  "/multi-tiered-menu-innertext",
+                  <MultiTieredMenuInnerTextPage />,
+                )}
                 {createRoutes("/hover", <HoverPage />)}
                 {createRoutes("/notifications", <NotificationsPage />)}
                 {createRoutes(

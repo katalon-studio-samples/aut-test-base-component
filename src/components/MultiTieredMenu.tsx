@@ -10,6 +10,7 @@ import {
 export interface MenuItem {
   id: string;
   label: string;
+  content?: React.ReactNode;
   children?: MenuItem[];
 }
 
@@ -56,19 +57,22 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
       >
         <button
           className={`
-            flex items-center justify-between gap-1 whitespace-nowrap
+            flex w-full items-center justify-between gap-2
             ${
               level === 0
-                ? "h-14 px-4 text-gray-700 hover:text-blue-600 font-medium text-base"
-                : "w-full px-4 py-2 text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                ? "min-h-14 px-4 py-3 text-gray-700 hover:text-blue-600 font-medium text-base"
+                : "px-4 py-2 text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50"
             }
           `}
           onClick={() => handleClick(item)}
+          data-test={`multi-tier-menu-item-${item.id}`}
         >
-          <span>{item.label}</span>
+          <span className="flex-1 text-left leading-tight">
+            {item.content ?? item.label}
+          </span>
           {hasChildren && (
             <svg
-              className="w-4 h-4"
+              className="h-4 w-4 shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

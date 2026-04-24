@@ -133,6 +133,13 @@ const categories = [
         icon: <MousePointer2 className="w-6 h-6" />,
       },
       {
+        title: "Menu InnerText",
+        path: "/multi-tiered-menu-innertext",
+        description:
+          "Inspect parent menu items whose text comes from descendants",
+        icon: <MousePointer2 className="w-6 h-6" />,
+      },
+      {
         title: "Notifications",
         path: "/notifications",
         description: "Test notification systems",
