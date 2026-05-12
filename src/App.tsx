@@ -68,6 +68,7 @@ import { CtrlClickTablePage } from "./pages/CtrlClickTablePage";
 import { SameTabUrlTransitionPage } from "./pages/SameTabUrlTransitionPage";
 import { MonacoEditorPage } from "./pages/MonacoEditorPage";
 import { MultiTieredMenuInnerTextPage } from "./pages/MultiTieredMenuInnerTextPage";
+import NgSelectDropdownPage from "./pages/NgSelectDropdownPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -198,6 +199,7 @@ function App() {
                 {createRoutes("/dynamic-id-locator", <DynamicIDLocatorPage />)}
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
+                {createRoutes("/ng-select-dropdown", <NgSelectDropdownPage />)}
                 {createRoutes("/challenging-form", <ChallengingFormPage />)}
                 {createRoutes("/ctrl-click-table", <CtrlClickTablePage />)}
                 {createRoutes(

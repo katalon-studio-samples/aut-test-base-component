@@ -95,6 +95,7 @@ const menuItems = [
       { path: "/open-new-tab", label: "Open New Tab" },
       { path: "/same-tab-url-transition", label: "Same-Tab URL Transition" },
       { path: "/challenging-form", label: "Challenging Form" },
+      { path: "/ng-select-dropdown", label: "Ng-Select Dropdown" },
       { path: "/ctrl-click-table", label: "Ctrl+Click Table" },
     ],
   },
