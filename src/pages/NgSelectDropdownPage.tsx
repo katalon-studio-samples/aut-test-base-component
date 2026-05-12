@@ -1,31 +1,96 @@
 import { useEffect, useRef, useState } from "react";
 
 const US_STATES = [
-  "AK", "AL", "AR", "AZ", "CA", "CO", "CT", "DC", "DE", "FL",
-  "GA", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA",
-  "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE",
-  "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "RI",
-  "SC", "SD", "TN", "TX", "UT", "VA", "VT", "WA", "WI", "WV", "WY",
+  "AK",
+  "AL",
+  "AR",
+  "AZ",
+  "CA",
+  "CO",
+  "CT",
+  "DC",
+  "DE",
+  "FL",
+  "GA",
+  "HI",
+  "IA",
+  "ID",
+  "IL",
+  "IN",
+  "KS",
+  "KY",
+  "LA",
+  "MA",
+  "MD",
+  "ME",
+  "MI",
+  "MN",
+  "MO",
+  "MS",
+  "MT",
+  "NC",
+  "ND",
+  "NE",
+  "NH",
+  "NJ",
+  "NM",
+  "NV",
+  "NY",
+  "OH",
+  "OK",
+  "OR",
+  "PA",
+  "RI",
+  "SC",
+  "SD",
+  "TN",
+  "TX",
+  "UT",
+  "VA",
+  "VT",
+  "WA",
+  "WI",
+  "WV",
+  "WY",
 ];
 
 const DOCUMENT_TYPES = [
-  "Refinance", "Purchase", "Home Equity", "Reverse Mortgage",
-  "HELOC", "Construction Loan", "Commercial Loan",
+  "Refinance",
+  "Purchase",
+  "Home Equity",
+  "Reverse Mortgage",
+  "HELOC",
+  "Construction Loan",
+  "Commercial Loan",
 ];
 
 const TIME_ZONES = [
-  "Eastern (ET)", "Central (CT)", "Mountain (MT)", "Pacific (PT)",
-  "Alaska (AKT)", "Hawaii (HT)",
+  "Eastern (ET)",
+  "Central (CT)",
+  "Mountain (MT)",
+  "Pacific (PT)",
+  "Alaska (AKT)",
+  "Hawaii (HT)",
 ];
 
 const NOTARY_TYPES = [
-  "Traditional Notary", "Remote Online Notary (RON)",
-  "In-Person Electronic Notary (IPEN)", "Mobile Notary",
+  "Traditional Notary",
+  "Remote Online Notary (RON)",
+  "In-Person Electronic Notary (IPEN)",
+  "Mobile Notary",
 ];
 
 const COUNTY_OPTIONS = [
-  "Jefferson", "Madison", "Franklin", "Monroe", "Washington",
-  "Lincoln", "Hamilton", "Jackson", "Adams", "Union",
+  "Jefferson",
+  "Madison",
+  "Franklin",
+  "Monroe",
+  "Washington",
+  "Lincoln",
+  "Hamilton",
+  "Jackson",
+  "Adams",
+  "Union",
 ];
 
 interface NgSelectProps {
@@ -66,7 +131,10 @@ const NgSelectField = ({
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
         close();
       }
     };
@@ -104,17 +172,23 @@ const NgSelectField = ({
     // question-group custom element wrapping — mirrors Angular component host element
     <question-group data-field={id}>
       <div className="question-label">
-        <label htmlFor={`ng-input-${id}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <label
+          htmlFor={`ng-input-${id}`}
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+        >
           {label}
           {required && <span className="text-red-500 ml-0.5">*</span>}
         </label>
       </div>
       {/* question-selectbox mirrors the Angular select component host */}
       <question-selectbox>
-        <div className="ng-select-wrapper" ref={containerRef as unknown as React.Ref<HTMLDivElement>}>
+        <div
+          className="ng-select-wrapper"
+          ref={containerRef as unknown as React.Ref<HTMLDivElement>}
+        >
           <div className="custom ng-select ng-select-single ng-select-searchable ng-select-clearable ng-untouched ng-pristine ng-valid">
             {/* .ng-select-container mirrors ng-select internal structure */}
-            <div className="ng-select-container" onClick={open} data-test={`ng-select-container-${id}`}>
+            <div className="ng-select-container" onClick={open}>
               <div className="ng-value-container">
                 {!value && !isOpen && (
                   <div className="ng-placeholder">{placeholder}</div>
@@ -141,7 +215,6 @@ const NgSelectField = ({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     className="ng-select-input"
-                    data-test={`ng-input-${id}`}
                   />
                 </div>
               </div>
@@ -157,7 +230,6 @@ const NgSelectField = ({
                 className="ng-dropdown-panel ng-select-bottom"
                 role="listbox"
                 aria-label={label}
-                data-test={`ng-dropdown-panel-${id}`}
               >
                 <div className="ng-dropdown-panel-items scroll-host">
                   {/* First child is the virtual-scroll padding element */}
@@ -175,13 +247,14 @@ const NgSelectField = ({
                           e.preventDefault();
                           select(opt);
                         }}
-                        data-test={`${id}-option-${idx + 1}`}
                       >
                         {opt}
                       </div>
                     ))}
                     {filtered.length === 0 && (
-                      <div className="ng-option ng-option-disabled">No items found</div>
+                      <div className="ng-option ng-option-disabled">
+                        No items found
+                      </div>
                     )}
                   </div>
                 </div>
@@ -207,7 +280,10 @@ const TextQuestion = ({
 }) => (
   <question-group data-field={id}>
     <div className="question-label">
-      <label htmlFor={id} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+      <label
+        htmlFor={id}
+        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+      >
         {label}
         {required && <span className="text-red-500 ml-0.5">*</span>}
       </label>
@@ -219,7 +295,6 @@ const TextQuestion = ({
           type="text"
           placeholder={placeholder}
           className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-          data-test={id}
         />
       </div>
     </question-text>
@@ -419,25 +494,49 @@ export const NgSelectDropdownPage = () => {
         </div>
 
         <div className="card p-6 space-y-6">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Signer Information</h2>
+          <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+            Signer Information
+          </h2>
 
           <div className="question-row">
             {/* question-group div:nth-child(1) */}
-            <TextQuestion id="first-name" label="First Name" placeholder="John" required />
+            <TextQuestion
+              id="first-name"
+              label="First Name"
+              placeholder="John"
+              required
+            />
             {/* question-group div:nth-child(2) */}
-            <TextQuestion id="last-name" label="Last Name" placeholder="Doe" required />
+            <TextQuestion
+              id="last-name"
+              label="Last Name"
+              placeholder="Doe"
+              required
+            />
           </div>
 
           <div className="question-row">
             {/* question-group div:nth-child(3) */}
-            <TextQuestion id="email" label="Email Address" placeholder="john.doe@example.com" required />
+            <TextQuestion
+              id="email"
+              label="Email Address"
+              placeholder="john.doe@example.com"
+              required
+            />
             {/* question-group div:nth-child(4) */}
-            <TextQuestion id="phone" label="Phone Number" placeholder="(555) 000-0000" required />
+            <TextQuestion
+              id="phone"
+              label="Phone Number"
+              placeholder="(555) 000-0000"
+              required
+            />
           </div>
         </div>
 
         <div className="card p-6 space-y-6">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Document Details</h2>
+          <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+            Document Details
+          </h2>
 
           <div className="question-row">
             {/* question-group div:nth-child(5) */}
@@ -451,19 +550,34 @@ export const NgSelectDropdownPage = () => {
               onChange={setDocType}
             />
             {/* question-group div:nth-child(6) */}
-            <TextQuestion id="loan-number" label="Loan Number" placeholder="LN-000000" />
+            <TextQuestion
+              id="loan-number"
+              label="Loan Number"
+              placeholder="LN-000000"
+            />
           </div>
 
           <div className="question-row">
             {/* question-group div:nth-child(7) */}
-            <TextQuestion id="loan-amount" label="Loan Amount" placeholder="$0.00" />
+            <TextQuestion
+              id="loan-amount"
+              label="Loan Amount"
+              placeholder="$0.00"
+            />
             {/* question-group div:nth-child(8) */}
-            <TextQuestion id="closing-date" label="Closing Date" placeholder="MM/DD/YYYY" required />
+            <TextQuestion
+              id="closing-date"
+              label="Closing Date"
+              placeholder="MM/DD/YYYY"
+              required
+            />
           </div>
         </div>
 
         <div className="card p-6 space-y-6">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Signing Appointment</h2>
+          <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+            Signing Appointment
+          </h2>
 
           <div className="question-row">
             {/* question-group div:nth-child(9) */}
@@ -490,14 +604,26 @@ export const NgSelectDropdownPage = () => {
 
           <div className="question-row">
             {/* question-group div:nth-child(11) */}
-            <TextQuestion id="appointment-date" label="Appointment Date" placeholder="MM/DD/YYYY" required />
+            <TextQuestion
+              id="appointment-date"
+              label="Appointment Date"
+              placeholder="MM/DD/YYYY"
+              required
+            />
             {/* question-group div:nth-child(12) */}
-            <TextQuestion id="appointment-time" label="Appointment Time" placeholder="HH:MM AM/PM" required />
+            <TextQuestion
+              id="appointment-time"
+              label="Appointment Time"
+              placeholder="HH:MM AM/PM"
+              required
+            />
           </div>
         </div>
 
         <div className="card p-6 space-y-6">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Property &amp; Signing Location</h2>
+          <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+            Property &amp; Signing Location
+          </h2>
 
           <div className="question-row">
             {/* question-group div:nth-child(13) — the exact nth-child from the bug report */}
@@ -523,25 +649,50 @@ export const NgSelectDropdownPage = () => {
 
           <div className="question-row">
             {/* question-group div:nth-child(15) */}
-            <TextQuestion id="property-address" label="Property Address" placeholder="123 Main St" required />
+            <TextQuestion
+              id="property-address"
+              label="Property Address"
+              placeholder="123 Main St"
+              required
+            />
             {/* question-group div:nth-child(16) */}
-            <TextQuestion id="property-city" label="City" placeholder="Springfield" required />
+            <TextQuestion
+              id="property-city"
+              label="City"
+              placeholder="Springfield"
+              required
+            />
           </div>
 
           <div className="question-row">
             {/* question-group div:nth-child(17) */}
-            <TextQuestion id="property-zip" label="ZIP Code" placeholder="00000" required />
+            <TextQuestion
+              id="property-zip"
+              label="ZIP Code"
+              placeholder="00000"
+              required
+            />
             {/* question-group div:nth-child(18) */}
-            <TextQuestion id="apn" label="APN / Parcel Number" placeholder="000-000-000" />
+            <TextQuestion
+              id="apn"
+              label="APN / Parcel Number"
+              placeholder="000-000-000"
+            />
           </div>
         </div>
 
         <div className="card p-6 space-y-6">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-white">Title &amp; Lender</h2>
+          <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+            Title &amp; Lender
+          </h2>
 
           <div className="question-row">
             {/* question-group div:nth-child(19) */}
-            <TextQuestion id="title-company" label="Title Company" placeholder="ABC Title Co." />
+            <TextQuestion
+              id="title-company"
+              label="Title Company"
+              placeholder="ABC Title Co."
+            />
             {/* question-group div:nth-child(20) */}
             <NgSelectField
               id="title-state"
@@ -555,7 +706,11 @@ export const NgSelectDropdownPage = () => {
 
           <div className="question-row">
             {/* question-group div:nth-child(21) */}
-            <TextQuestion id="lender-name" label="Lender Name" placeholder="First National Bank" />
+            <TextQuestion
+              id="lender-name"
+              label="Lender Name"
+              placeholder="First National Bank"
+            />
             {/* question-group div:nth-child(22) */}
             <NgSelectField
               id="lender-state"
@@ -569,9 +724,17 @@ export const NgSelectDropdownPage = () => {
 
           <div className="question-row">
             {/* question-group div:nth-child(23) */}
-            <TextQuestion id="escrow-number" label="Escrow Number" placeholder="ESC-0000000" />
+            <TextQuestion
+              id="escrow-number"
+              label="Escrow Number"
+              placeholder="ESC-0000000"
+            />
             {/* question-group div:nth-child(24) */}
-            <TextQuestion id="file-number" label="File Number" placeholder="FILE-0000000" />
+            <TextQuestion
+              id="file-number"
+              label="File Number"
+              placeholder="FILE-0000000"
+            />
           </div>
         </div>
 
@@ -579,14 +742,12 @@ export const NgSelectDropdownPage = () => {
           <button
             type="button"
             className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
-            data-test="btn-cancel"
           >
             Cancel
           </button>
           <button
             type="button"
             className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            data-test="btn-submit"
           >
             Submit Signing Order
           </button>
