@@ -31,6 +31,7 @@ import { SliderPage } from "./pages/SliderPage";
 import { AlertsPage } from "./pages/AlertsPage";
 import { KeyPressPage } from "./pages/KeyPressPage";
 import { ShadowDOMPage } from "./pages/ShadowDOMPage";
+import { ShadowBookBorrowPage } from "./pages/ShadowBookBorrowPage";
 import { Menu, X } from "lucide-react";
 import MultiTieredMenuPage from "./pages/MultiTieredMenuPage";
 import { IframePageNested1Level } from "./pages/IframePageNested1Level.tsx";
@@ -49,6 +50,7 @@ import { TextPage as InputTextPage } from "./pages/Input/TextPage.tsx";
 import { RadioSearchSubmitPage } from "./pages/Input/RadioSearchSubmitPage.tsx";
 import { FormInputsPage } from "./pages/Input/FormInputsPage.tsx";
 import { CardListPage } from "./pages/PII/CardListPage.tsx";
+import { PIIControlsPage } from "./pages/PII/PIIControlsPage.tsx";
 import { SauceLoginPage } from "./pages/SauceLoginPage";
 import { NumericInputPage } from "./pages/NumericInputPage";
 import { SettingsPage } from "./pages/SettingsPage";
@@ -155,6 +157,7 @@ function App() {
                 {createRoutes("/alerts", <AlertsPage />)}
                 {createRoutes("/key-press", <KeyPressPage />)}
                 {createRoutes("/shadow-dom", <ShadowDOMPage />)}
+                {createRoutes("/shadow-book-borrow", <ShadowBookBorrowPage />)}
                 {createRoutes("/open-popup", <OpenPopupPage />)}
                 {createRoutes("/open-new-tab", <OpenNewTabPage />)}
                 {createRoutes("/popup-form", <PopupFormPage />)}
@@ -192,6 +195,7 @@ function App() {
                   <NestedTextLocatorPOCPage />,
                 )}
                 {createRoutes("/list-card", <CardListPage />)}
+                {createRoutes("/pii-controls", <PIIControlsPage />)}
                 {createRoutes("/unique-test-data", <NumericInputPage />)}
                 {createRoutes("/settings", <SettingsPage />)}
                 {createRoutes("/ag-grid", <AGGridPage />)}
