@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrueTest Object Clustering Static Sample</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f6f8;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #5f6b7a;
+        --line: #d8dee7;
+        --primary: #1663d8;
+        --primary-dark: #0f4fae;
+        --good: #137a43;
+        --warn: #9a5b00;
+        --bad: #b42318;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        font-size: 14px;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .app-shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+      }
+
+      .side-nav {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow: auto;
+        border-right: 1px solid var(--line);
+        background: var(--panel);
+        padding: 18px;
+      }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.25;
+      }
+
+      .version-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .version-badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        border-radius: 999px;
+        padding: 4px 10px;
+        background: #111827;
+        color: #fff;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .version-link,
+      .route-link {
+        display: flex;
+        align-items: center;
+        border-radius: 6px;
+        color: #243244;
+        text-decoration: none;
+      }
+
+      .version-link {
+        min-height: 28px;
+        padding: 4px 9px;
+        border: 1px solid var(--line);
+        font-size: 12px;
+      }
+
+      .route-link {
+        min-height: 38px;
+        margin: 4px 0;
+        padding: 8px 10px;
+        gap: 8px;
+      }
+
+      .route-link:hover,
+      .version-link:hover {
+        background: #eef4ff;
+      }
+
+      .route-link.active {
+        background: #dceaff;
+        color: #0f4fae;
+        outline: 2px solid #2d6cdf;
+      }
+
+      .nav-label {
+        margin: 22px 0 8px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .content {
+        padding: 24px;
+      }
+
+      .page-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin: 0 auto 18px;
+        max-width: 1440px;
+      }
+
+      .page-header h2 {
+        margin: 0 0 6px;
+        font-size: 24px;
+      }
+
+      .route-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 4px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--panel);
+        color: var(--muted);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 430px;
+        gap: 18px;
+        align-items: start;
+        max-width: 1440px;
+        margin: 0 auto;
+      }
+
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
+        padding: 18px;
+      }
+
+      .panel h3 {
+        margin: 0 0 14px;
+        font-size: 18px;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      label,
+      .field-label {
+        color: #334155;
+        font-weight: 700;
+        font-size: 13px;
+      }
+
+      input,
+      select {
+        min-height: 38px;
+        border: 1px solid #c9d2df;
+        border-radius: 6px;
+        background: #fff;
+        color: var(--text);
+        padding: 8px 10px;
+        font: inherit;
+      }
+
+      input:focus,
+      select:focus,
+      button:focus,
+      a:focus {
+        outline: 2px solid #8ab4ff;
+        outline-offset: 2px;
+      }
+
+      .btn,
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 38px;
+        border: 1px solid transparent;
+        border-radius: 6px;
+        padding: 8px 13px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .button-main {
+        background: #13845a;
+        color: #fff;
+      }
+
+      .secondary {
+        border-color: #c9d2df;
+        background: #fff;
+        color: #1f2a3a;
+      }
+
+      .danger {
+        background: var(--bad);
+        color: #fff;
+      }
+
+      .sticky-footer {
+        position: sticky;
+        bottom: 0;
+        margin: 18px -18px -18px;
+        border-top: 1px solid var(--line);
+        background: #fbfcfe;
+        padding: 14px 18px;
+        text-align: right;
+      }
+
+      .table-wrap {
+        overflow: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid #edf0f4;
+        padding: 10px;
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      th {
+        color: #526071;
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      .status-button {
+        min-height: 30px;
+        border: 0;
+        border-radius: 999px;
+        background: #fff1c2;
+        color: #7a4100;
+        padding: 5px 11px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 44px;
+        border: 1px solid #e4e9f0;
+        border-radius: 6px;
+        padding: 10px;
+      }
+
+      .checkbox-row-v2 {
+        border-style: dashed;
+        background: #fbfcfe;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .icon-button,
+      .icon-button-v2 {
+        width: 38px;
+        min-width: 38px;
+        padding: 0;
+        border: 1px solid #c9d2df;
+        background: #fff;
+        color: #233044;
+      }
+
+      .icon-button-v2 {
+        border-radius: 999px;
+        background: #eef4ff;
+      }
+
+      .result-panel {
+        min-height: 96px;
+        border: 1px dashed #b8c3d2;
+        border-radius: 6px;
+        background: #f8fafc;
+        padding: 12px;
+        color: #243244;
+      }
+
+      .scenario-card {
+        border: 1px solid #e1e6ee;
+        border-radius: 8px;
+        background: #fbfcfe;
+        padding: 11px;
+      }
+
+      .scenario-card + .scenario-card {
+        margin-top: 10px;
+      }
+
+      .scenario-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-weight: 800;
+      }
+
+      .tag {
+        border-radius: 999px;
+        padding: 3px 7px;
+        font-size: 10px;
+        font-weight: 900;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .same_object_variant,
+      .single_object_static {
+        background: #dff8e9;
+        color: var(--good);
+      }
+
+      .collection_family {
+        background: #e4efff;
+        color: #174ea6;
+      }
+
+      .related_distinct_objects,
+      .distinct_static_candidates {
+        background: #fff2cf;
+        color: var(--warn);
+      }
+
+      .ambiguous {
+        background: #f1e8ff;
+        color: #6941c6;
+      }
+
+      .no_match {
+        background: #ffe4e0;
+        color: var(--bad);
+      }
+
+      .scenario-card dl {
+        display: grid;
+        grid-template-columns: 86px minmax(0, 1fr);
+        gap: 4px 8px;
+        margin: 0;
+        font-size: 12px;
+      }
+
+      .scenario-card dt {
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .scenario-card dd {
+        margin: 0;
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        display: none;
+        place-items: center;
+        background: rgb(15 23 42 / 0.55);
+        padding: 20px;
+        z-index: 30;
+      }
+
+      .modal-backdrop.open {
+        display: grid;
+      }
+
+      .modal {
+        width: min(560px, 100%);
+        border-radius: 8px;
+        background: #fff;
+        padding: 18px;
+        box-shadow: 0 18px 60px rgb(15 23 42 / 0.28);
+      }
+
+      .portal-root-v2 {
+        border: 1px dashed #a9b6c7;
+        border-radius: 8px;
+        padding: 12px;
+        background: #fbfcfe;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+
+      @media (max-width: 1100px) {
+        .app-shell,
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .side-nav {
+          position: static;
+          height: auto;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .content {
+          padding: 14px;
+        }
+
+        .grid-2,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="side-nav">
+        <div class="brand">
+          <h1>TrueTest Object Clustering</h1>
+          <div class="version-row">
+            <span class="version-badge" id="versionBadge">Version A</span>
+            <a class="version-link" id="versionA" href="?version=A">Open A</a>
+            <a class="version-link" id="versionB" href="?version=B">Open B</a>
+          </div>
+        </div>
+        <div class="nav-label">Routes</div>
+        <nav id="routeNav" aria-label="Static sample routes"></nav>
+        <div class="nav-label">Run locally</div>
+        <p style="margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45">
+          This file is standalone. Use <code>file:///.../index.html?version=A</code>
+          or <code>?version=B</code>, then choose a route from this menu.
+        </p>
+      </aside>
+
+      <main class="content">
+        <header class="page-header">
+          <div>
+            <h2 id="pageTitle">Query Template</h2>
+            <p id="pageDescription" style="margin: 0; color: var(--muted)">
+              Controlled locator, semantic, structure, and attribute variations.
+            </p>
+          </div>
+          <span class="route-chip" id="routeChip">/query-template</span>
+        </header>
+
+        <div class="layout">
+          <div class="stack" id="pageRoot"></div>
+          <aside class="stack">
+            <section class="panel">
+              <h3>Scenario matrix</h3>
+              <div id="scenarioMatrix"></div>
+            </section>
+            <section class="panel">
+              <h3>Interaction result</h3>
+              <div class="result-panel" id="resultPanel" data-testid="clustering-result-panel" aria-live="polite">
+                No actions recorded yet.
+              </div>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="editModalBackdrop">
+      <section class="modal" role="dialog" aria-modal="true" aria-label="Edit query modal">
+        <h3>Edit query</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label for="edit-query-name-modal">Query Name</label>
+            <input id="edit-query-name-modal" name="queryName" placeholder="Query name" />
+          </div>
+          <div class="field">
+            <label for="edit-query-owner-modal">Owner</label>
+            <input id="edit-query-owner-modal" name="queryOwner" placeholder="Owner" />
+          </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:14px">
+          <button class="button secondary" type="button" data-action="close-modal">Close</button>
+          <button class="button button-main" type="button" data-action="save-modal">Save</button>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const routes = [
+        { path: "/query-template", title: "Query Template" },
+        { path: "/studies/123/queries/456", title: "Study Queries" },
+        { path: "/admin/permissions", title: "Admin Permissions" },
+        { path: "/profile/settings", title: "Profile Settings" },
+        { path: "/dashboard", title: "Dashboard" },
+      ];
+
+      const scenarioMatrix = [
+        {
+          id: 1,
+          page: "/query-template",
+          objectType: "Issue input",
+          versionA: "label Issue, placeholder Enter issue name, id cr-input-0svzb-2, class ng-untouched ng-pristine ng-valid",
+          versionB: "same label/placeholder/data-testid, id cr-input-2kd04-5, class order changes, wrapper added before input",
+          stableSignals: "url pattern, role=textbox, label, placeholder, data-testid=issue_value",
+          changedSignals: "generated id, raw CSS class order, raw XPath index",
+          expectedClassification: "same_object_variant",
+          expectedBehavior: "Should be considered the same logical TestObject.",
+          risk: "false duplicate",
+        },
+        {
+          id: 2,
+          page: "/query-template",
+          objectType: "Save button",
+          versionA: "text Save, id save-button, class btn btn-primary",
+          versionB: "text Save, id save-button-v2, class button button-main, moved into sticky footer",
+          stableSignals: "url pattern, role=button, visible text Save, action result Saved",
+          changedSignals: "id, CSS locator, wrapper, XPath",
+          expectedClassification: "same_object_variant",
+          expectedBehavior: "Should remain same logical Save button.",
+          risk: "false duplicate",
+        },
+        {
+          id: 3,
+          page: "/query-template",
+          objectType: "Filter inputs",
+          versionA: "ID, Name, Description use same structure and generated classes",
+          versionB: "same structure and similar generated ids",
+          stableSignals: "labels and placeholders identify each field",
+          changedSignals: "generated ids/classes",
+          expectedClassification: "related_distinct_objects",
+          expectedBehavior: "Must split by label or placeholder.",
+          risk: "false merge",
+        },
+        {
+          id: 4,
+          page: "/studies/123/queries/456",
+          objectType: "Pending status buttons",
+          versionA: "15 rows, row IDs query-row-1..query-row-15, normal order",
+          versionB: "rows reordered, one new row added near top, generated row ids/classes changed",
+          stableSignals: "table context, repeated row structure, Query ID and Query Name",
+          changedSignals: "row index, raw XPath, row id/class",
+          expectedClassification: "collection_family",
+          expectedBehavior: "Identify repeated status controls as collection pattern.",
+          risk: "collection row identity",
+        },
+        {
+          id: 5,
+          page: "/admin/permissions",
+          objectType: "Service checkboxes",
+          versionA: "Navigator, E-learning, Participant, Billing rows in original order",
+          versionB: "rows reordered and wrapper classes changed",
+          stableSignals: "label for/id relationship, service names",
+          changedSignals: "row order, wrapper CSS, XPath",
+          expectedClassification: "distinct_static_candidates",
+          expectedBehavior: "Must not merge all checkboxes into one object.",
+          risk: "false merge",
+        },
+        {
+          id: 6,
+          page: "/studies/123/queries/456",
+          objectType: "Status dropdown",
+          versionA: "label Status, id cr-select-q2msr-1, options All/Pending/Open/Closed",
+          versionB: "label Status, id cr-select-x3se8-1, same options, wrapper index changes",
+          stableSignals: "label Status, options, URL pattern",
+          changedSignals: "generated id, wrapper, XPath",
+          expectedClassification: "same_object_variant",
+          expectedBehavior: "Same logical dropdown despite generated ID drift.",
+          risk: "false duplicate",
+        },
+        {
+          id: 7,
+          page: "/studies/123/queries/456",
+          objectType: "Filter dropdown group",
+          versionA: "Category, Generated, Status, Site, Subject use same component shape",
+          versionB: "same component family with different generated IDs",
+          stableSignals: "individual labels and option meanings",
+          changedSignals: "generated ids/classes",
+          expectedClassification: "related_distinct_objects",
+          expectedBehavior: "Must not merge different filters only because they share cr-select structure.",
+          risk: "false merge",
+        },
+        {
+          id: 8,
+          page: "/query-template",
+          objectType: "Category select",
+          versionA: "data-testid category_value=query, text query/dcr, generated CSS",
+          versionB: "same data-testid, different generated class and wrapper",
+          stableSignals: "data-testid=category_value=query, label Category",
+          changedSignals: "wrapper, generated class, XPath",
+          expectedClassification: "single_object_static",
+          expectedBehavior: "Stable test id should provide strong semantic signal.",
+          risk: "false duplicate",
+        },
+        {
+          id: 9,
+          page: "/studies/123/queries/456",
+          objectType: "Weak generic combobox",
+          versionA: "no label, no aria-label, id cr-select-random",
+          versionB: "generated id and wrapper changed",
+          stableSignals: "generic text only: cr-select select",
+          changedSignals: "generated id, wrapper, XPath",
+          expectedClassification: "ambiguous",
+          expectedBehavior: "Low confidence or manual review.",
+          risk: "weak signal",
+        },
+        {
+          id: 10,
+          page: "/dashboard",
+          objectType: "Unlabeled icon toolbar",
+          versionA: "5 icon-only buttons, no aria-label, class icon-button",
+          versionB: "same icons but DOM order changes",
+          stableSignals: "weak role=button and icon shape only",
+          changedSignals: "DOM order, XPath",
+          expectedClassification: "ambiguous",
+          expectedBehavior: "Must not confidently merge unrelated icons.",
+          risk: "weak signal",
+        },
+        {
+          id: 11,
+          page: "/dashboard",
+          objectType: "Labeled icon buttons",
+          versionA: "Refresh, Export, Delete with stable aria-label",
+          versionB: "CSS and wrapper changed",
+          stableSignals: "aria-label and button role",
+          changedSignals: "CSS, wrapper, XPath",
+          expectedClassification: "same_object_variant",
+          expectedBehavior: "Stable aria-label identifies each object.",
+          risk: "false duplicate",
+        },
+        {
+          id: 12,
+          page: "/query-template",
+          objectType: "Submit vs Archive button",
+          versionA: "button text Submit, action result Submitted",
+          versionB: "same location button text Archive, action result Archived",
+          stableSignals: "similar page location",
+          changedSignals: "visible text and action result",
+          expectedClassification: "no_match",
+          expectedBehavior: "Must not reuse Submit as Archive.",
+          risk: "false merge",
+        },
+        {
+          id: 13,
+          page: "/profile/settings",
+          objectType: "Profile Save button",
+          versionA: "Save button on profile page",
+          versionB: "Save button remains on profile page; query-template also has Save",
+          stableSignals: "URL/page context and form context",
+          changedSignals: "none significant",
+          expectedClassification: "distinct_static_candidates",
+          expectedBehavior: "Do not match with Save button on /query-template.",
+          risk: "false merge",
+        },
+        {
+          id: 14,
+          page: "/studies/123/queries/456",
+          objectType: "Edit row action and edit form",
+          versionA: "Edit opens inline edit panel",
+          versionB: "Edit opens modal dialog; fields keep same labels",
+          stableSignals: "row identity, Edit text, form field labels",
+          changedSignals: "DOM relocation, modal portal, XPath",
+          expectedClassification: "same_object_variant",
+          expectedBehavior: "Relocation should not create duplicate objects.",
+          risk: "false duplicate",
+        },
+        {
+          id: 15,
+          page: "/query-template",
+          objectType: "Hidden Save duplicate",
+          versionA: "visible Save plus hidden Save with similar class",
+          versionB: "same hidden duplicate risk around sticky footer Save",
+          stableSignals: "visible state and action result",
+          changedSignals: "wrapper and placement",
+          expectedClassification: "ambiguous",
+          expectedBehavior: "Visible action should be selected; hidden duplicate should not cause confident merge.",
+          risk: "hidden duplicate",
+        },
+      ];
+
+      const queryRowsA = Array.from({ length: 15 }, (_, index) => ({
+        rowId: `query-row-${index + 1}`,
+        queryId: `Q-${String(index + 1).padStart(3, "0")}`,
+        name: [
+          "Eligibility mismatch",
+          "Missing visit date",
+          "Lab range review",
+          "Consent verification",
+          "Dose confirmation",
+          "AE follow-up",
+          "Site response needed",
+          "Participant note",
+          "Enrollment check",
+          "Imaging query",
+          "Medication review",
+          "Signature missing",
+          "Screening update",
+          "Protocol deviation",
+          "Final closeout",
+        ][index],
+      }));
+
+      const queryRowsB = [
+        { rowId: "row-gen-b-new", queryId: "Q-016", name: "New safety review" },
+        ...queryRowsA.slice(9),
+        ...queryRowsA.slice(0, 9),
+      ].map((row, index) => ({
+        ...row,
+        rowId: `cr-row-b-${index + 31}`,
+      }));
+
+      const permissionRowsA = [
+        ["navigator-service", "Navigator Service"],
+        ["elearning-service", "E-learning Service"],
+        ["participant-service", "Participant Service"],
+        ["billing-service", "Billing Service"],
+      ];
+
+      const permissionRowsB = [
+        ["billing-service", "Billing Service"],
+        ["participant-service", "Participant Service"],
+        ["navigator-service", "Navigator Service"],
+        ["elearning-service", "E-learning Service"],
+      ];
+
+      const state = {
+        version: new URLSearchParams(window.location.search).get("version") === "B" ? "B" : "A",
+        route: window.location.hash.replace(/^#/, "") || "/query-template",
+        result: "No actions recorded yet.",
+      };
+
+      function setResult(message) {
+        state.result = `${new Date().toLocaleTimeString()} - ${message}`;
+        document.getElementById("resultPanel").textContent = state.result;
+      }
+
+      function versionHref(version) {
+        return `${window.location.pathname}?version=${version}#${state.route}`;
+      }
+
+      function routeHref(route) {
+        return `${window.location.pathname}?version=${state.version}#${route}`;
+      }
+
+      function renderShell() {
+        document.getElementById("versionBadge").textContent = `Version ${state.version}`;
+        document.getElementById("versionA").href = versionHref("A");
+        document.getElementById("versionB").href = versionHref("B");
+        document.getElementById("routeNav").innerHTML = routes
+          .map(
+            (route) => `
+              <a class="route-link ${state.route === route.path ? "active" : ""}"
+                 href="${routeHref(route.path)}"
+                 data-route="${route.path}">
+                <span aria-hidden="true">›</span>
+                <span>${route.title}</span>
+              </a>
+            `,
+          )
+          .join("");
+
+        const routeInfo = routes.find((route) => route.path === state.route) || routes[0];
+        document.getElementById("pageTitle").textContent = routeInfo.title;
+        document.getElementById("routeChip").textContent = routeInfo.path;
+        renderScenarioMatrix(routeInfo.path);
+      }
+
+      function renderScenarioMatrix(route) {
+        const current = scenarioMatrix.filter((item) => item.page === route);
+        const html = current
+          .map(
+            (item) => `
+              <article class="scenario-card">
+                <div class="scenario-title">
+                  <span>${item.id}. ${item.objectType}</span>
+                  <span class="tag ${item.expectedClassification}">${item.expectedClassification}</span>
+                </div>
+                <dl>
+                  <dt>Page</dt><dd><code>${item.page}</code></dd>
+                  <dt>A</dt><dd>${item.versionA}</dd>
+                  <dt>B</dt><dd>${item.versionB}</dd>
+                  <dt>Stable</dt><dd>${item.stableSignals}</dd>
+                  <dt>Changed</dt><dd>${item.changedSignals}</dd>
+                  <dt>Expected</dt><dd>${item.expectedBehavior}</dd>
+                  <dt>Risk</dt><dd>${item.risk}</dd>
+                </dl>
+              </article>
+            `,
+          )
+          .join("");
+        document.getElementById("scenarioMatrix").innerHTML =
+          html || "<p>No scenarios mapped to this route.</p>";
+      }
+
+      function renderPage() {
+        renderShell();
+        const root = document.getElementById("pageRoot");
+        if (state.route === "/query-template") {
+          root.innerHTML = renderQueryTemplate();
+        } else if (state.route === "/studies/123/queries/456") {
+          root.innerHTML = renderStudyQueries();
+        } else if (state.route === "/admin/permissions") {
+          root.innerHTML = renderPermissions();
+        } else if (state.route === "/profile/settings") {
+          root.innerHTML = renderProfileSettings();
+        } else if (state.route === "/dashboard") {
+          root.innerHTML = renderDashboard();
+        }
+        document.getElementById("resultPanel").textContent = state.result;
+        bindActions();
+      }
+
+      function renderQueryTemplate() {
+        const isB = state.version === "B";
+        const issueInput = `
+          <div class="field ${isB ? "issue-wrapper-before" : ""}">
+            <label for="${isB ? "cr-input-2kd04-5" : "cr-input-0svzb-2"}">Issue</label>
+            ${isB ? '<div class="xpath-shift-wrapper" data-wrapper="inserted-before-input"></div>' : ""}
+            <input
+              role="textbox"
+              data-testid="issue_value"
+              id="${isB ? "cr-input-2kd04-5" : "cr-input-0svzb-2"}"
+              name="issue"
+              class="${isB ? "ng-pristine ng-valid ng-touched" : "ng-untouched ng-pristine ng-valid"}"
+              placeholder="Enter issue name"
+            />
+          </div>
+        `;
+
+        const saveButton = `
+          <button
+            id="${isB ? "save-button-v2" : "save-button"}"
+            class="${isB ? "button button-main" : "btn btn-primary"}"
+            type="button"
+            data-action="save-template">
+            Save
+          </button>
+        `;
+
+        return `
+          <section class="panel">
+            <h3>Create query template</h3>
+            <div class="grid-2">
+              ${issueInput}
+              <div class="${isB ? "category-shell-v2" : "category-shell-a"}">
+                <div class="field">
+                  <label for="${isB ? "cat-select-v2" : "cat-select-v1"}">Category</label>
+                  <select
+                    id="${isB ? "cat-select-v2" : "cat-select-v1"}"
+                    class="${isB ? "gen-select-v2-93" : "gen-select-a-14"}"
+                    data-testid="category_value=query"
+                    data-action="select-change">
+                    <option>query</option>
+                    <option>dcr</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            ${isB ? `<div class="sticky-footer">${saveButton}</div>` : `<div style="margin-top:16px">${saveButton}</div>`}
+          </section>
+
+          <section class="panel">
+            <h3>Similar structure, different field meaning</h3>
+            <div class="grid-3">
+              ${["ID", "Name", "Description"].map((label, index) => `
+                <div class="field object-filter-row">
+                  <label for="cr-filter-${state.version.toLowerCase()}-${index}">${label}</label>
+                  <input id="cr-filter-${state.version.toLowerCase()}-${index}" class="filter-input generated-control" placeholder="${label} filter" />
+                </div>
+              `).join("")}
+            </div>
+          </section>
+
+          <section class="panel">
+            <h3>Meaning changed action</h3>
+            <button class="${isB ? "button danger" : "btn btn-primary"}" type="button" data-action="${isB ? "archive" : "submit"}">
+              ${isB ? "Archive" : "Submit"}
+            </button>
+          </section>
+
+          <section class="panel">
+            <h3>Hidden duplicate</h3>
+            <button class="btn btn-primary" type="button" hidden>Save</button>
+            <button class="${isB ? "button button-main" : "btn btn-primary"}" type="button" data-action="visible-save">Save</button>
+          </section>
+        `;
+      }
+
+      function renderStudyQueries() {
+        const isB = state.version === "B";
+        const rows = isB ? queryRowsB : queryRowsA;
+        return `
+          <section class="panel">
+            <h3>Query filters</h3>
+            <div class="grid-3">
+              ${renderSelect("Category", isB ? "cr-select-cat-b92" : "cr-select-cat-a12", ["All", "Safety", "Data", "Site"])}
+              ${renderSelect("Generated", isB ? "cr-select-gen-b52" : "cr-select-gen-a22", ["All", "System", "Manual"])}
+              ${renderSelect("Status", isB ? "cr-select-x3se8-1" : "cr-select-q2msr-1", ["All", "Pending", "Open", "Closed"])}
+              ${renderSelect("Site", isB ? "cr-select-site-b44" : "cr-select-site-a18", ["All", "Site 101", "Site 204"])}
+              ${renderSelect("Subject", isB ? "cr-select-subj-b88" : "cr-select-subj-a31", ["All", "SUB-001", "SUB-002"])}
+              <div class="${isB ? "portal-root-v2" : ""}">
+                <select id="${isB ? "cr-select-random-b" : "cr-select-random"}" class="generated-combobox" data-action="select-change">
+                  <option>cr-select select</option>
+                  <option>generic option</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h3>Query table</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Query ID</th>
+                    <th>Query Name</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rows.map((row, index) => `
+                    <tr id="${row.rowId}" class="${isB ? `row-v2-${index}` : "query-row"}">
+                      <td>${row.queryId}</td>
+                      <td>${row.name}</td>
+                      <td><button class="status-button" type="button" data-action="status" data-row="${row.queryId}">Pending</button></td>
+                      <td><button class="button secondary" type="button" data-action="edit-row" data-row="${row.queryId}" data-row-name="${row.name}">Edit</button></td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          ${isB ? "" : `
+            <section class="panel" id="inlineEditPanel" style="display:none">
+              <h3>Inline edit panel</h3>
+              <div class="grid-2">
+                <div class="field"><label for="edit-query-name-inline">Query Name</label><input id="edit-query-name-inline" placeholder="Query name" /></div>
+                <div class="field"><label for="edit-query-owner-inline">Owner</label><input id="edit-query-owner-inline" placeholder="Owner" /></div>
+              </div>
+              <button class="btn btn-primary" type="button" data-action="save-inline" style="margin-top:12px">Save</button>
+            </section>
+          `}
+        `;
+      }
+
+      function renderSelect(label, id, options) {
+        return `
+          <div class="field cr-select-wrapper">
+            <label for="${id}">${label}</label>
+            <select id="${id}" class="cr-select generated-select" data-action="select-change">
+              ${options.map((option) => `<option>${option}</option>`).join("")}
+            </select>
+          </div>
+        `;
+      }
+
+      function renderPermissions() {
+        const isB = state.version === "B";
+        const rows = isB ? permissionRowsB : permissionRowsA;
+        return `
+          <section class="panel">
+            <h3>Service permissions</h3>
+            <div class="stack">
+              ${rows.map(([id, label]) => `
+                <div class="${isB ? "checkbox-row checkbox-row-v2" : "checkbox-row"}">
+                  <input id="${id}" type="checkbox" data-action="permission-toggle" />
+                  <label for="${id}">${label}</label>
+                </div>
+              `).join("")}
+            </div>
+            <button class="${isB ? "button button-main" : "btn btn-primary"}" type="button" data-action="save-permissions" style="margin-top:14px">
+              Save Permissions
+            </button>
+          </section>
+        `;
+      }
+
+      function renderProfileSettings() {
+        const isB = state.version === "B";
+        return `
+          <section class="panel">
+            <h3>Profile settings</h3>
+            <div class="${isB ? "profile-form-v2" : "profile-form-a"}">
+              <div class="field">
+                <label for="${isB ? "profile-email-b" : "profile-email-a"}">Email</label>
+                <input id="${isB ? "profile-email-b" : "profile-email-a"}" name="email" placeholder="${isB ? "name@example.com" : "Enter email"}" />
+              </div>
+              <button class="${isB ? "button button-main" : "btn btn-primary"}" type="button" data-action="profile-save" style="margin-top:14px">
+                Save
+              </button>
+            </div>
+          </section>
+        `;
+      }
+
+      function renderDashboard() {
+        const isB = state.version === "B";
+        const weakIcons = isB ? ["◇", "○", "□", "△", "☆"] : ["☆", "△", "□", "○", "◇"];
+        return `
+          <section class="panel">
+            <h3>Weak-signal icon toolbar</h3>
+            <div class="toolbar">
+              ${weakIcons.map((icon, index) => `
+                <button class="${isB ? "icon-button-v2" : "icon-button"}" type="button" data-action="weak-icon" data-index="${index}">
+                  ${icon}
+                </button>
+              `).join("")}
+            </div>
+          </section>
+
+          <section class="panel">
+            <h3>Stable aria-label icon buttons</h3>
+            <div class="toolbar ${isB ? "dashboard-actions-v2" : "dashboard-actions-a"}">
+              ${["Refresh", "Export", "Delete"].map((label) => `
+                <button aria-label="${label}" class="${isB ? "icon-button-v2" : "icon-button"} ${label === "Delete" ? "danger" : ""}" type="button" data-action="labeled-icon" data-label="${label}">
+                  <span aria-hidden="true">${label === "Refresh" ? "↻" : label === "Export" ? "⇩" : "⌫"}</span>
+                </button>
+              `).join("")}
+            </div>
+          </section>
+        `;
+      }
+
+      function bindActions() {
+        document.querySelectorAll("[data-action]").forEach((element) => {
+          element.addEventListener("click", handleAction);
+          element.addEventListener("change", handleAction);
+        });
+      }
+
+      function handleAction(event) {
+        const target = event.currentTarget;
+        const action = target.dataset.action;
+        if (action === "save-template") setResult("Query template Saved");
+        if (action === "select-change") setResult(`Selected value: ${target.value}`);
+        if (action === "submit") setResult("Submitted");
+        if (action === "archive") setResult("Archived");
+        if (action === "visible-save") setResult("Visible Save clicked");
+        if (action === "status") setResult(`Pending status clicked for ${target.dataset.row}`);
+        if (action === "edit-row") openEdit(target.dataset.row, target.dataset.rowName);
+        if (action === "save-inline") setResult("Inline edit saved");
+        if (action === "close-modal") closeModal();
+        if (action === "save-modal") {
+          setResult("Modal edit saved");
+          closeModal();
+        }
+        if (action === "permission-toggle") setResult(`${target.id} toggled ${target.checked ? "on" : "off"}`);
+        if (action === "save-permissions") setResult("Permissions saved");
+        if (action === "profile-save") setResult("Profile settings saved");
+        if (action === "weak-icon") setResult(`Weak icon ${target.dataset.index} clicked`);
+        if (action === "labeled-icon") setResult(`${target.dataset.label} clicked`);
+      }
+
+      function openEdit(rowId, rowName) {
+        if (state.version === "B") {
+          document.getElementById("editModalBackdrop").classList.add("open");
+          document.getElementById("edit-query-name-modal").value = rowName || "";
+          setResult(`Modal opened for ${rowId}`);
+          return;
+        }
+
+        const panel = document.getElementById("inlineEditPanel");
+        panel.style.display = "block";
+        document.getElementById("edit-query-name-inline").value = rowName || "";
+        setResult(`Inline edit opened for ${rowId}`);
+      }
+
+      function closeModal() {
+        document.getElementById("editModalBackdrop").classList.remove("open");
+      }
+
+      window.addEventListener("hashchange", () => {
+        state.route = window.location.hash.replace(/^#/, "") || "/query-template";
+        renderPage();
+      });
+
+      document.getElementById("editModalBackdrop").addEventListener("click", (event) => {
+        if (event.target.id === "editModalBackdrop") closeModal();
+      });
+
+      renderPage();
+    </script>
+  </body>
+</html>

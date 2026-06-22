@@ -71,6 +71,7 @@ import { SameTabUrlTransitionPage } from "./pages/SameTabUrlTransitionPage";
 import { MonacoEditorPage } from "./pages/MonacoEditorPage";
 import { MultiTieredMenuInnerTextPage } from "./pages/MultiTieredMenuInnerTextPage";
 import NgSelectDropdownPage from "./pages/NgSelectDropdownPage";
+import { TrueTestMatchingPage } from "./pages/TrueTestMatchingPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -205,6 +206,16 @@ function App() {
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
                 {createRoutes("/ng-select-dropdown", <NgSelectDropdownPage />)}
                 {createRoutes("/challenging-form", <ChallengingFormPage />)}
+                {createRoutes("/login", <TrueTestMatchingPage />)}
+                {createRoutes("/query-template", <TrueTestMatchingPage />)}
+                {createRoutes(
+                  "/studies/123/queries/456",
+                  <TrueTestMatchingPage />,
+                )}
+                {createRoutes("/admin/permissions", <TrueTestMatchingPage />)}
+                {createRoutes("/checkout", <TrueTestMatchingPage />)}
+                {createRoutes("/profile/settings", <TrueTestMatchingPage />)}
+                {createRoutes("/dashboard", <TrueTestMatchingPage />)}
                 {createRoutes("/ctrl-click-table", <CtrlClickTablePage />)}
                 {createRoutes(
                   "/same-tab-url-transition",

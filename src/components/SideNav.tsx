@@ -89,6 +89,36 @@ const menuItems = [
       { path: "/notifications", label: "Notifications" },
       { path: "/toast-delay-scenario", label: "Toast Delay Scenario" },
       { path: "/ab-testing", label: "A/B Testing" },
+      {
+        label: "TrueTest Matching",
+        children: [
+          { path: "/login?version=A", label: "Login - Version A" },
+          { path: "/login?version=B", label: "Login - Version B" },
+          { path: "/query-template?version=A", label: "Query Template - A" },
+          { path: "/query-template?version=B", label: "Query Template - B" },
+          {
+            path: "/studies/123/queries/456?version=A",
+            label: "Study Queries - A",
+          },
+          {
+            path: "/studies/123/queries/456?version=B",
+            label: "Study Queries - B",
+          },
+          { path: "/admin/permissions?version=A", label: "Permissions - A" },
+          { path: "/admin/permissions?version=B", label: "Permissions - B" },
+          { path: "/checkout?version=A", label: "Checkout - A" },
+          { path: "/checkout?version=B", label: "Checkout - B" },
+          { path: "/profile/settings?version=A", label: "Profile - A" },
+          { path: "/profile/settings?version=B", label: "Profile - B" },
+          { path: "/dashboard?version=A", label: "Dashboard - A" },
+          { path: "/dashboard?version=B", label: "Dashboard - B" },
+        ],
+      },
+      {
+        path: "/true-test-clustering/index.html?version=A#/query-template",
+        label: "TrueTest Clustering Static",
+        external: true,
+      },
       { path: "/auth", label: "Authentication" },
       { path: "/checkboxes", label: "Checkboxes" },
       { path: "/exit-intent", label: "Exit Intent" },
@@ -107,6 +137,33 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
   const location = useLocation();
   const { getFormattedPath } = useTheme();
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
+
+  const formatPath = (path: string) => {
+    const suffixIndex = path.search(/[?#]/);
+    if (suffixIndex === -1) {
+      return getFormattedPath(path);
+    }
+
+    return `${getFormattedPath(path.slice(0, suffixIndex))}${path.slice(suffixIndex)}`;
+  };
+
+  const isActivePath = (path?: string) => {
+    if (!path) {
+      return false;
+    }
+
+    const formattedPath = formatPath(path);
+    const hasQueryOrHash = /[?#]/.test(path);
+
+    if (hasQueryOrHash) {
+      return `${location.pathname}${location.search}` === formattedPath;
+    }
+
+    return location.pathname === formattedPath;
+  };
+
+  const getDataTestPath = (path?: string) =>
+    path?.replace(/^\//, "").replace(/[^a-zA-Z0-9_-]+/g, "-") || "";
 
   const handleToggle = (key: string) => {
     setExpanded((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -135,36 +192,39 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
               {category.items.map((item, idx) => {
                 const hasChildren = !!item.children;
                 const hasPath = !!item.path;
+                const isExternal = !!item.external;
                 const key = `${category.category}-${item.label}-${idx}`;
                 if (hasChildren && !hasPath) {
+                  const isExpanded =
+                    expanded[key] ??
+                    item.children.some((child) => isActivePath(child.path));
+
                   return (
                     <li key={key}>
                       <button
                         type="button"
                         className="flex items-center px-3 py-2 text-sm rounded-md w-full text-left text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                         onClick={() => handleToggle(key)}
-                        aria-expanded={!!expanded[key]}
+                        aria-expanded={isExpanded}
                         data-test={`nav-collapse-${item.label.replace(/\s+/g, "-").toLowerCase()}`}
                       >
                         <ChevronRight
-                          className={`w-4 h-4 mr-2 transition-transform ${expanded[key] ? "rotate-90" : ""}`}
+                          className={`w-4 h-4 mr-2 transition-transform ${isExpanded ? "rotate-90" : ""}`}
                         />
                         {item.label}
                       </button>
-                      {expanded[key] && (
+                      {isExpanded && (
                         <ul className="ml-6 mt-1 space-y-1">
                           {item.children.map((child) => (
                             <li key={child.path}>
                               <Link
-                                to={getFormattedPath(child.path)}
+                                to={formatPath(child.path)}
                                 className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                                  location.pathname === child.path ||
-                                  location.pathname ===
-                                    getFormattedPath(child.path)
+                                  isActivePath(child.path)
                                     ? "bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300"
                                     : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
                                 }`}
-                                data-test={`nav-${child.path.slice(1)}`}
+                                data-test={`nav-${getDataTestPath(child.path)}`}
                                 onClick={handleLinkClick}
                               >
                                 <ChevronRight className="w-4 h-4 mr-2" />
@@ -180,42 +240,57 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                 // Default rendering for items with path
                 return (
                   <li key={item.path || key}>
-                    <Link
-                      to={getFormattedPath(item.path)}
-                      className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                        location.pathname === item.path ||
-                        location.pathname === getFormattedPath(item.path)
-                          ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
-                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-                      }`}
-                      data-test={`nav-${item.path?.slice(1)}`}
-                      onClick={handleLinkClick}
-                    >
-                      <ChevronRight className="w-4 h-4 mr-2" />
-                      {item.label}
-                    </Link>
-                    {hasChildren && hasPath && (
-                      <ul className="ml-6 mt-1 space-y-1">
-                        {item.children.map((child) => (
-                          <li key={child.path}>
-                            <Link
-                              to={getFormattedPath(child.path)}
-                              className={`flex items-center px-3 py-2 text-sm rounded-md ${
-                                location.pathname === child.path ||
-                                location.pathname ===
-                                  getFormattedPath(child.path)
-                                  ? "bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300"
-                                  : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
-                              }`}
-                              data-test={`nav-${child.path.slice(1)}`}
-                              onClick={handleLinkClick}
-                            >
-                              <ChevronRight className="w-4 h-4 mr-2" />
-                              {child.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                    {isExternal ? (
+                      <a
+                        href={item.path}
+                        className={`flex items-center px-3 py-2 text-sm rounded-md ${
+                          isActivePath(item.path)
+                            ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        }`}
+                        data-test={`nav-${getDataTestPath(item.path)}`}
+                        onClick={handleLinkClick}
+                      >
+                        <ChevronRight className="w-4 h-4 mr-2" />
+                        {item.label}
+                      </a>
+                    ) : (
+                      <>
+                        <Link
+                          to={formatPath(item.path)}
+                          className={`flex items-center px-3 py-2 text-sm rounded-md ${
+                            isActivePath(item.path)
+                              ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
+                              : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                          }`}
+                          data-test={`nav-${getDataTestPath(item.path)}`}
+                          onClick={handleLinkClick}
+                        >
+                          <ChevronRight className="w-4 h-4 mr-2" />
+                          {item.label}
+                        </Link>
+                        {hasChildren && hasPath && (
+                          <ul className="ml-6 mt-1 space-y-1">
+                            {item.children.map((child) => (
+                              <li key={child.path}>
+                                <Link
+                                  to={formatPath(child.path)}
+                                  className={`flex items-center px-3 py-2 text-sm rounded-md ${
+                                    isActivePath(child.path)
+                                      ? "bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300"
+                                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                                  }`}
+                                  data-test={`nav-${getDataTestPath(child.path)}`}
+                                  onClick={handleLinkClick}
+                                >
+                                  <ChevronRight className="w-4 h-4 mr-2" />
+                                  {child.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </>
                     )}
                   </li>
                 );

@@ -23,6 +23,7 @@ import {
   Route,
   ShieldCheck,
   BookOpen,
+  ScanSearch,
 } from "lucide-react";
 
 const categories = [
@@ -194,6 +195,12 @@ const categories = [
         path: "/same-tab-url-transition",
         description: "Validate replay-safe same-tab navigation transitions",
         icon: <Route className="w-6 h-6" />,
+      },
+      {
+        title: "TrueTest Matching",
+        path: "/login?version=A",
+        description: "Compare TestObject reuse across Version A and B UI changes",
+        icon: <ScanSearch className="w-6 h-6" />,
       },
     ],
   },
