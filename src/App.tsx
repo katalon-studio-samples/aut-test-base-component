@@ -72,6 +72,8 @@ import { MonacoEditorPage } from "./pages/MonacoEditorPage";
 import { MultiTieredMenuInnerTextPage } from "./pages/MultiTieredMenuInnerTextPage";
 import NgSelectDropdownPage from "./pages/NgSelectDropdownPage";
 import { TrueTestMatchingPage } from "./pages/TrueTestMatchingPage";
+import { TrafficAgentIframeFixturePage } from "./pages/TrafficAgentIframeFixturePage";
+import { SameDomainAttachmentFormIframePage } from "./pages/SameDomainAttachmentFormIframePage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -176,6 +178,14 @@ function App() {
                   <IframeDocsKatalonPage />,
                 )}
                 {createRoutes("/iframes/same-domain", <IframeSameDomainPage />)}
+                {createRoutes(
+                  "/traffic-agent-iframe-fixture",
+                  <TrafficAgentIframeFixturePage />,
+                )}
+                {createRoutes(
+                  "/same-domain-attachment-form-iframe",
+                  <SameDomainAttachmentFormIframePage />,
+                )}
                 {createRoutes(
                   "/rich-text-editor",
                   <RichTextEditorExamplePage />,

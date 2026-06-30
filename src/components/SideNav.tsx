@@ -60,6 +60,14 @@ const menuItems = [
           { path: "/iframes/vinoth-demo", label: "Vinoth QA Demo" },
           { path: "/iframes/docs-katalon", label: "Docs Katalon" },
           { path: "/iframes/same-domain", label: "Base Component Iframe" },
+          {
+            path: "/traffic-agent-iframe-fixture",
+            label: "Traffic Agent Iframe Fixture",
+          },
+          {
+            path: "/same-domain-attachment-form-iframe",
+            label: "Same-Domain Attachment Form",
+          },
         ],
       },
       { path: "/broken-images", label: "Broken Images" },
