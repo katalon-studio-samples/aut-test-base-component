@@ -82,6 +82,10 @@ const menuItems = [
       { path: "/xpath-breaking", label: "XPath Breaking Characters" },
       { path: "/nested-text-locator-poc", label: "Nested Text Locator POC" },
       { path: "/dynamic-id-locator", label: "Dynamic ID Locator" },
+      {
+        path: "/semantic-form-control-locator",
+        label: "Semantic Form Locator",
+      },
       { path: "/scenario-toggle", label: "Scenario Toggle" },
     ],
   },
@@ -133,6 +137,7 @@ const menuItems = [
       { path: "/alerts", label: "Alerts" },
       { path: "/open-popup", label: "Open Popup" },
       { path: "/open-new-tab", label: "Open New Tab" },
+      { path: "/tab-workflow-test", label: "Tab Workflow Test" },
       { path: "/same-tab-url-transition", label: "Same-Tab URL Transition" },
       { path: "/challenging-form", label: "Challenging Form" },
       { path: "/ng-select-dropdown", label: "Ng-Select Dropdown" },

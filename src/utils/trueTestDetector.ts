@@ -114,7 +114,9 @@ export class TrueTestDetector {
 
   public clearAllAttributes(): void {
     this.sessionData.clear();
-    this.saveToLocalStorage();
+    if (typeof window !== "undefined" && window.localStorage) {
+      window.localStorage.removeItem("trueTestSessionAttributes");
+    }
   }
 
   public addListener(callback: (key: string, value: string) => void): void {
@@ -169,6 +171,7 @@ export class TrueTestDetector {
 
   private loadFromLocalStorage(): void {
     if (typeof window !== "undefined" && window.localStorage) {
+      this.sessionData.clear();
       const stored = window.localStorage.getItem("trueTestSessionAttributes");
       if (stored) {
         try {

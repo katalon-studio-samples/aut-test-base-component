@@ -160,7 +160,9 @@ export const SettingsPage: React.FC = () => {
 
   const clearAllAttributes = () => {
     trueTestDetector.clearAllAttributes();
+    trueTestDetector.callTrueTestSetSessionAttributesWithData({});
     setKeyValuePairs([]);
+    setSearchParams({});
     showMessage("success", "All attributes cleared");
   };
 

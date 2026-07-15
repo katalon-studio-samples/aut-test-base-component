@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Related Tab Signer</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: #f3f4f6;
+        color: #111827;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+      }
+
+      section {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 0.08);
+        padding: 24px;
+        margin-bottom: 24px;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 16px;
+      }
+
+      input[type="text"] {
+        display: block;
+        width: min(100%, 560px);
+        box-sizing: border-box;
+        margin-top: 8px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 16px;
+      }
+
+      .checkbox-label {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      button {
+        border: 0;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+        padding: 12px 18px;
+      }
+
+      button:disabled {
+        background: #d1d5db;
+        color: #4b5563;
+        cursor: not-allowed;
+      }
+
+      .primary {
+        background: #2563eb;
+        color: #ffffff;
+      }
+
+      .secondary {
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        color: #374151;
+      }
+
+      .debug {
+        background: #020617;
+        color: #f8fafc;
+      }
+
+      dl {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      dt {
+        color: #94a3b8;
+        font-size: 14px;
+      }
+
+      dd {
+        margin: 4px 0 0;
+        overflow-wrap: anywhere;
+      }
+
+      ol {
+        background: #111827;
+        border-radius: 6px;
+        margin: 18px 0 0;
+        max-height: 220px;
+        overflow: auto;
+        padding: 14px 14px 14px 34px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
+      code {
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", monospace;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <main data-testid="static-related-tab-signer-page">
+      <section>
+        <p><strong>TrueTest Related Tabs</strong></p>
+        <h1 id="signer-title" data-testid="signer-tab-title">Signer</h1>
+        <p id="mode-summary" data-testid="signer-mode-summary"></p>
+      </section>
+
+      <section>
+        <h2>Signer action</h2>
+        <p id="saved-status" data-testid="signer-saved-status">
+          Current status: Pending
+        </p>
+        <label for="full-name">
+          Signer full name
+          <input
+            id="full-name"
+            type="text"
+            autocomplete="name"
+            data-testid="signer-full-name"
+          />
+        </label>
+        <label class="checkbox-label" for="agree">
+          <input id="agree" type="checkbox" data-testid="signer-agree" />
+          I agree
+        </label>
+        <div class="actions">
+          <button
+            id="sign"
+            class="primary"
+            type="button"
+            disabled
+            data-testid="signer-sign"
+          >
+            Sign
+          </button>
+          <button
+            id="return-main"
+            class="secondary"
+            type="button"
+            data-testid="signer-return-main"
+          >
+            Return to main tab
+          </button>
+        </div>
+      </section>
+
+      <section class="debug" data-testid="related-tab-debug-panel">
+        <h2>Debug Panel</h2>
+        <dl>
+          <div>
+            <dt>Current tab role</dt>
+            <dd id="debug-tab-role" data-testid="debug-tab-role">signer</dd>
+          </div>
+          <div>
+            <dt>Signer id</dt>
+            <dd id="debug-signer-id" data-testid="debug-signer-id"></dd>
+          </div>
+          <div>
+            <dt>Mode</dt>
+            <dd id="debug-mode" data-testid="debug-mode"></dd>
+          </div>
+          <div>
+            <dt>Opener exists</dt>
+            <dd id="debug-opener-exists" data-testid="debug-opener-exists"></dd>
+          </div>
+          <div>
+            <dt>Opened by workflow button</dt>
+            <dd
+              id="debug-opened-by-workflow"
+              data-testid="debug-opened-by-workflow"
+            ></dd>
+          </div>
+          <div>
+            <dt>Current URL</dt>
+            <dd>
+              <code
+                id="debug-current-url"
+                data-testid="debug-current-url"
+              ></code>
+            </dd>
+          </div>
+        </dl>
+        <ol id="debug-event-log" data-testid="debug-event-log"></ol>
+      </section>
+    </main>
+
+    <script>
+      (() => {
+        const SIGNER_IDS = ["1", "2", "3"];
+        const STORAGE_STATE_KEY = "relatedTabSignerWorkflow.state";
+        const STORAGE_SIGNAL_KEY = "relatedTabSignerWorkflow.signal";
+        const CHANNEL_NAME = "related-tab-signer-workflow";
+        const MAIN_WINDOW_NAME = "related-tab-workflow-main";
+        const MODE_LABELS = {
+          "same-domain": "same-domain",
+          "cross-domain-allowlisted": "cross-domain allowlisted",
+          "cross-domain-non-allowlisted": "cross-domain non-allowlisted",
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const signerId = SIGNER_IDS.includes(params.get("signer"))
+          ? params.get("signer")
+          : "1";
+        const mode = MODE_LABELS[params.get("mode")]
+          ? params.get("mode")
+          : "same-domain";
+        const mainUrl = params.get("mainUrl") || "/";
+        const openedByWorkflow =
+          params.get("workflowOpen") === "1" &&
+          !!window.opener &&
+          !window.opener.closed;
+        const channel =
+          "BroadcastChannel" in window
+            ? new BroadcastChannel(CHANNEL_NAME)
+            : null;
+
+        const title = document.getElementById("signer-title");
+        const modeSummary = document.getElementById("mode-summary");
+        const fullNameInput = document.getElementById("full-name");
+        const agreeInput = document.getElementById("agree");
+        const signButton = document.getElementById("sign");
+        const savedStatus = document.getElementById("saved-status");
+        const debugLog = document.getElementById("debug-event-log");
+
+        const now = () => new Date().toISOString();
+
+        const addDebug = (message) => {
+          const item = document.createElement("li");
+          item.textContent = `${new Date().toLocaleTimeString()} ${message}`;
+          debugLog.prepend(item);
+        };
+
+        const readState = () => {
+          try {
+            const value = window.localStorage.getItem(STORAGE_STATE_KEY);
+            return value ? JSON.parse(value) : {};
+          } catch {
+            return {};
+          }
+        };
+
+        const writeSameDomainState = (fullName, timestamp) => {
+          const state = readState();
+          state[signerId] = {
+            id: signerId,
+            name: fullName,
+            signed: true,
+            signedAt: timestamp,
+            mode,
+          };
+          try {
+            window.localStorage.setItem(
+              STORAGE_STATE_KEY,
+              JSON.stringify(state),
+            );
+            window.localStorage.setItem(
+              STORAGE_SIGNAL_KEY,
+              JSON.stringify({
+                type: "state-sync",
+                state,
+                signalAt: timestamp,
+              }),
+            );
+          } catch {
+            addDebug("Unable to write same-domain localStorage state");
+          }
+          channel?.postMessage({ type: "state-sync", state });
+        };
+
+        const postToMain = (type, fullName) => {
+          const message = {
+            source: "related-tab-signer-workflow",
+            type,
+            signerId,
+            fullName,
+            mode,
+            timestamp: now(),
+          };
+          window.opener?.postMessage(message, "*");
+          return message.timestamp;
+        };
+
+        const updateButton = () => {
+          signButton.disabled =
+            !fullNameInput.value.trim() || !agreeInput.checked;
+        };
+
+        title.textContent = `Signer ${signerId}`;
+        modeSummary.textContent = `Mode: ${MODE_LABELS[mode]}`;
+        document.getElementById("debug-signer-id").textContent = signerId;
+        document.getElementById("debug-mode").textContent = mode;
+        document.getElementById("debug-opener-exists").textContent =
+          window.opener && !window.opener.closed ? "yes" : "no";
+        document.getElementById("debug-opened-by-workflow").textContent =
+          openedByWorkflow ? "yes" : "no";
+        document.getElementById("debug-current-url").textContent =
+          window.location.href;
+        fullNameInput.setAttribute(
+          "data-testid",
+          `signer-${signerId}-full-name`,
+        );
+        agreeInput.setAttribute("data-testid", `signer-${signerId}-agree`);
+        signButton.setAttribute("data-testid", `signer-${signerId}-sign`);
+        document
+          .getElementById("return-main")
+          .setAttribute("data-testid", `signer-${signerId}-return-main`);
+
+        fullNameInput.addEventListener("input", updateButton);
+        agreeInput.addEventListener("change", updateButton);
+
+        signButton.addEventListener("click", () => {
+          const fullName = fullNameInput.value.trim();
+          if (!fullName || !agreeInput.checked) {
+            return;
+          }
+
+          const timestamp = postToMain("signer-signed", fullName);
+          writeSameDomainState(fullName, timestamp);
+          savedStatus.textContent = `Current status: Signed as ${fullName}`;
+          addDebug(`Signer ${signerId} signed using ${MODE_LABELS[mode]}`);
+        });
+
+        document.getElementById("return-main").addEventListener("click", () => {
+          postToMain("returned-main");
+          addDebug(`Returning to main tab using ${MODE_LABELS[mode]}`);
+          const mainWindow = window.open(mainUrl, MAIN_WINDOW_NAME);
+          mainWindow?.focus();
+          window.opener?.focus();
+        });
+
+        addDebug("signer tab loaded");
+      })();
+    </script>
+  </body>
+</html>

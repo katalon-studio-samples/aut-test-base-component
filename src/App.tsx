@@ -72,8 +72,10 @@ import { MonacoEditorPage } from "./pages/MonacoEditorPage";
 import { MultiTieredMenuInnerTextPage } from "./pages/MultiTieredMenuInnerTextPage";
 import NgSelectDropdownPage from "./pages/NgSelectDropdownPage";
 import { TrueTestMatchingPage } from "./pages/TrueTestMatchingPage";
+import { RelatedTabSignerWorkflowPage } from "./pages/RelatedTabSignerWorkflowPage";
 import { TrafficAgentIframeFixturePage } from "./pages/TrafficAgentIframeFixturePage";
 import { SameDomainAttachmentFormIframePage } from "./pages/SameDomainAttachmentFormIframePage";
+import { SemanticFormControlLocatorPage } from "./pages/SemanticFormControlLocatorPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -163,6 +165,18 @@ function App() {
                 {createRoutes("/shadow-book-borrow", <ShadowBookBorrowPage />)}
                 {createRoutes("/open-popup", <OpenPopupPage />)}
                 {createRoutes("/open-new-tab", <OpenNewTabPage />)}
+                {createRoutes(
+                  "/related-tab-workflow",
+                  <RelatedTabSignerWorkflowPage />,
+                )}
+                {createRoutes(
+                  "/tab-workflow-test",
+                  <RelatedTabSignerWorkflowPage />,
+                )}
+                {createRoutes(
+                  "/tab-workflow-test/right-click-destination",
+                  <RelatedTabSignerWorkflowPage />,
+                )}
                 {createRoutes("/popup-form", <PopupFormPage />)}
                 {createRoutes("/key-value-form", <KeyValueFormPage />)}
                 {createRoutes(
@@ -212,6 +226,10 @@ function App() {
                 {createRoutes("/ag-grid", <AGGridPage />)}
                 {createRoutes("/tinymce-shadow-dom", <TinyMCEShadowDOMPage />)}
                 {createRoutes("/dynamic-id-locator", <DynamicIDLocatorPage />)}
+                {createRoutes(
+                  "/semantic-form-control-locator",
+                  <SemanticFormControlLocatorPage />,
+                )}
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
                 {createRoutes("/ng-select-dropdown", <NgSelectDropdownPage />)}
