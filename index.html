@@ -10,11 +10,22 @@
       (function () {
         var urlParams = new URLSearchParams(window.location.search);
 
-        // Get environment from URL or localStorage (prod, qa, staging)
-        var env = urlParams.get("env") || urlParams.get("environment");
-        if (!env) {
-          env = localStorage.getItem("katalon-env");
-        } else {
+        // Prefer an explicit URL override, then infer the environment from the
+        // deployed hostname. Fall back to localStorage for local/custom hosts.
+        var requestedEnv = urlParams.get("env") || urlParams.get("environment");
+        var hostname = window.location.hostname.toLowerCase();
+        var hostnameEnv = null;
+
+        if (hostname === "base-component-qa.aut.katalon.com") {
+          hostnameEnv = "qa";
+        } else if (hostname === "base-component-staging.aut.katalon.com") {
+          hostnameEnv = "staging";
+        }
+
+        var env =
+          requestedEnv || hostnameEnv || localStorage.getItem("katalon-env");
+
+        if (requestedEnv || hostnameEnv) {
           localStorage.setItem("katalon-env", env);
         }
 

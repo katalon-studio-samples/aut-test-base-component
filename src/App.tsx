@@ -31,6 +31,7 @@ import { SliderPage } from "./pages/SliderPage";
 import { AlertsPage } from "./pages/AlertsPage";
 import { KeyPressPage } from "./pages/KeyPressPage";
 import { ShadowDOMPage } from "./pages/ShadowDOMPage";
+import { ShadowBookBorrowPage } from "./pages/ShadowBookBorrowPage";
 import { Menu, X } from "lucide-react";
 import MultiTieredMenuPage from "./pages/MultiTieredMenuPage";
 import { IframePageNested1Level } from "./pages/IframePageNested1Level.tsx";
@@ -49,6 +50,7 @@ import { TextPage as InputTextPage } from "./pages/Input/TextPage.tsx";
 import { RadioSearchSubmitPage } from "./pages/Input/RadioSearchSubmitPage.tsx";
 import { FormInputsPage } from "./pages/Input/FormInputsPage.tsx";
 import { CardListPage } from "./pages/PII/CardListPage.tsx";
+import { PIIControlsPage } from "./pages/PII/PIIControlsPage.tsx";
 import { SauceLoginPage } from "./pages/SauceLoginPage";
 import { NumericInputPage } from "./pages/NumericInputPage";
 import { SettingsPage } from "./pages/SettingsPage";
@@ -68,6 +70,12 @@ import { CtrlClickTablePage } from "./pages/CtrlClickTablePage";
 import { SameTabUrlTransitionPage } from "./pages/SameTabUrlTransitionPage";
 import { MonacoEditorPage } from "./pages/MonacoEditorPage";
 import { MultiTieredMenuInnerTextPage } from "./pages/MultiTieredMenuInnerTextPage";
+import NgSelectDropdownPage from "./pages/NgSelectDropdownPage";
+import { TrueTestMatchingPage } from "./pages/TrueTestMatchingPage";
+import { RelatedTabSignerWorkflowPage } from "./pages/RelatedTabSignerWorkflowPage";
+import { TrafficAgentIframeFixturePage } from "./pages/TrafficAgentIframeFixturePage";
+import { SameDomainAttachmentFormIframePage } from "./pages/SameDomainAttachmentFormIframePage";
+import { SemanticFormControlLocatorPage } from "./pages/SemanticFormControlLocatorPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -154,8 +162,21 @@ function App() {
                 {createRoutes("/alerts", <AlertsPage />)}
                 {createRoutes("/key-press", <KeyPressPage />)}
                 {createRoutes("/shadow-dom", <ShadowDOMPage />)}
+                {createRoutes("/shadow-book-borrow", <ShadowBookBorrowPage />)}
                 {createRoutes("/open-popup", <OpenPopupPage />)}
                 {createRoutes("/open-new-tab", <OpenNewTabPage />)}
+                {createRoutes(
+                  "/related-tab-workflow",
+                  <RelatedTabSignerWorkflowPage />,
+                )}
+                {createRoutes(
+                  "/tab-workflow-test",
+                  <RelatedTabSignerWorkflowPage />,
+                )}
+                {createRoutes(
+                  "/tab-workflow-test/right-click-destination",
+                  <RelatedTabSignerWorkflowPage />,
+                )}
                 {createRoutes("/popup-form", <PopupFormPage />)}
                 {createRoutes("/key-value-form", <KeyValueFormPage />)}
                 {createRoutes(
@@ -171,6 +192,14 @@ function App() {
                   <IframeDocsKatalonPage />,
                 )}
                 {createRoutes("/iframes/same-domain", <IframeSameDomainPage />)}
+                {createRoutes(
+                  "/traffic-agent-iframe-fixture",
+                  <TrafficAgentIframeFixturePage />,
+                )}
+                {createRoutes(
+                  "/same-domain-attachment-form-iframe",
+                  <SameDomainAttachmentFormIframePage />,
+                )}
                 {createRoutes(
                   "/rich-text-editor",
                   <RichTextEditorExamplePage />,
@@ -191,14 +220,30 @@ function App() {
                   <NestedTextLocatorPOCPage />,
                 )}
                 {createRoutes("/list-card", <CardListPage />)}
+                {createRoutes("/pii-controls", <PIIControlsPage />)}
                 {createRoutes("/unique-test-data", <NumericInputPage />)}
                 {createRoutes("/settings", <SettingsPage />)}
                 {createRoutes("/ag-grid", <AGGridPage />)}
                 {createRoutes("/tinymce-shadow-dom", <TinyMCEShadowDOMPage />)}
                 {createRoutes("/dynamic-id-locator", <DynamicIDLocatorPage />)}
+                {createRoutes(
+                  "/semantic-form-control-locator",
+                  <SemanticFormControlLocatorPage />,
+                )}
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
+                {createRoutes("/ng-select-dropdown", <NgSelectDropdownPage />)}
                 {createRoutes("/challenging-form", <ChallengingFormPage />)}
+                {createRoutes("/login", <TrueTestMatchingPage />)}
+                {createRoutes("/query-template", <TrueTestMatchingPage />)}
+                {createRoutes(
+                  "/studies/123/queries/456",
+                  <TrueTestMatchingPage />,
+                )}
+                {createRoutes("/admin/permissions", <TrueTestMatchingPage />)}
+                {createRoutes("/checkout", <TrueTestMatchingPage />)}
+                {createRoutes("/profile/settings", <TrueTestMatchingPage />)}
+                {createRoutes("/dashboard", <TrueTestMatchingPage />)}
                 {createRoutes("/ctrl-click-table", <CtrlClickTablePage />)}
                 {createRoutes(
                   "/same-tab-url-transition",

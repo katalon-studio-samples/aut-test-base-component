@@ -21,6 +21,9 @@ import {
   Download,
   Info,
   Route,
+  ShieldCheck,
+  BookOpen,
+  ScanSearch,
 } from "lucide-react";
 
 const categories = [
@@ -44,6 +47,12 @@ const categories = [
         path: "/tables",
         description: "Work with sortable tables and dynamic data",
         icon: <Table className="w-6 h-6" />,
+      },
+      {
+        title: "PII Controls",
+        path: "/pii-controls",
+        description: "Practice finding sensitive data in selectable controls",
+        icon: <ShieldCheck className="w-6 h-6" />,
       },
     ],
   },
@@ -115,6 +124,12 @@ const categories = [
         description: "Work with Shadow DOM elements",
         icon: <Box className="w-6 h-6" />,
       },
+      {
+        title: "Shadow Book Borrow",
+        path: "/shadow-book-borrow",
+        description: "Register borrowed books inside Shadow DOM form controls",
+        icon: <BookOpen className="w-6 h-6" />,
+      },
     ],
   },
   {
@@ -180,6 +195,12 @@ const categories = [
         path: "/same-tab-url-transition",
         description: "Validate replay-safe same-tab navigation transitions",
         icon: <Route className="w-6 h-6" />,
+      },
+      {
+        title: "TrueTest Matching",
+        path: "/login?version=A",
+        description: "Compare TestObject reuse across Version A and B UI changes",
+        icon: <ScanSearch className="w-6 h-6" />,
       },
     ],
   },

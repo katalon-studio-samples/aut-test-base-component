@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="QA fixture for Traffic Agent Session Replay uploads from inherited-origin iframes"
+    />
+    <title>Inherited-Origin Iframe QA Fixture</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- INSERT KATALON TRAFFIC AGENT SNIPPET HERE -->
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Katalon TrueTest QA fixture</p>
+        <h1>Inherited-Origin Iframe Session Replay</h1>
+        <p class="hero-copy">
+          Correlate browser events from accessible <code>about:blank</code> and
+          <code>srcdoc</code> frames with externally observed <code>/record</code> requests.
+        </p>
+      </div>
+      <div class="hero-badge">No <code>/record</code> calls are made by this fixture</div>
+    </header>
+
+    <main>
+      <section class="panel controls-panel" aria-labelledby="fixture-controls-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Step 1</p>
+            <h2 id="fixture-controls-title">Fixture controls</h2>
+          </div>
+          <span id="fixture-state" class="status status-idle" data-testid="fixture-state">Not created</span>
+        </div>
+
+        <div class="toolbar">
+          <button id="create-fixtures" class="button button-primary" data-testid="create-fixtures" type="button">
+            Create/Recreate iframe fixtures
+          </button>
+          <button id="clear-log" class="button button-secondary" data-testid="clear-log" type="button">
+            Clear action log
+          </button>
+          <label class="compact-field" for="traffic-agent-status">
+            Traffic Agent status
+            <select id="traffic-agent-status" data-testid="traffic-agent-status">
+              <option value="not checked">not checked</option>
+              <option value="configured by tester">configured by tester</option>
+              <option value="intentionally not configured">intentionally not configured</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="repeat-runner" aria-labelledby="repeat-runner-title">
+          <div>
+            <h3 id="repeat-runner-title">Repeated-action runner</h3>
+            <p>Runs input, checkbox, and button actions in every accessible frame.</p>
+          </div>
+          <label class="compact-field" for="repeat-count">
+            Iterations
+            <input id="repeat-count" data-testid="repeat-count" type="number" min="1" max="100" value="5" />
+          </label>
+          <label class="compact-field" for="repeat-delay">
+            Delay (ms)
+            <input id="repeat-delay" data-testid="repeat-delay" type="number" min="0" max="10000" value="250" />
+          </label>
+          <button id="run-repeated-actions" class="button button-accent" data-testid="run-repeated-actions" type="button">
+            Run repeated actions
+          </button>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="environment-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Environment</p>
+            <h2 id="environment-title">Canonical top-page context</h2>
+          </div>
+        </div>
+        <dl class="environment-grid">
+          <div><dt>Current page URL</dt><dd id="environment-url" data-testid="environment-url"></dd></div>
+          <div><dt>Top-page origin</dt><dd id="environment-origin" data-testid="environment-origin"></dd></div>
+          <div><dt>Run ID</dt><dd id="environment-run-id" data-testid="environment-run-id"></dd></div>
+          <div><dt>Fixture creation time</dt><dd id="environment-created-at" data-testid="environment-created-at">Not created</dd></div>
+          <div><dt>Top-level window</dt><dd id="environment-is-top" data-testid="environment-is-top"></dd></div>
+          <div><dt>Traffic Agent status</dt><dd id="environment-agent-status" data-testid="environment-agent-status">not checked</dd></div>
+          <div class="wide"><dt>User agent</dt><dd id="environment-user-agent" data-testid="environment-user-agent"></dd></div>
+        </dl>
+      </section>
+
+      <section class="panel" aria-labelledby="top-controls-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Scenario 1</p>
+            <h2 id="top-controls-title">Top frame controls</h2>
+          </div>
+          <span class="frame-chip">top</span>
+        </div>
+        <div id="top-frame-controls" class="frame-controls" data-frame-id="top">
+          <label for="top-text-input">Text input</label>
+          <input id="top-text-input" data-testid="top-text-input" type="text" autocomplete="off" />
+          <button id="top-action-button" data-testid="top-action-button" type="button">Record top-frame click</button>
+          <label class="checkbox-label" for="top-checkbox">
+            <input id="top-checkbox" data-testid="top-checkbox" type="checkbox" />
+            Checkbox
+          </label>
+          <div class="marker-grid">
+            <div><span>Action count</span><strong id="top-action-count" data-testid="top-action-count">0</strong></div>
+            <div><span>Last action</span><output id="top-last-action" data-testid="top-last-action">No actions yet</output></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="inventory-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Diagnostics</p>
+            <h2 id="inventory-title">Frame inventory</h2>
+          </div>
+          <span id="frame-count" class="frame-chip" data-testid="frame-count">0 frames</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Frame ID</th>
+                <th>Kind</th>
+                <th>Depth</th>
+                <th>Parent access</th>
+                <th>location.href</th>
+                <th>location.origin</th>
+                <th>Expected canonical origin</th>
+              </tr>
+            </thead>
+            <tbody id="frame-inventory-body" data-testid="frame-inventory-body">
+              <tr class="empty-row"><td colspan="7">Create the iframe fixtures to collect diagnostics.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="fixture-host-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Scenarios 2–6</p>
+            <h2 id="fixture-host-title">Iframe fixtures</h2>
+          </div>
+        </div>
+        <div id="fixture-host" class="fixture-grid" data-testid="fixture-host">
+          <p class="empty-state">No iframe fixtures created yet.</p>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="action-log-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Correlation</p>
+            <h2 id="action-log-title">Action log</h2>
+          </div>
+          <span id="action-log-count" class="frame-chip" data-testid="action-log-count">0 actions</span>
+        </div>
+        <p class="help-text">
+          Match run ID, frame ID, count, and timestamp against Session Replay network requests in DevTools or Playwright.
+        </p>
+        <div class="table-wrap log-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Run ID</th>
+                <th>Frame ID</th>
+                <th>Action</th>
+                <th>Count</th>
+                <th>Frame origin</th>
+              </tr>
+            </thead>
+            <tbody id="action-log-body" data-testid="action-log-body">
+              <tr class="empty-row"><td colspan="6">No actions recorded.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
