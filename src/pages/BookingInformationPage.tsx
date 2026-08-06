@@ -1,8 +1,14 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, KeyboardEvent, useState } from "react";
 import { CalendarDays, Check, ShieldCheck } from "lucide-react";
 import "./BookingInformationPage.css";
 
-type FieldName = "fullName" | "email" | "phone" | "documentId";
+type FieldName =
+  | "fullName"
+  | "email"
+  | "bookingReference"
+  | "spaceValidationCode"
+  | "phone"
+  | "documentId";
 
 type FormValues = Record<FieldName, string>;
 type FormErrors = Partial<Record<FieldName, string>>;
@@ -11,6 +17,8 @@ type TouchedFields = Partial<Record<FieldName, boolean>>;
 const initialValues: FormValues = {
   fullName: "",
   email: "",
+  bookingReference: "",
+  spaceValidationCode: "",
   phone: "",
   documentId: "",
 };
@@ -34,6 +42,26 @@ const fieldValidators: Record<FieldName, (value: string) => string> = {
     if (!trimmedValue) return "Please enter your email address.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
       return "Enter an email in the format name@example.com.";
+    }
+
+    return "";
+  },
+  bookingReference: (value) => {
+    const trimmedValue = value.trim();
+
+    if (!trimmedValue) return "Please enter your booking reference.";
+    if (!/^BK-\d{6}$/i.test(trimmedValue)) {
+      return "Use the format BK- followed by 6 digits, for example BK-123456.";
+    }
+
+    return "";
+  },
+  spaceValidationCode: (value) => {
+    const trimmedValue = value.trim();
+
+    if (!trimmedValue) return "Please enter your space-validation code.";
+    if (!/^SP-\d{4}$/i.test(trimmedValue)) {
+      return "Use the format SP- followed by 4 digits, for example SP-1234.";
     }
 
     return "";
@@ -78,7 +106,16 @@ export const BookingInformationPage = () => {
     setValues((current) => ({ ...current, [field]: value }));
     setSubmittedName("");
 
-    if (touched[field]) {
+    const shouldValidateImmediately = field === "bookingReference";
+
+    if (shouldValidateImmediately && !touched[field]) {
+      setTouched((current) => ({ ...current, [field]: true }));
+    }
+
+    const shouldRevalidateTouchedField =
+      touched[field] && field !== "spaceValidationCode";
+
+    if (shouldValidateImmediately || shouldRevalidateTouchedField) {
       const message = fieldValidators[field](value);
       setErrors((current) => ({ ...current, [field]: message || undefined }));
     }
@@ -88,6 +125,13 @@ export const BookingInformationPage = () => {
     const message = fieldValidators[field](values[field]);
     setTouched((current) => ({ ...current, [field]: true }));
     setErrors((current) => ({ ...current, [field]: message || undefined }));
+  };
+
+  const validateSpaceField = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== " ") return;
+
+    event.preventDefault();
+    validateField("spaceValidationCode");
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -210,6 +254,92 @@ export const BookingInformationPage = () => {
                   role="alert"
                 >
                   {errors.email}
+                </p>
+              )}
+            </div>
+
+            <div className="booking-form__field booking-form__field--wide">
+              <label htmlFor="bookingReference">
+                Booking reference
+                <span className="booking-form__label-note">
+                  Auto validation
+                </span>
+              </label>
+              <input
+                id="bookingReference"
+                name="bookingReference"
+                type="text"
+                autoComplete="off"
+                placeholder="BK-123456"
+                value={values.bookingReference}
+                onChange={(event) =>
+                  updateField("bookingReference", event.target.value)
+                }
+                onBlur={() => validateField("bookingReference")}
+                className={inputClassName("bookingReference")}
+                aria-invalid={Boolean(errors.bookingReference)}
+                aria-describedby={
+                  errors.bookingReference
+                    ? "bookingReference-error"
+                    : "bookingReference-hint"
+                }
+                data-test="booking-reference-auto-validation"
+              />
+              {!errors.bookingReference && (
+                <p id="bookingReference-hint" className="booking-form__hint">
+                  Validated automatically while you type. Format: BK-123456.
+                </p>
+              )}
+              {errors.bookingReference && (
+                <p
+                  id="bookingReference-error"
+                  className="booking-form__error"
+                  role="alert"
+                >
+                  {errors.bookingReference}
+                </p>
+              )}
+            </div>
+
+            <div className="booking-form__field booking-form__field--wide">
+              <label htmlFor="spaceValidationCode">
+                Space-validation code
+                <span className="booking-form__label-note">
+                  Press Space to validate
+                </span>
+              </label>
+              <input
+                id="spaceValidationCode"
+                name="spaceValidationCode"
+                type="text"
+                autoComplete="off"
+                placeholder="SP-1234"
+                value={values.spaceValidationCode}
+                onChange={(event) =>
+                  updateField("spaceValidationCode", event.target.value)
+                }
+                onKeyDown={validateSpaceField}
+                className={inputClassName("spaceValidationCode")}
+                aria-invalid={Boolean(errors.spaceValidationCode)}
+                aria-describedby={
+                  errors.spaceValidationCode
+                    ? "spaceValidationCode-error"
+                    : "spaceValidationCode-hint"
+                }
+                data-test="booking-space-validation-code"
+              />
+              {!errors.spaceValidationCode && (
+                <p id="spaceValidationCode-hint" className="booking-form__hint">
+                  Enter a code, then press Space to run validation.
+                </p>
+              )}
+              {errors.spaceValidationCode && (
+                <p
+                  id="spaceValidationCode-error"
+                  className="booking-form__error"
+                  role="alert"
+                >
+                  {errors.spaceValidationCode}
                 </p>
               )}
             </div>

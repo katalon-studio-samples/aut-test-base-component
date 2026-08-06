@@ -181,6 +181,20 @@
   font-weight: 700;
 }
 
+.booking-form__label-note {
+  display: inline-flex;
+  margin-left: 0.55rem;
+  padding: 0.16rem 0.45rem;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
 .booking-form .booking-form__input {
   width: 100%;
   height: 3rem;
@@ -228,6 +242,13 @@
   margin: 0.38rem 0 0;
   color: var(--booking-error);
   font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.booking-form__hint {
+  margin: 0.38rem 0 0;
+  color: var(--booking-muted);
+  font-size: 0.75rem;
   line-height: 1.4;
 }
 
@@ -352,6 +373,11 @@
 .dark .booking-form__heading h2,
 .dark .booking-form__field label {
   color: #f2f7f5;
+}
+
+.dark .booking-form__label-note {
+  background: #1e3a5f;
+  color: #bfdbfe;
 }
 
 .dark .booking-form__heading p,
