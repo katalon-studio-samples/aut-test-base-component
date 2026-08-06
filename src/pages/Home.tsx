@@ -43,6 +43,12 @@ const categories = [
         icon: <FormInput className="w-6 h-6" />,
       },
       {
+        title: "Booking Information",
+        path: "/booking-information",
+        description: "Validate personal booking details and error states",
+        icon: <FormInput className="w-6 h-6" />,
+      },
+      {
         title: "Tables",
         path: "/tables",
         description: "Work with sortable tables and dynamic data",
