@@ -76,6 +76,7 @@ import { RelatedTabSignerWorkflowPage } from "./pages/RelatedTabSignerWorkflowPa
 import { TrafficAgentIframeFixturePage } from "./pages/TrafficAgentIframeFixturePage";
 import { SameDomainAttachmentFormIframePage } from "./pages/SameDomainAttachmentFormIframePage";
 import { SemanticFormControlLocatorPage } from "./pages/SemanticFormControlLocatorPage";
+import { BookingInformationPage } from "./pages/BookingInformationPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -130,6 +131,10 @@ function App() {
                 {createRoutes("/native-element", <NativeElementsPage />)}
                 {createRoutes("/about", <AboutPage />)}
                 {createRoutes("/forms", <FormsPage />)}
+                {createRoutes(
+                  "/booking-information",
+                  <BookingInformationPage />,
+                )}
                 {createRoutes("/msu-simulation-form", <DropdownListPage />)}
                 {createRoutes("/tables", <TablesPage />)}
                 {createRoutes("/drag-drop", <DragDropPage />)}
