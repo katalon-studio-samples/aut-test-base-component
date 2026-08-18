@@ -87,6 +87,10 @@ const menuItems = [
         path: "/semantic-form-control-locator",
         label: "Semantic Form Locator",
       },
+      {
+        path: "/product-2476-xml-values",
+        label: "Product 2476 XML Values",
+      },
       { path: "/scenario-toggle", label: "Scenario Toggle" },
     ],
   },

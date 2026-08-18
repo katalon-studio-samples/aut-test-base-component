@@ -77,6 +77,7 @@ import { TrafficAgentIframeFixturePage } from "./pages/TrafficAgentIframeFixture
 import { SameDomainAttachmentFormIframePage } from "./pages/SameDomainAttachmentFormIframePage";
 import { SemanticFormControlLocatorPage } from "./pages/SemanticFormControlLocatorPage";
 import { BookingInformationPage } from "./pages/BookingInformationPage";
+import { Product2476XmlValuesPage } from "./pages/Product2476XmlValuesPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -234,6 +235,10 @@ function App() {
                 {createRoutes(
                   "/semantic-form-control-locator",
                   <SemanticFormControlLocatorPage />,
+                )}
+                {createRoutes(
+                  "/product-2476-xml-values",
+                  <Product2476XmlValuesPage />,
                 )}
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}

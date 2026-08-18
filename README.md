@@ -104,3 +104,19 @@ test("should reorder items via drag and drop", async () => {
 - Add tests for new functionality
 - Follow the existing code style
 - Keep pull requests focused on a single feature
+
+## Product 2476 XML-sensitive tracking fixture
+
+Start the app with `npm run dev`, then open
+`/product-2476-xml-values`. The page is a deterministic AUT fixture for
+TrueTest tracking and generated Katalon Object Repository `.rs` XML.
+
+- Click **Verify fixtures** or run `window.verifyXml2476Fixtures()` in the
+  browser console. Every result should have `matches: true`.
+- Recommended tracking order: T01 → T11, then S01 → S05.
+- Inspect `action_target[].target_attributes`,
+  `action_target[].relative_xpath`, `action_target[].css`, and
+  `action_target[].smart` in the captured tracking data.
+
+The AUT provides stable candidate values and structures; the TrueTest tracker
+decides which relative XPath, CSS, and smart locators are emitted.

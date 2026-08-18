@@ -2071,4 +2071,39 @@ export const ROUTE_SPECS: RouteSpec[] = [
       },
     ],
   },
+  {
+    id: "product2476XmlValues",
+    path: "/product-2476-xml-values",
+    title: "Product 2476 XML-sensitive tracking fixtures",
+    deterministic: true,
+    functions: [
+      {
+        id: "product2476XmlValues-route-load",
+        name: "Product 2476 XML fixture route loads",
+        description:
+          "Open the deterministic XML-sensitive TrueTest tracking fixture page.",
+        preconditions: "Application is reachable.",
+        steps: "Navigate to /product-2476-xml-values.",
+        expectedResult:
+          "T01 through T11 and S01 through S05 are rendered with exact tracked values.",
+        tags: ["@regression"],
+        automationStatus: "Automated",
+        priority: "P1",
+      },
+      {
+        id: "product2476XmlValues-primary",
+        name: "Verify XML-sensitive fixture values",
+        description:
+          "Read exact DOM fields, click every target in order, and verify no fixture mutates.",
+        preconditions: "The Product 2476 fixture route is loaded.",
+        steps:
+          "Run the fixture verifier, click T01-T11 then S01-S05, and compare the click log and DOM values.",
+        expectedResult:
+          "All verification entries match and the local click log preserves interaction order.",
+        tags: ["@regression"],
+        automationStatus: "Automated",
+        priority: "P1",
+      },
+    ],
+  },
 ];
