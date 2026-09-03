@@ -8,7 +8,14 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test:e2e": "playwright test",
+    "test:e2e:smoke": "playwright test --grep @smoke",
+    "test:e2e:regression": "playwright test --grep @regression --grep-invert @nonblocking",
+    "test:e2e:nonblocking": "playwright test --grep @nonblocking",
+    "test:e2e:all": "node scripts/run-e2e-all.mjs",
+    "test:e2e:report": "playwright show-report",
+    "test:manual:generate": "node scripts/generate-manual-test-cases.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",

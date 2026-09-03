@@ -78,6 +78,7 @@ import { SameDomainAttachmentFormIframePage } from "./pages/SameDomainAttachment
 import { SemanticFormControlLocatorPage } from "./pages/SemanticFormControlLocatorPage";
 import { BookingInformationPage } from "./pages/BookingInformationPage";
 import { Product2476XmlValuesPage } from "./pages/Product2476XmlValuesPage";
+import { ConsoleLogsPage } from "./pages/ConsoleLogsPage";
 
 // Helper function to create routes with multiple extensions
 const createRoutes = (path: string, element: React.ReactElement) => {
@@ -240,6 +241,7 @@ function App() {
                   "/product-2476-xml-values",
                   <Product2476XmlValuesPage />,
                 )}
+                {createRoutes("/console-logs", <ConsoleLogsPage />)}
                 {createRoutes("/scenario-toggle", <ScenarioTogglePage />)}
                 {createRoutes("/form-builder-html5", <FormBuilderPageHTML5 />)}
                 {createRoutes("/ng-select-dropdown", <NgSelectDropdownPage />)}
