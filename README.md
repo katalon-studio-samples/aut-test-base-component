@@ -120,3 +120,10 @@ TrueTest tracking and generated Katalon Object Repository `.rs` XML.
 
 The AUT provides stable candidate values and structures; the TrueTest tracker
 decides which relative XPath, CSS, and smart locators are emitted.
+
+## Console log fixture
+
+Open `/console-logs` to emit deterministic `log`, `debug`, `info`, `warn`, and
+`error` browser messages. Use the individual controls to test level filtering,
+or **Emit all five levels** to verify ordered Session Replay capture for
+[katalon-studio/product#2900](https://github.com/katalon-studio/product/issues/2900).

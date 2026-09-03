@@ -104,6 +104,7 @@ const menuItems = [
         label: "Multi Tiered Menu InnerText",
       },
       { path: "/notifications", label: "Notifications" },
+      { path: "/console-logs", label: "Console Logs" },
       { path: "/toast-delay-scenario", label: "Toast Delay Scenario" },
       { path: "/ab-testing", label: "A/B Testing" },
       {

@@ -2106,4 +2106,39 @@ export const ROUTE_SPECS: RouteSpec[] = [
       },
     ],
   },
+  {
+    id: "consoleLogs",
+    path: "/console-logs",
+    title: "Console log fixture",
+    deterministic: true,
+    functions: [
+      {
+        id: "consoleLogs-route-load",
+        name: "Console log fixture route loads",
+        description:
+          "Open the deterministic browser console-level fixture page.",
+        preconditions: "Application is reachable.",
+        steps: "Navigate to /console-logs.",
+        expectedResult:
+          "The page displays controls for log, debug, info, warn, and error.",
+        tags: ["@regression"],
+        automationStatus: "Automated",
+        priority: "P1",
+      },
+      {
+        id: "consoleLogs-primary",
+        name: "Emit all supported console levels",
+        description:
+          "Emit each supported browser console method individually or as one ordered set.",
+        preconditions: "The Console log fixture route is loaded.",
+        steps:
+          "Click each level control or Emit all five levels and inspect browser console output.",
+        expectedResult:
+          "Exactly one log, debug, info, warn, and error message is emitted in order and recorded in the page activity list.",
+        tags: ["@regression"],
+        automationStatus: "Automated",
+        priority: "P1",
+      },
+    ],
+  },
 ];

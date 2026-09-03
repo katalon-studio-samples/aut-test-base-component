@@ -290,4 +290,9 @@ export const CANONICAL_ROUTES: CanonicalRoute[] = [
     path: "/ctrl-click-table",
     title: "Ctrl Click Table",
   },
+  {
+    id: "consoleLogs",
+    path: "/console-logs",
+    title: "Console Logs",
+  },
 ];
