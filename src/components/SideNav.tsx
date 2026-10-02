@@ -52,6 +52,7 @@ const menuItems = [
       { path: "/file-upload", label: "File Upload" },
       { path: "/file-upload/es", label: "File Upload (ES DOM)" },
       { path: "/file-download", label: "File Download" },
+      { path: "/large-pdf-viewer", label: "Large PDF Viewer" },
       {
         path: "/iframes",
         label: "Iframes",

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Synthetic PDF viewer</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font:
+          14px system-ui,
+          sans-serif;
+        background: #e5e7eb;
+        color: #111827;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px;
+        background: #fff;
+        border-bottom: 1px solid #cbd5e1;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+        padding: 6px 10px;
+        border: 1px solid #94a3b8;
+        border-radius: 4px;
+        background: #fff;
+        color: #111827;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: default;
+        opacity: 0.45;
+      }
+      input {
+        width: 64px;
+      }
+      select {
+        max-width: 110px;
+      }
+      #status {
+        margin: 0;
+        padding: 8px 12px;
+        background: #f8fafc;
+      }
+      #viewer {
+        height: calc(100vh - 140px);
+        min-height: 160px;
+        overflow: auto;
+        padding: 16px;
+      }
+      figure {
+        width: 600px;
+        max-width: none;
+        margin: 0 auto 20px;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        box-shadow: 0 1px 5px #9ca3af;
+      }
+      figcaption {
+        padding: 6px;
+        text-align: center;
+      }
+      #error {
+        color: #b91c1c;
+        padding: 12px;
+      }
+      @media (max-width: 480px) {
+        header {
+          gap: 4px;
+          padding: 8px;
+        }
+      }
+    </style>
+    <script src="./viewer.js" defer></script>
+  </head>
+  <body>
+    <header aria-label="Document toolbar">
+      <strong>Sample document</strong>
+      <button id="previous" disabled>Previous</button>
+      <label for="page-number">Page</label>
+      <input id="page-number" type="number" min="1" value="1" disabled />
+      <span id="page-total"></span>
+      <button id="next" disabled>Next</button>
+      <label for="zoom">Zoom</label>
+      <select id="zoom">
+        <option value="fit">Fit width</option>
+        <option value="0.75">75%</option>
+        <option value="1">100%</option>
+        <option value="1.25">125%</option>
+        <option value="1.5">150%</option>
+      </select>
+      <button id="top">First page</button>
+    </header>
+    <p id="status" role="status" aria-live="polite">Preparing page images…</p>
+    <p id="error" role="alert" hidden></p>
+    <main
+      id="viewer"
+      aria-label="Document pages"
+      tabindex="0"
+      aria-busy="true"
+    ></main>
+  </body>
+</html>

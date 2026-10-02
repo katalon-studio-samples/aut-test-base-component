@@ -18,6 +18,7 @@ import { DynamicElementsPage } from "./pages/DynamicElementsPage";
 import { FileUploadPage } from "./pages/FileUploadPage";
 import { ESFileUploadPage } from "./pages/ESFileUploadPage";
 import { FileDownloadPage } from "./pages/FileDownloadPage";
+import { LargePdfViewerPage } from "./pages/LargePdfViewerPage";
 import { IframePage } from "./pages/IframePage";
 import { ContextMenuPage } from "./pages/ContextMenuPage";
 import { HoverPage } from "./pages/HoverPage";
@@ -144,6 +145,7 @@ function App() {
                 {createRoutes("/file-upload", <FileUploadPage />)}
                 {createRoutes("/file-upload/es", <ESFileUploadPage />)}
                 {createRoutes("/file-download", <FileDownloadPage />)}
+                {createRoutes("/large-pdf-viewer", <LargePdfViewerPage />)}
                 {createRoutes("/iframes", <IframePage />)}
                 {createRoutes("/iframes-1", <IframePageNested1Level />)}
                 {createRoutes("/iframes-2", <IframePageNested2Level />)}
