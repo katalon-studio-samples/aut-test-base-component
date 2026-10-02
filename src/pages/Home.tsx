@@ -107,6 +107,13 @@ const categories = [
         icon: <Upload className="w-6 h-6" />,
       },
       {
+        title: "Large PDF Viewer",
+        path: "/large-pdf-viewer",
+        description:
+          "Exercise large document viewing and Session Replay capture",
+        icon: <BookOpen className="w-6 h-6" />,
+      },
+      {
         title: "File Download",
         path: "/file-download",
         description: "Handle file download scenarios",
