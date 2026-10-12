@@ -20,7 +20,7 @@
 
         // Build base URL based on environment
         var baseUrl;
-        if (env === null) {
+        if (env === null || env === "prod") {
           baseUrl = "https://static.katalon.com";
         } else if (env === "qa") {
           baseUrl = "https://static.qa.katalon.com";

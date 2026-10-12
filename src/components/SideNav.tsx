@@ -19,6 +19,7 @@ const menuItems = [
       { path: "/msu-simulation-form", label: "MSU Simulation Form" },
       { path: "/sauce-login", label: "Sauce Login" },
       { path: "/tables", label: "Tables" },
+      { path: "/order-history", label: "Vantus Order History" },
       { path: "/ag-grid", label: "AG Grid Table" },
       {
         label: "Input",
