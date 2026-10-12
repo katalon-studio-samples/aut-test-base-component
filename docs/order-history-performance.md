@@ -1,6 +1,6 @@
 # TruePhamacy order history
 
-Open `/truephamacy-order` (also `.html`, `.php`, `.asp`, `.aspx`, `.jsp`) or use **TruePhamacy** in the Basic menu. This page has its own full-width order history layout.
+Open `/truephamacy-order` (also `.html`, `.php`, `.asp`, `.aspx`, `.jsp`) or use **TruePhamacy** in the Basic menu. This page keeps the shared left sidebar and displays the order history table in the main content area. On small screens, use the menu button to open the sidebar.
 
 The page has white navigation, a blue account/search bar, order status/type/purchase order filters, a date range, a horizontally scrollable table and pagination. The table has Order #, Confirmation #, Order type, Order method, Order date, Total, PO # and Order status columns. It also includes Quantity and Notes.
 
