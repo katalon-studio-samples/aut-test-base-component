@@ -102,7 +102,10 @@ export function OrderHistoryPage() {
           </a>
         </div>
       </div>
-      <main className="truephamacy-content">
+      <section
+        className="truephamacy-content"
+        aria-label="Order history content"
+      >
         <div className="truephamacy-breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
@@ -246,7 +249,7 @@ export function OrderHistoryPage() {
             </button>
           </div>
         </div>
-      </main>
+      </section>
       <footer id="fixture-support" className="truephamacy-footer">
         <strong>TruePhamacy · Order history</strong>
         <Link to="/">Back to base component</Link>
