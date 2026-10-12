@@ -127,3 +127,7 @@ Open `/console-logs` to emit deterministic `log`, `debug`, `info`, `warn`, and
 `error` browser messages. Use the individual controls to test level filtering,
 or **Emit all five levels** to verify ordered Session Replay capture for
 [katalon-studio/product#2900](https://github.com/katalon-studio/product/issues/2900).
+
+## TruePhamacy order history
+
+Open `/truephamacy-order` to exercise search, filters, sorting, pagination and editable PO #, quantity and notes fields. Generate or randomize up to 10,000 rows and mount all rows for Traffic Agent / Session Replay stress measurements. See [the workload and capture guide](docs/order-history-performance.md).
