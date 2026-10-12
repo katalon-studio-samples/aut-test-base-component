@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
   // Functional baseline must not send fixture traffic to a customer AUT.
   await page.route("https://static*.katalon.com/**", (route) => route.abort());
-  await page.goto("/order-history");
+  await page.goto("/truephamacy-order");
 });
 
 test("@regression order history searches, combines filters and sorts", async ({
@@ -142,7 +142,7 @@ test("@regression production loader uses the canonical host and route extensions
       body: "/* loader test stub */",
     });
   });
-  await page.goto("/order-history.html?env=prod&clientCode=DEMO-LOADER-ONLY");
+  await page.goto("/truephamacy-order.html?env=prod&clientCode=DEMO-LOADER-ONLY");
   await expect(
     page.getByRole("heading", { name: "Order history", exact: true }),
   ).toBeVisible();
@@ -166,6 +166,13 @@ test("@regression production loader uses the canonical host and route extensions
     .first()
     .click();
   await expect(
-    page.getByRole("link", { name: "Vantus Order History", exact: true }),
+    page.getByRole("link", { name: "TruePhamacy", exact: true }),
   ).toBeVisible();
+  await page.getByRole("link", { name: "TruePhamacy", exact: true }).click();
+  await expect(page).toHaveURL(/\/truephamacy-order(?:\.html)?$/);
+  await expect(page.locator(".truephamacy-brand")).toHaveText("TruePhamacy");
+  await page.getByLabel("Render all rows (no pagination)").check();
+  await page.locator("tr.order-row summary").first().click();
+  const content = await page.locator("body").textContent();
+  expect(content).not.toMatch(/vantus|cardinal\s*health|orderexpress|performance fixture/i);
 });

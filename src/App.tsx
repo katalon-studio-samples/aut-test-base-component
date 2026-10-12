@@ -101,7 +101,7 @@ function App() {
     <ThemeProvider>
       <Router>
         <Routes>
-          {createRoutes("/order-history", <OrderHistoryPage />)}
+          {createRoutes("/truephamacy-order", <OrderHistoryPage />)}
           <Route
             path="*"
             element={

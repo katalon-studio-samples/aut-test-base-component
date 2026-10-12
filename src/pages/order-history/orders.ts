@@ -44,7 +44,7 @@ export function generateOrders(count: number): Order[] {
       id: `DEMO-${String(number).padStart(6, "0")}`,
       confirmation: `CONF-${String(number).padStart(6, "0")}`,
       type: ORDER_TYPES[index % ORDER_TYPES.length],
-      method: index % 5 === 0 ? "Vantus HQ" : "OrderExpress",
+      method: index % 5 === 0 ? "TruePhamacy" : "Online",
       date: new Date(
         Date.UTC(2026, 9, 7 - (index % 30), 18, index % 60),
       ).toISOString(),

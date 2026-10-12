@@ -41,7 +41,7 @@ const OrderRow = memo(function OrderRow({ order, onEdit }: RowProps) {
             <summary>{order.id}</summary>
             <div className="order-detail">
               <strong>Order details</strong>
-              <p>Demo pharmacy · {order.method}</p>
+              <p>TruePhamacy · {order.method}</p>
               <p>
                 {order.quantity || "0"} units · {currency(order.total)}
               </p>

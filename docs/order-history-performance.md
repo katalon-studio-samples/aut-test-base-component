@@ -1,10 +1,10 @@
-# Order history performance fixture
+# TruePhamacy order history
 
-Open `/order-history` (also `.html`, `.php`, `.asp`, `.aspx`, `.jsp`) or use **Vantus Order History** in the Basic menu. This page has its own full-width shell to approximate the Vantus HQ order history layout.
+Open `/truephamacy-order` (also `.html`, `.php`, `.asp`, `.aspx`, `.jsp`) or use **TruePhamacy** in the Basic menu. This page has its own full-width order history layout.
 
-The layout and labels were derived from inspected production replay chunks: white navigation, red account/search bar, order status/type/purchase order filters, date range, a horizontally scrollable table and pagination. The observed table had Order #, Confirmation #, Order type, Order method, Order date, Total, PO # and Order status columns. This fixture retains those columns and adds Quantity and Notes.
+The page has white navigation, a blue account/search bar, order status/type/purchase order filters, a date range, a horizontally scrollable table and pagination. The table has Order #, Confirmation #, Order type, Order method, Order date, Total, PO # and Order status columns. It also includes Quantity and Notes.
 
-Only synthetic account/order values are included. Production replay chunks, HTML, account details, authentication material and customer assets are not committed. The fixture approximates the captured interface; it does not duplicate the customer's application, services, web components or exact DOM.
+Only synthetic account and order values are included. The page uses generic TruePhamacy branding and sample data.
 
 ## Workloads
 
@@ -24,12 +24,12 @@ At 10,000 unfiltered rows, the fixture mounts 40,000 inputs and approximately 42
 Use the existing loader with a **test AUT's client code** and an environment query parameter, for example:
 
 ```text
-/order-history?env=qa&clientCode=<TEST_AUT_CLIENT_CODE>
-/order-history?env=staging&clientCode=<TEST_AUT_CLIENT_CODE>
-/order-history?env=prod&clientCode=<TEST_AUT_CLIENT_CODE>
+/truephamacy-order?env=qa&clientCode=<TEST_AUT_CLIENT_CODE>
+/truephamacy-order?env=staging&clientCode=<TEST_AUT_CLIENT_CODE>
+/truephamacy-order?env=prod&clientCode=<TEST_AUT_CLIENT_CODE>
 ```
 
-The explicit `prod` environment now maps to `https://static.katalon.com`, matching the loader's default production host. QA/staging hosts retain their existing behavior. The source customer client code is not a fixture default.
+The explicit `prod` environment now maps to `https://static.katalon.com`, matching the loader's default production host. QA/staging hosts retain their existing behavior. No AUT client code is configured by default.
 
 Enable traffic collection and Session Replay on that test tracking environment and ensure it permits the fixture origin. The repository loader remembers environment and client code in `katalon-env` and `katalon-client-code` localStorage. A loaded script or the configuration banner alone does not confirm successful traffic delivery or recording.
 
@@ -41,7 +41,7 @@ For an agent-off baseline, use a fresh browser context with no client code in th
 4. Test 100, 1,000, 5,000 and 10,000 mounted rows. Measure typing response, long tasks, DOM size and heap. Also compare paginated mode with the same dataset size.
 5. Type distinctive sample notes, edit a PO # and quantity, select a row, expand details, filter/sort and paginate. Confirm traffic events arrive and open the newly recorded replay to verify those interactions, honoring the AUT's input masking settings.
 
-This fixture provides a repeatable workload. A successful fixture test does not by itself establish the cause of the original production performance issue. Actual traffic ingestion, Session Replay persistence and agent-on/off performance require a configured test AUT and separate measurements.
+This fixture provides a repeatable workload. A successful fixture test does not by itself establish the cause of the performance issues in another application. Actual traffic ingestion, Session Replay persistence and agent-on/off performance require a configured test AUT and separate measurements.
 
 ## Verification
 

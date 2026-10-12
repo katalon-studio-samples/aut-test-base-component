@@ -1,70 +1,70 @@
-.vantus-order-history {
-  --vantus-accent: #1274bf;
-  --vantus-text: #27251f;
-  --vantus-muted: #5e5c56;
-  --vantus-border: #d1d1cf;
-  --vantus-surface: #f3f4f4;
-  color: var(--vantus-text);
+.truephamacy-order-history {
+  --truephamacy-accent: #1274bf;
+  --truephamacy-text: #27251f;
+  --truephamacy-muted: #5e5c56;
+  --truephamacy-border: #d1d1cf;
+  --truephamacy-surface: #f3f4f4;
+  color: var(--truephamacy-text);
   background: white;
   min-height: 100vh;
   font-family: Arial, sans-serif;
   font-size: 14px;
 }
-.vantus-order-history * {
+.truephamacy-order-history * {
   box-sizing: border-box;
 }
-.vantus-order-history a {
+.truephamacy-order-history a {
   color: inherit;
   text-decoration: underline;
 }
-.vantus-order-history button,
-.vantus-order-history input,
-.vantus-order-history select {
+.truephamacy-order-history button,
+.truephamacy-order-history input,
+.truephamacy-order-history select {
   font: inherit;
 }
-.vantus-order-history input:not([type="checkbox"]),
-.vantus-order-history select {
-  border: 1px solid var(--vantus-border);
+.truephamacy-order-history input:not([type="checkbox"]),
+.truephamacy-order-history select {
+  border: 1px solid var(--truephamacy-border);
   border-radius: 4px;
   padding: 8px 12px;
   background: white;
-  color: var(--vantus-text);
+  color: var(--truephamacy-text);
   min-height: 36px;
   min-width: 0;
 }
-.vantus-order-history input[type="checkbox"] {
+.truephamacy-order-history input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: var(--vantus-accent);
+  accent-color: var(--truephamacy-accent);
 }
-.vantus-order-history button {
-  border: 1px solid var(--vantus-text);
+.truephamacy-order-history button {
+  border: 1px solid var(--truephamacy-text);
   padding: 8px 16px;
   border-radius: 24px;
   background: white;
   cursor: pointer;
 }
-.vantus-order-history button:hover:not(:disabled) {
-  background: var(--vantus-surface);
+.truephamacy-order-history button:hover:not(:disabled) {
+  background: var(--truephamacy-surface);
 }
-.vantus-order-history button:disabled {
+.truephamacy-order-history button:disabled {
   opacity: 0.45;
   cursor: default;
 }
-.vantus-order-history :focus-visible {
+.truephamacy-order-history :focus-visible {
   outline: 2px solid #1274bf;
   outline-offset: 3px;
 }
-.vantus-order-history label {
+.truephamacy-order-history label {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-.vantus-header {
-  border-bottom: 1px solid var(--vantus-border);
+.truephamacy-header {
+  border-bottom: 1px solid var(--truephamacy-border);
 }
-.vantus-header-inner,
-.vantus-taskbar-inner {
+.truephamacy-header-inner,
+.truephamacy-taskbar-inner {
   max-width: 1440px;
   margin: auto;
   padding: 20px 32px;
@@ -72,33 +72,25 @@
   align-items: center;
   gap: 32px;
 }
-.vantus-header .vantus-brand {
+.truephamacy-header .truephamacy-brand {
   font-size: 24px;
   text-decoration: none;
   white-space: nowrap;
 }
-.vantus-brand sup {
-  font-size: 9px;
-  vertical-align: super;
-}
-.vantus-header nav {
+.truephamacy-header nav {
   display: flex;
   gap: 32px;
   flex: 1;
 }
-.vantus-header nav a {
+.truephamacy-header nav a {
   text-decoration: none;
   font-size: 16px;
 }
-.fixture-badge {
-  color: var(--vantus-muted);
-  font-size: 12px;
-}
-.vantus-taskbar {
-  background: var(--vantus-accent);
+.truephamacy-taskbar {
+  background: var(--truephamacy-accent);
   color: white;
 }
-.vantus-taskbar-inner {
+.truephamacy-taskbar-inner {
   padding-top: 12px;
   padding-bottom: 12px;
 }
@@ -110,11 +102,11 @@
 .demo-account span {
   font-size: 12px;
 }
-.vantus-order-history .product-search {
+.truephamacy-order-history .product-search {
   position: relative;
   flex: 1;
 }
-.vantus-order-history .product-search input {
+.truephamacy-order-history .product-search input {
   width: 100%;
   border-radius: 24px;
   padding-right: 48px;
@@ -123,23 +115,23 @@
   position: absolute;
   right: 16px;
   top: 9px;
-  color: var(--vantus-text);
+  color: var(--truephamacy-text);
 }
 .workload-shortcut {
   white-space: nowrap;
 }
-.vantus-content {
+.truephamacy-content {
   max-width: 1440px;
   padding: 16px 32px 32px;
   margin: auto;
 }
-.vantus-breadcrumb {
+.truephamacy-breadcrumb {
   display: flex;
   gap: 16px;
   margin-bottom: 24px;
 }
-.vantus-breadcrumb > span:first-of-type {
-  color: var(--vantus-border);
+.truephamacy-breadcrumb > span:first-of-type {
+  color: var(--truephamacy-border);
 }
 .order-title {
   display: flex;
@@ -156,7 +148,7 @@
 }
 .order-title > span,
 .order-results > span:last-child {
-  color: var(--vantus-muted);
+  color: var(--truephamacy-muted);
   font-size: 12px;
 }
 .order-filters,
@@ -183,9 +175,9 @@
   font-size: 12px;
 }
 .workload-controls {
-  border: 1px solid var(--vantus-border);
+  border: 1px solid var(--truephamacy-border);
   border-radius: 8px;
-  background: var(--vantus-surface);
+  background: var(--truephamacy-surface);
   padding: 12px 16px;
   margin: 24px 0;
 }
@@ -196,7 +188,7 @@
 .workload-controls summary span {
   font-weight: 400;
   margin-left: 16px;
-  color: var(--vantus-muted);
+  color: var(--truephamacy-muted);
 }
 .workload-fields {
   display: flex;
@@ -208,7 +200,7 @@
 .workload-fields label:not(.all-rows) {
   width: 120px;
 }
-.vantus-order-history .all-rows {
+.truephamacy-order-history .all-rows {
   flex-direction: row;
   align-items: center;
   align-self: center;
@@ -217,7 +209,7 @@
   margin: 12px 0 0;
   font-size: 12px;
 }
-.vantus-order-history .workload-error {
+.truephamacy-order-history .workload-error {
   color: #a31828;
   font-size: 14px;
 }
@@ -229,29 +221,29 @@
   padding: 0 0 12px;
 }
 .order-table-scroll {
-  border: 1px solid var(--vantus-border);
+  border: 1px solid var(--truephamacy-border);
   border-radius: 12px;
   overflow: auto;
   max-height: 65vh;
 }
-.vantus-order-history table {
+.truephamacy-order-history table {
   border-collapse: separate;
   border-spacing: 0;
   min-width: 1600px;
   width: 100%;
   text-align: left;
 }
-.vantus-order-history th {
+.truephamacy-order-history th {
   position: sticky;
   top: 0;
   z-index: 1;
   background: white;
-  border-bottom: 1px solid var(--vantus-border);
+  border-bottom: 1px solid var(--truephamacy-border);
   padding: 16px 12px;
   font-weight: 400;
   white-space: nowrap;
 }
-.vantus-order-history th button {
+.truephamacy-order-history th button {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -262,15 +254,15 @@
   width: 100%;
   text-align: left;
 }
-.vantus-order-history td {
+.truephamacy-order-history td {
   padding: 12px;
   border-bottom: 1px solid #ededeb;
   vertical-align: top;
 }
-.vantus-order-history tbody tr:last-child td {
+.truephamacy-order-history tbody tr:last-child td {
   border-bottom: 0;
 }
-.vantus-order-history tbody tr:hover {
+.truephamacy-order-history tbody tr:hover {
   background: #fafafa;
 }
 .cell-content {
@@ -284,7 +276,7 @@
 }
 .cell-content small {
   font-size: 12px;
-  color: var(--vantus-muted);
+  color: var(--truephamacy-muted);
 }
 .cell-content input[type="text"] {
   width: 150px;
@@ -302,7 +294,7 @@
 .order-detail {
   padding: 12px;
   margin-top: 8px;
-  background: var(--vantus-surface);
+  background: var(--truephamacy-surface);
   max-width: 220px;
 }
 .order-detail p {
@@ -330,12 +322,12 @@
   background: #067f47;
 }
 .status-canceled::before {
-  background: var(--vantus-accent);
+  background: var(--truephamacy-accent);
 }
 .status-in-process::before {
   background: #967000;
 }
-.vantus-order-history .order-empty {
+.truephamacy-order-history .order-empty {
   text-align: center;
   padding: 48px;
 }
@@ -346,7 +338,7 @@
   flex-wrap: wrap;
   margin-top: 16px;
 }
-.vantus-order-history .order-pagination label {
+.truephamacy-order-history .order-pagination label {
   flex-direction: row;
   align-items: center;
 }
@@ -356,38 +348,38 @@
   gap: 16px;
   margin-left: auto;
 }
-.vantus-order-history .pagination-buttons button {
+.truephamacy-order-history .pagination-buttons button {
   border: 0;
   padding: 8px;
 }
-.vantus-footer {
-  background: var(--vantus-surface);
+.truephamacy-footer {
+  background: var(--truephamacy-surface);
   padding: 24px 32px;
-  color: var(--vantus-muted);
+  color: var(--truephamacy-muted);
 }
-.vantus-footer p {
+.truephamacy-footer p {
   margin: 8px 0;
 }
 @media (max-width: 768px) {
-  .vantus-header-inner,
-  .vantus-taskbar-inner {
+  .truephamacy-header-inner,
+  .truephamacy-taskbar-inner {
     padding-left: 16px;
     padding-right: 16px;
     flex-wrap: wrap;
     gap: 16px;
   }
-  .vantus-header nav {
+  .truephamacy-header nav {
     order: 3;
     flex-basis: 100%;
     gap: 24px;
   }
-  .vantus-header nav a {
+  .truephamacy-header nav a {
     font-size: 14px;
   }
-  .vantus-content {
+  .truephamacy-content {
     padding: 16px;
   }
-  .vantus-order-history .product-search {
+  .truephamacy-order-history .product-search {
     flex-basis: 100%;
     order: 3;
   }

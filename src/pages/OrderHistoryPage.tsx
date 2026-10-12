@@ -60,17 +60,17 @@ export function OrderHistoryPage() {
   };
 
   return (
-    <div className="vantus-order-history">
-      <header className="vantus-header">
-        <div className="vantus-header-inner">
+    <div className="truephamacy-order-history">
+      <header className="truephamacy-header">
+        <div className="truephamacy-header-inner">
           <Link
             to="/"
-            className="vantus-brand"
+            className="truephamacy-brand"
             aria-label="Back to base component"
           >
             TruePhamacy
           </Link>
-          <nav aria-label="Fixture sections">
+          <nav aria-label="Main sections">
             <a href="#order-history-title">Products</a>
             <a href="#order-history-table" aria-current="page">
               Orders
@@ -78,12 +78,11 @@ export function OrderHistoryPage() {
             <a href="#performance-workload">Reports</a>
             <a href="#fixture-support">Solutions</a>
           </nav>
-          <span className="fixture-badge">Performance fixture</span>
           <ShoppingCart size={20} aria-hidden="true" />
         </div>
       </header>
-      <div className="vantus-taskbar">
-        <div className="vantus-taskbar-inner">
+      <div className="truephamacy-taskbar">
+        <div className="truephamacy-taskbar-inner">
           <div className="demo-account">
             <strong>TruePhamacy</strong>
             <span>Account # DEMO-001</span>
@@ -103,8 +102,8 @@ export function OrderHistoryPage() {
           </a>
         </div>
       </div>
-      <main className="vantus-content">
-        <div className="vantus-breadcrumb">
+      <main className="truephamacy-content">
+        <div className="truephamacy-breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
           <span>Order history</span>
@@ -248,12 +247,8 @@ export function OrderHistoryPage() {
           </div>
         </div>
       </main>
-      <footer id="fixture-support" className="vantus-footer">
-        <strong>TruePhamacy · Order history performance fixture</strong>
-        <p>
-          Use your test AUT's Traffic Agent configuration to compare collection
-          and Session Replay workloads.
-        </p>
+      <footer id="fixture-support" className="truephamacy-footer">
+        <strong>TruePhamacy · Order history</strong>
         <Link to="/">Back to base component</Link>
       </footer>
     </div>
