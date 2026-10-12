@@ -13,7 +13,7 @@ Only synthetic account/order values are included. Production replay chunks, HTML
 - Click a column heading to sort ascending/descending. Order date starts descending.
 - Edit PO #, quantity and notes, or select a row. Edits and selections survive sorting, filtering and pagination during the current visit. Reloading or generating a new dataset resets them.
 - Expand an order # to add visible detail content and exercise DOM mutations.
-- Choose 10, 25, 50 or 100 items per page. Pagination limits mounted DOM, not just visibility.
+- Choose 10, 25, 50, 100, 1,000 or 10,000 items per page. Pagination limits mounted DOM, not just visibility.
 - Generate an exact count or randomize an inclusive minimum/maximum count (1–10,000). Order contents remain deterministic for repeatable comparisons.
 - Enable **Render all rows (no pagination)** to mount every matching order and its four inputs. There is no virtualization. Clear filters before comparing DOM sizes. The scroll container limits the viewport, not the mounted row count.
 

@@ -1,5 +1,5 @@
 .vantus-order-history {
-  --vantus-red: #e41f35;
+  --vantus-accent: #1274bf;
   --vantus-text: #27251f;
   --vantus-muted: #5e5c56;
   --vantus-border: #d1d1cf;
@@ -35,7 +35,7 @@
 .vantus-order-history input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: var(--vantus-red);
+  accent-color: var(--vantus-accent);
 }
 .vantus-order-history button {
   border: 1px solid var(--vantus-text);
@@ -95,7 +95,7 @@
   font-size: 12px;
 }
 .vantus-taskbar {
-  background: var(--vantus-red);
+  background: var(--vantus-accent);
   color: white;
 }
 .vantus-taskbar-inner {
@@ -330,7 +330,7 @@
   background: #067f47;
 }
 .status-canceled::before {
-  background: var(--vantus-red);
+  background: var(--vantus-accent);
 }
 .status-in-process::before {
   background: #967000;

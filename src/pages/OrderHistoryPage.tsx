@@ -68,7 +68,7 @@ export function OrderHistoryPage() {
             className="vantus-brand"
             aria-label="Back to base component"
           >
-            Vantus<sup>™</sup> HQ
+            TruePhamacy
           </Link>
           <nav aria-label="Fixture sections">
             <a href="#order-history-title">Products</a>
@@ -85,7 +85,7 @@ export function OrderHistoryPage() {
       <div className="vantus-taskbar">
         <div className="vantus-taskbar-inner">
           <div className="demo-account">
-            <strong>DEMO PHARMACY</strong>
+            <strong>TruePhamacy</strong>
             <span>Account # DEMO-001</span>
           </div>
           <label className="product-search">
@@ -218,7 +218,7 @@ export function OrderHistoryPage() {
                 setPage(1);
               }}
             >
-              {[10, 25, 50, 100].map((size) => (
+              {[10, 25, 50, 100, 1000, 10000].map((size) => (
                 <option key={size}>{size}</option>
               ))}
             </select>
@@ -249,7 +249,7 @@ export function OrderHistoryPage() {
         </div>
       </main>
       <footer id="fixture-support" className="vantus-footer">
-        <strong>Vantus HQ · Order history performance fixture</strong>
+        <strong>TruePhamacy · Order history performance fixture</strong>
         <p>
           Use your test AUT's Traffic Agent configuration to compare collection
           and Session Replay workloads.
