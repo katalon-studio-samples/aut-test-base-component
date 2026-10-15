@@ -1096,3 +1096,16 @@ body:has(.pharmacy-workflow) .app-side-nav {
     padding-top: 64px;
   }
 }
+
+.wf-select-all {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 6px;
+  min-width: 155px;
+  cursor: pointer;
+}
+.wf-select-all small {
+  grid-column: 1 / -1;
+  font-weight: 400;
+}

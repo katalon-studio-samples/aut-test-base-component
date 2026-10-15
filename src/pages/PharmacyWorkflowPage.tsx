@@ -270,7 +270,9 @@ export function PharmacyWorkflowPage() {
   );
   const addCart = () => {
     if (!selectedProducts.length) {
-      setError("Enter a quantity for at least one product.");
+      setError(
+        "Select a product or enter a quantity for at least one product.",
+      );
       return;
     }
     for (const product of selectedProducts) {
@@ -366,6 +368,30 @@ export function PharmacyWorkflowPage() {
     (activePage - 1) * pageSize,
     activePage * pageSize,
   );
+  const selectableProducts = visible.filter((product) => product.stock > 0);
+  const selectedCount = selectableProducts.filter(
+    (product) => Number(quantities[product.id]) > 0,
+  ).length;
+  const allSelected =
+    selectableProducts.length > 0 &&
+    selectedCount === selectableProducts.length;
+  const selectProduct = (id: string, checked: boolean) =>
+    setQuantities((previous) => ({
+      ...previous,
+      [id]: checked ? (Number(previous[id]) > 0 ? previous[id] : "1") : "",
+    }));
+  const selectAllProducts = (checked: boolean) =>
+    setQuantities((previous) => {
+      const next = { ...previous };
+      for (const product of selectableProducts) {
+        next[product.id] = checked
+          ? Number(previous[product.id]) > 0
+            ? previous[product.id]
+            : "1"
+          : "";
+      }
+      return next;
+    });
   const matchedItem =
     match && draft.find((item) => item.productId === match.productId);
   const matchedRow = matchedItem?.rows.find((row) => row.id === match?.rowId);
@@ -619,9 +645,7 @@ export function PharmacyWorkflowPage() {
                 />
                 In stock only
               </label>
-              <span>
-                {selectedProducts.length} products with quantity entered
-              </span>
+              <span>{selectedProducts.length} products selected</span>
             </div>
             <div className="wf-actionbar">
               <button
@@ -630,7 +654,9 @@ export function PharmacyWorkflowPage() {
                     ? addReturnProducts(
                         selectedProducts.map((product) => product.id),
                       )
-                    : setError("Enter a quantity for at least one product.")
+                    : setError(
+                        "Select a product or enter a quantity for at least one product.",
+                      )
                 }
               >
                 <Plus size={16} />
@@ -682,6 +708,26 @@ export function PharmacyWorkflowPage() {
                 <caption className="sr-only">Demo product catalog</caption>
                 <thead>
                   <tr>
+                    <th scope="col">
+                      <label className="wf-select-all">
+                        <input
+                          type="checkbox"
+                          aria-label="Select all in-stock products on this page"
+                          checked={allSelected}
+                          disabled={!selectableProducts.length}
+                          ref={(input) => {
+                            if (input)
+                              input.indeterminate =
+                                selectedCount > 0 && !allSelected;
+                          }}
+                          onChange={(event) =>
+                            selectAllProducts(event.target.checked)
+                          }
+                        />
+                        Select all
+                        <small>This page · in stock only</small>
+                      </label>
+                    </th>
                     {catalogColumns.map((column) => (
                       <th
                         key={column.key}
@@ -717,6 +763,17 @@ export function PharmacyWorkflowPage() {
                 <tbody>
                   {visible.map((product) => (
                     <tr key={product.id} data-testid={`product-${product.id}`}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          aria-label={`Select ${product.name}`}
+                          checked={Number(quantities[product.id]) > 0}
+                          disabled={!product.stock}
+                          onChange={(event) =>
+                            selectProduct(product.id, event.target.checked)
+                          }
+                        />
+                      </td>
                       <td>
                         <input
                           type="number"

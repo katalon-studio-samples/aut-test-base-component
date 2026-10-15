@@ -302,7 +302,7 @@ test("all eight catalog columns sort both directions across the paginated 5,000-
     "Favorites",
   ];
   for (const [index, label] of columns.entries()) {
-    const header = table.getByRole("columnheader").nth(index);
+    const header = table.getByRole("columnheader").nth(index + 1);
     const button = header.getByRole("button", {
       name: `Sort products by ${label}`,
       exact: true,
@@ -318,7 +318,7 @@ test("all eight catalog columns sort both directions across the paginated 5,000-
       const values = await table.locator("tbody tr").evaluateAll(
         (rows, col) =>
           rows.map((row) => {
-            const cell = row.querySelectorAll("td")[col];
+            const cell = row.querySelectorAll("td")[col + 1];
             if (col === 0)
               return Number(cell.querySelector("input")!.value || 0);
             if (col === 1) return cell.querySelector("strong")!.textContent!;
@@ -367,7 +367,7 @@ test("all eight catalog columns sort both directions across the paginated 5,000-
     .getByRole("button", { name: "Sort products by Stock", exact: true })
     .click();
   await expect(
-    table.locator("tbody tr").first().locator("td").nth(2),
+    table.locator("tbody tr").first().locator("td").nth(3),
   ).toContainText("120 units available");
 });
 
@@ -481,3 +481,81 @@ for (const width of [1440, 1024, 768, 390, 320]) {
       .toBe("0px");
   });
 }
+
+test("row selection and select all add in-stock products across pages to the cart @regression", async ({
+  page,
+}) => {
+  await page.goto(BASE);
+  const all = page.getByRole("checkbox", {
+    name: "Select all in-stock products on this page",
+    exact: true,
+  });
+  const row = page.getByRole("checkbox", {
+    name: `Select ${cream}`,
+    exact: true,
+  });
+  const quantity = page.getByRole("spinbutton", {
+    name: `Quantity for ${cream}`,
+    exact: true,
+  });
+  await row.check();
+  await expect(quantity).toHaveValue("1");
+  await expect(all).toBeChecked({ indeterminate: true });
+  await quantity.fill("2");
+  await all.check();
+  await expect(quantity).toHaveValue("2");
+  await expect(all).toBeChecked();
+  const selected = page.getByText(/^\d+ products selected$/);
+  const count = Number((await selected.textContent())!.split(" ")[0]);
+  expect(count).toBeGreaterThan(0);
+  expect(count).toBeLessThanOrEqual(200);
+  const outOfStock = page
+    .getByRole("table", { name: "Demo product catalog" })
+    .locator("tbody tr")
+    .filter({ hasText: "OUT OF STOCK" });
+  expect(await outOfStock.count()).toBeGreaterThan(0);
+  for (const checkbox of await outOfStock.getByRole("checkbox").all()) {
+    await expect(checkbox).toBeDisabled();
+    await expect(checkbox).not.toBeChecked();
+  }
+  await page.getByRole("button", { name: "Next product page" }).click();
+  await expect(page.getByText("Page 2 of 25", { exact: true })).toBeVisible();
+  await expect(all).not.toBeChecked();
+  await expect(selected).toHaveText(`${count} products selected`);
+  const secondPageCount = await page
+    .getByRole("table", { name: "Demo product catalog" })
+    .locator('tbody input[type="checkbox"]:enabled')
+    .count();
+  await all.check();
+  const combinedCount = count + secondPageCount;
+  await expect(selected).toHaveText(`${combinedCount} products selected`);
+  await page.getByRole("button", { name: "Previous product page" }).click();
+  await expect(all).toBeChecked();
+  await expect(row).toBeChecked();
+  await expect(quantity).toHaveValue("2");
+  await all.uncheck();
+  await expect(selected).toHaveText(`${secondPageCount} products selected`);
+  await page.getByRole("button", { name: "Next product page" }).click();
+  await expect(all).toBeChecked();
+  await page.getByRole("button", { name: "Previous product page" }).click();
+  await row.check();
+  await quantity.fill("2");
+  await all.check();
+  await expect(selected).toHaveText(`${combinedCount} products selected`);
+  await page.getByRole("button", { name: "Add to cart", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText(
+    `${combinedCount} products added to cart.`,
+  );
+  await expect(selected).toHaveText("0 products selected");
+  const cart = await page.evaluate(
+    () => JSON.parse(sessionStorage.getItem("truephamacy-workflow-v1")!).cart,
+  );
+  expect(cart).toHaveLength(combinedCount);
+  expect(
+    cart.find((line: { productId: string }) => line.productId === "care-cream")
+      .quantity,
+  ).toBe("2");
+  expect(
+    cart.every((line: { quantity: string }) => Number(line.quantity) > 0),
+  ).toBe(true);
+});
