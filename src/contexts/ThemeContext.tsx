@@ -39,6 +39,13 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     localStorage.setItem("urlExtension", urlExtension);
+    // The standalone library keeps its route unchanged even if the AUT saved an extension.
+    if (
+      /^\/traffic-agent-performance(?:\.(?:html|php|asp|aspx|jsp))?\/?$/.test(
+        window.location.pathname,
+      )
+    )
+      return;
 
     // Update current URL based on setting
     const currentUrl = window.location.href;

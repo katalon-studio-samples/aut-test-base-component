@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local benchmark reports and Chrome traces
+benchmark-results/

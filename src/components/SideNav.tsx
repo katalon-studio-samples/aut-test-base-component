@@ -20,6 +20,7 @@ const menuItems = [
       { path: "/sauce-login", label: "Sauce Login" },
       { path: "/tables", label: "Tables" },
       { path: "/truephamacy-order", label: "TruePhamacy" },
+      { path: "/truephamacy-workflow", label: "Pharmacy Workflow" },
       { path: "/ag-grid", label: "AG Grid Table" },
       {
         label: "Input",
@@ -34,6 +35,10 @@ const menuItems = [
       { path: "/pii-controls", label: "PII Controls" },
       { path: "/unique-test-data", label: "Numeric Input" },
       { path: "/settings", label: "TrueTest Settings" },
+      {
+        path: "/traffic-agent-performance",
+        label: "Library management",
+      },
     ],
   },
   {
@@ -198,7 +203,7 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
 
   return (
     <div
-      className={`bg-white dark:bg-gray-800 shadow-lg h-screen overflow-y-auto transition-all duration-300 z-40
+      className={`app-side-nav bg-white dark:bg-gray-800 shadow-lg h-screen overflow-y-auto transition-all duration-300 z-40
       ${isOpen ? "translate-x-0" : "-translate-x-full"}
       fixed md:translate-x-0 md:sticky top-0 left-0 w-64`}
     >
@@ -213,7 +218,7 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
               {category.items.map((item, idx) => {
                 const hasChildren = !!item.children;
                 const hasPath = !!item.path;
-                const isExternal = !!item.external;
+                const isExternal = "external" in item && !!item.external;
                 const key = `${category.category}-${item.label}-${idx}`;
                 if (hasChildren && !hasPath) {
                   const isExpanded =
@@ -239,6 +244,9 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                           {item.children.map((child) => (
                             <li key={child.path}>
                               <Link
+                                reloadDocument={location.pathname.startsWith(
+                                  "/traffic-agent-performance",
+                                )}
                                 to={formatPath(child.path)}
                                 className={`flex items-center px-3 py-2 text-sm rounded-md ${
                                   isActivePath(child.path)
@@ -279,6 +287,12 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                       <>
                         <Link
                           to={formatPath(item.path)}
+                          reloadDocument={
+                            item.path === "/traffic-agent-performance" ||
+                            location.pathname.startsWith(
+                              "/traffic-agent-performance",
+                            )
+                          }
                           className={`flex items-center px-3 py-2 text-sm rounded-md ${
                             isActivePath(item.path)
                               ? "bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400"
@@ -295,6 +309,9 @@ export const SideNav: React.FC<SideNavProps> = ({ isOpen = true, onClose }) => {
                             {item.children.map((child) => (
                               <li key={child.path}>
                                 <Link
+                                  reloadDocument={location.pathname.startsWith(
+                                    "/traffic-agent-performance",
+                                  )}
                                   to={formatPath(child.path)}
                                   className={`flex items-center px-3 py-2 text-sm rounded-md ${
                                     isActivePath(child.path)

@@ -131,3 +131,11 @@ or **Emit all five levels** to verify ordered Session Replay capture for
 ## TruePhamacy order history
 
 Open `/truephamacy-order` to exercise search, filters, sorting, pagination and editable PO #, quantity and notes fields. Generate or randomize up to 10,000 rows and mount all rows for Traffic Agent / Session Replay stress measurements. See [the workload and capture guide](docs/order-history-performance.md).
+
+## Library Management
+
+Open `/traffic-agent-performance` for the English library application: book catalog, readers, borrowing/returns, reservations, shelf classification, settings, local announcements, Shadow DOM lookup and same-origin borrowing slips. The route always bypasses both agent and SDK loaders. Run `npm run test:library`. See [the walkthrough and isolation/DOM checks](docs/library-management.md).
+
+## Pharmacy Workflow
+
+Open `/truephamacy-workflow` for the Cardinal-inspired demo: product search → cart → return request → serial/unit/GTIN rows → invoice matching → local return history. All business data is synthetic. See [the walkthrough and reference notes](docs/pharmacy-workflow.md).

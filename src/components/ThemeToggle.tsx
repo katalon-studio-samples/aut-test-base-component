@@ -21,7 +21,7 @@ export const ThemeToggle: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-50 flex gap-2">
+    <div className="app-utility-controls fixed top-4 right-4 z-50 flex gap-2">
       {/* URL Extension Dropdown */}
       <div className="relative">
         <button

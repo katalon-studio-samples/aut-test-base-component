@@ -15,7 +15,8 @@
     "test:e2e:nonblocking": "playwright test --grep @nonblocking",
     "test:e2e:all": "node scripts/run-e2e-all.mjs",
     "test:e2e:report": "playwright show-report",
-    "test:manual:generate": "node scripts/generate-manual-test-cases.mjs"
+    "test:manual:generate": "node scripts/generate-manual-test-cases.mjs",
+    "test:library": "playwright test tests/specs/regression/library-management.regression.spec.ts --project=chromium"
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
@@ -38,12 +39,14 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.2",
-    "react-use": "^17.6.0"
+    "react-use": "^17.6.0",
+    "tinymce": "^8.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
     "@playwright/test": "^1.60.0",
     "@types/js-cookie": "^3.0.6",
+    "@types/node": "^22.20.5",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",

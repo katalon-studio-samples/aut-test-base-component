@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Library borrowing slip</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #fff;
+        --text: #203a37;
+        --border: #c5d6ce;
+        --muted: #657d73;
+      }
+      html[data-theme="dark"] {
+        color-scheme: dark;
+        --bg: #162d29;
+        --text: #e3eee6;
+        --border: #425c51;
+        --muted: #b3c5bc;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 18px;
+        background: var(--bg);
+        color: var(--text);
+        font: 14px system-ui;
+      }
+      h2 {
+        font-size: 19px;
+        margin: 0 0 8px;
+      }
+      p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      label {
+        display: grid;
+        gap: 6px;
+        min-width: 0;
+      }
+      select,
+      input,
+      textarea,
+      button {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        background: var(--bg);
+        color: var(--text);
+        font: inherit;
+      }
+      select[multiple] {
+        height: 140px;
+      }
+      button {
+        cursor: pointer;
+        background: #316d5b;
+        color: white;
+        min-height: 42px;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible,
+      button:focus-visible {
+        outline: 3px solid #d9ad47;
+        outline-offset: 2px;
+      }
+      .full {
+        grid-column: 1/-1;
+      }
+      iframe {
+        width: 100%;
+        height: 140px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+      #receipt-result {
+        font-weight: 600;
+      }
+      small {
+        color: var(--muted);
+      }
+      @media (max-width: 480px) {
+        form {
+          grid-template-columns: 1fr;
+        }
+        select,
+        input,
+        textarea {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Borrowing slip</h2>
+    <p>
+      This slip uses the same library data. Select a reader and books, read the
+      rules and confirm borrowing.
+    </p>
+    <form id="receipt-form">
+      <label
+        >Reader on slip<select
+          id="receipt-reader"
+          aria-label="Reader on slip"
+          required
+        >
+          <option value="">Select reader</option>
+        </select></label
+      ><label
+        >Borrowed date on slip<input
+          id="receipt-borrowed"
+          type="date"
+          required /></label
+      ><label class="full"
+        >Books on slip<select
+          id="receipt-books"
+          aria-label="Books on slip"
+          multiple
+          required
+          aria-describedby="receipt-help"
+        ></select
+        ><small id="receipt-help"
+          >Use Ctrl/Cmd to select multiple books; on mobile, use the system
+          selection menu.</small
+        ></label
+      ><label
+        >Due date on slip<input id="receipt-due" type="date" required /></label
+      ><label
+        >Notes on slip<textarea
+          id="receipt-note"
+          maxlength="500"
+          rows="2"
+        ></textarea>
+      </label>
+      <div class="full">
+        <iframe
+          id="receipt-rules"
+          src="/library/frames/rules.html"
+          title="Borrowing slip confirmation rules"
+        ></iframe>
+      </div>
+      <button class="full" id="receipt-confirm" disabled>
+        Confirm borrowing slip
+      </button>
+    </form>
+    <p id="receipt-result" role="status"></p>
+    <script>
+      (function () {
+        const reader = document.getElementById("receipt-reader"),
+          books = document.getElementById("receipt-books"),
+          borrowed = document.getElementById("receipt-borrowed"),
+          due = document.getElementById("receipt-due"),
+          nested = document.getElementById("receipt-rules"),
+          confirm = document.getElementById("receipt-confirm"),
+          result = document.getElementById("receipt-result");
+        let initialized = false,
+          consent = false;
+        function option(value, text) {
+          const o = document.createElement("option");
+          o.value = value;
+          o.textContent = text;
+          return o;
+        }
+        window.addEventListener("message", function (e) {
+          if (e.origin !== location.origin || !e.data) return;
+          if (
+            e.source === nested.contentWindow &&
+            e.data.type === "library:receipt-consent"
+          ) {
+            consent = e.data.accepted === true;
+            confirm.disabled = !consent;
+            return;
+          }
+          if (e.source !== parent) return;
+          if (e.data.type === "library:receipt-data") {
+            const d = e.data;
+            const previousReader = reader.value;
+            const previousBooks = [...books.selectedOptions].map(
+              (o) => o.value,
+            );
+            reader.replaceChildren(option("", "Select reader"));
+            d.readers.forEach((r) =>
+              reader.append(
+                option(
+                  r.id,
+                  r.id +
+                    " · " +
+                    r.name +
+                    (r.expires < d.today ? " · Card expired" : ""),
+                ),
+              ),
+            );
+            books.replaceChildren();
+            d.books.forEach((b) =>
+              books.append(
+                option(
+                  b.id,
+                  b.id +
+                    " · " +
+                    b.title +
+                    " · Available: " +
+                    b.available +
+                    " copies",
+                ),
+              ),
+            );
+            reader.value = initialized ? previousReader : d.selected.readerId;
+            const selected = initialized ? previousBooks : d.selected.bookIds;
+            [...books.options].forEach(
+              (o) => (o.selected = selected.includes(o.value)),
+            );
+            if (!initialized) {
+              borrowed.value = d.today;
+              due.value = d.due;
+              initialized = true;
+            }
+            document.documentElement.dataset.theme = d.theme;
+            nested.contentWindow.postMessage(
+              { type: "library:receipt-theme", theme: d.theme },
+              location.origin,
+            );
+          }
+          if (e.data.type === "library:receipt-result") {
+            result.textContent = e.data.message;
+            result.style.color = e.data.error ? "#b54242" : "";
+            if (!e.data.error) {
+              [...books.options].forEach((o) => (o.selected = false));
+              consent = false;
+              confirm.disabled = true;
+              nested.contentWindow.postMessage(
+                { type: "library:receipt-reset" },
+                location.origin,
+              );
+            }
+          }
+        });
+        nested.addEventListener("load", () =>
+          nested.contentWindow.postMessage(
+            {
+              type: "library:receipt-theme",
+              theme: document.documentElement.dataset.theme || "light",
+            },
+            location.origin,
+          ),
+        );
+        document
+          .getElementById("receipt-form")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (!consent) {
+              result.textContent =
+                "Please confirm that you have read the rules.";
+              return;
+            }
+            parent.postMessage(
+              {
+                type: "library:receipt-borrow",
+                readerId: reader.value,
+                bookIds: [...books.selectedOptions].map((o) => o.value),
+                borrowed: borrowed.value,
+                due: due.value,
+                note: document.getElementById("receipt-note").value,
+              },
+              location.origin,
+            );
+          });
+        parent.postMessage({ type: "library:receipt-ready" }, location.origin);
+      })();
+    </script>
+  </body>
+</html>

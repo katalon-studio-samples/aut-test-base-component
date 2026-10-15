@@ -2,7 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import "./utils/trueTestDetector";
+// The library route must not load or fabricate an SDK object.
+if (
+  !/^\/traffic-agent-performance(?:\.(?:html|php|asp|aspx|jsp))?\/?$/.test(
+    location.pathname,
+  )
+) {
+  void import("./utils/trueTestDetector");
+}
 
 const rootElement = document.getElementById("root");
 if (rootElement) {

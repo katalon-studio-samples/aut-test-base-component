@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Borrowing slip rules</title>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      html[data-theme="dark"] {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        padding: 12px;
+        font: 13px system-ui;
+        background: Canvas;
+        color: CanvasText;
+      }
+      p {
+        margin: 0 0 9px;
+        line-height: 1.5;
+      }
+      label {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+      input {
+        flex-shrink: 0;
+      }
+      button {
+        margin-top: 9px;
+        padding: 6px 12px;
+        border-radius: 5px;
+        border: 1px solid #7e9c8d;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <strong>Book care agreement</strong> · Return books on time and tell staff
+      if a copy is damaged.
+    </p>
+    <label
+      ><input id="rules-agree" type="checkbox" />I have read the borrowing slip
+      rules</label
+    ><button id="rules-confirm" disabled>Confirm rules read</button>
+    <script>
+      (function () {
+        const box = document.getElementById("rules-agree"),
+          button = document.getElementById("rules-confirm");
+        box.addEventListener("change", () => {
+          button.disabled = !box.checked;
+          parent.postMessage(
+            { type: "library:receipt-consent", accepted: false },
+            location.origin,
+          );
+        });
+        button.addEventListener("click", () =>
+          parent.postMessage(
+            { type: "library:receipt-consent", accepted: box.checked },
+            location.origin,
+          ),
+        );
+        window.addEventListener("message", (e) => {
+          if (e.origin !== location.origin || e.source !== parent) return;
+          if (e.data.type === "library:receipt-reset") {
+            box.checked = false;
+            button.disabled = true;
+          }
+          if (e.data.type === "library:receipt-theme")
+            document.documentElement.dataset.theme = e.data.theme;
+        });
+      })();
+    </script>
+  </body>
+</html>
