@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   CheckCircle2,
@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { currency } from "./order-history/orders";
 import { Modal } from "./pharmacy-workflow/Modal";
+import { Checkout, type CheckoutReceipt } from "./pharmacy-workflow/Checkout";
+import { regionForCity } from "./pharmacy-workflow/locations";
 import { ReturnCard } from "./pharmacy-workflow/ReturnCard";
 import {
   STORE_KEY,
@@ -25,6 +27,7 @@ import {
   SubmittedReturn,
   byId,
   credit,
+  deliveryCents,
   emptyStore,
   invoices,
   loadStore,
@@ -41,6 +44,7 @@ const BASE = "/truephamacy-workflow";
 const paths = {
   search: `${BASE}/search`,
   cart: `${BASE}/cart`,
+  checkout: `${BASE}/checkout`,
   returns: `${BASE}/returns/return-request`,
   history: `${BASE}/returns/history`,
   invoices: `${BASE}/invoices`,
@@ -71,6 +75,7 @@ type PendingNavigation = { url: string; fullLoad?: boolean; popDelta?: number };
 function currentView(path: string): View {
   if (path.includes("/returns/history")) return "history";
   if (path.includes("/returns/return-request")) return "returns";
+  if (path.includes("/checkout")) return "checkout";
   if (path.includes("/cart")) return "cart";
   if (path.includes("/invoices")) return "invoices";
   return "search";
@@ -104,7 +109,9 @@ export function PharmacyWorkflowPage() {
   } | null>(null);
   const [invoiceChoice, setInvoiceChoice] = useState("");
   const [receipt, setReceipt] = useState<SubmittedReturn | null>(null);
-  const [confirmCart, setConfirmCart] = useState(false);
+  const [orderReceipt, setOrderReceipt] = useState<CheckoutReceipt | null>(
+    null,
+  );
   const [resetDialog, setResetDialog] = useState(false);
   const nextRow = useRef(1);
   const dirtyRef = useRef(false);
@@ -204,6 +211,7 @@ export function PharmacyWorkflowPage() {
       return;
     }
     setReceipt(null);
+    setOrderReceipt(null);
     setNotice("");
     setError("");
     navigate(target);
@@ -319,6 +327,11 @@ export function PharmacyWorkflowPage() {
         line.productId === id ? { ...line, ...changes } : line,
       ),
     }));
+  const patchCheckout = (changes: Partial<Store["checkout"]>) =>
+    setStore((previous) => ({
+      ...previous,
+      checkout: { ...previous.checkout, ...changes },
+    }));
   const cartError = store.cart.some(
     (line) =>
       !validQuantity(line.quantity) ||
@@ -328,6 +341,60 @@ export function PharmacyWorkflowPage() {
     (n, line) => n + (Number(line.quantity) || 0) * byId(line.productId).cents,
     0,
   );
+  const placeOrder = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!store.cart.length || cartError) {
+      setError("Review cart quantities before checkout.");
+      return;
+    }
+    const details = store.checkout;
+    const required = [
+      details.fullName,
+      details.email,
+      details.phone,
+      details.pharmacyName,
+      details.address1,
+      details.city,
+      details.region,
+      details.postalCode,
+      details.country,
+      ...(details.billingSameAsShipping
+        ? []
+        : [
+            details.billingName,
+            details.billingAddress1,
+            details.billingCity,
+            details.billingRegion,
+            details.billingPostalCode,
+            details.billingCountry,
+          ]),
+    ];
+    if (required.some((value) => !value.trim())) {
+      setError("Complete all required checkout fields.");
+      return;
+    }
+    if (
+      details.region !== regionForCity(details.country, details.city) ||
+      (!details.billingSameAsShipping &&
+        details.billingRegion !==
+          regionForCity(details.billingCountry, details.billingCity))
+    ) {
+      setError("Choose a city for each checkout address.");
+      return;
+    }
+    setOrderReceipt({
+      id: `ORDER-DEMO-${Date.now()}`,
+      email: details.email.trim(),
+      recipient: details.fullName.trim(),
+      lineCount: store.cart.length,
+      totalCents: totalCents + deliveryCents(details.deliveryMethod),
+      deliveryMethod: details.deliveryMethod,
+      paymentMethod: details.paymentMethod,
+    });
+    setError("");
+    setNotice("");
+    window.scrollTo(0, 0);
+  };
   const sortValue = (product: Product): string | number => {
     if (sortKey === "quantity") {
       const value = Number(quantities[product.id] || 0);
@@ -564,6 +631,7 @@ export function PharmacyWorkflowPage() {
               {
                 search: "Search results",
                 cart: "Carts",
+                checkout: "Checkout",
                 returns: "Return request",
                 history: "Return history",
                 invoices: "Invoices & credits",
@@ -912,9 +980,9 @@ export function PharmacyWorkflowPage() {
                     <button
                       className="wf-primary"
                       disabled={!store.cart.length || cartError}
-                      onClick={() => setConfirmCart(true)}
+                      onClick={() => go(paths.checkout)}
                     >
-                      Submit cart
+                      Proceed to checkout
                     </button>
                   </div>
                 </div>
@@ -1064,6 +1132,29 @@ export function PharmacyWorkflowPage() {
                 </p>
               )}
             </section>
+          </>
+        )}
+        {view === "checkout" && (
+          <>
+            <div className="wf-title">
+              <h1>Checkout</h1>
+              {store.cart.length > 0 && !orderReceipt && (
+                <button onClick={() => go(paths.cart)}>Edit cart</button>
+              )}
+            </div>
+            <Checkout
+              details={store.checkout}
+              cart={store.cart}
+              subtotalCents={totalCents}
+              po={store.po}
+              memo={store.memo}
+              cartError={cartError}
+              receipt={orderReceipt}
+              onChange={patchCheckout}
+              onBack={() => go(paths.cart)}
+              onShop={() => go(paths.search)}
+              onSubmit={placeOrder}
+            />
           </>
         )}
         {view === "returns" && (
@@ -1497,32 +1588,6 @@ export function PharmacyWorkflowPage() {
           </div>
         </Modal>
       )}
-      {confirmCart && (
-        <Modal
-          title="Submit practice cart"
-          onClose={() => setConfirmCart(false)}
-        >
-          <p className="wf-modal-description">
-            {store.cart.length} product lines · Total{" "}
-            {currency(totalCents / 100)}. This creates a local confirmation
-            only.
-          </p>
-          <div className="wf-modal-actions">
-            <button onClick={() => setConfirmCart(false)}>Cancel</button>
-            <button
-              className="wf-primary"
-              onClick={() => {
-                setConfirmCart(false);
-                setNotice(
-                  `Practice cart submitted locally · ORDER-DEMO-${Date.now()}. Cart retained for return exercises.`,
-                );
-              }}
-            >
-              Confirm local submission
-            </button>
-          </div>
-        </Modal>
-      )}
       {resetDialog && (
         <Modal title="Reset demo data?" onClose={() => setResetDialog(false)}>
           <p className="wf-modal-description">
@@ -1540,6 +1605,7 @@ export function PharmacyWorkflowPage() {
                 setComment("");
                 setQuantities({});
                 setReceipt(null);
+                setOrderReceipt(null);
                 setResetDialog(false);
                 setError("");
                 setNotice("Demo data reset.");

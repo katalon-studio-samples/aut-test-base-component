@@ -34,6 +34,15 @@
   --lib-hero: #253e2e;
   color-scheme: dark;
 }
+.lib-dark .lib-amber {
+  background: #4a3521;
+  color: #f6d6a0;
+}
+.lib-dark .lib-error {
+  background: #462b29;
+  border-color: #a96256;
+  color: #ffd0c6 !important;
+}
 .library-app *,
 .lib-dialog * {
   box-sizing: border-box;

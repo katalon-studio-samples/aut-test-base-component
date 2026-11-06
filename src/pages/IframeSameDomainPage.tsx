@@ -24,7 +24,7 @@ export const IframeSameDomainPage: React.FC = () => {
         title="Same Domain Iframe"
         name="iframe-same-domain"
       />
-      <div className="mt-4 text-gray-500 text-sm">
+      <div className="mt-4 text-sm text-gray-500 dark:text-gray-300">
         <div>
           Iframe src: <span className="font-mono">{src}</span>
         </div>

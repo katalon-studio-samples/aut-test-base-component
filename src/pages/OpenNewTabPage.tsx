@@ -57,7 +57,7 @@ export const OpenNewTabPage: React.FC = () => {
           <button
             type="button"
             onClick={handleOpen}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white shadow hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white shadow hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:bg-blue-700 dark:hover:bg-blue-600"
             data-test="open-new-tab-button"
           >
             Open New Tab
@@ -65,7 +65,7 @@ export const OpenNewTabPage: React.FC = () => {
           <button
             type="button"
             onClick={handlePopup}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-600 px-5 py-3 font-semibold text-white shadow hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 dark:bg-amber-500 dark:hover:bg-amber-600"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-amber-600 px-5 py-3 font-semibold text-white shadow hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 dark:bg-amber-700 dark:hover:bg-amber-600"
             data-test="open-popup-window-button"
           >
             Open Popup Window

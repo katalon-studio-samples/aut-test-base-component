@@ -30,21 +30,21 @@ export const NotificationExample: React.FC = () => {
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => addNotification("success")}
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          className="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-800"
           data-test="add-success"
         >
           Success Message
         </button>
         <button
           onClick={() => addNotification("error")}
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-800"
           data-test="add-error"
         >
           Error Message
         </button>
         <button
           onClick={() => addNotification("info")}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800"
           data-test="add-info"
         >
           Info Message

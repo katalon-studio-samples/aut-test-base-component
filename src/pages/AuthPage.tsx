@@ -37,13 +37,16 @@ export const AuthPage: React.FC = () => {
   if (isAuthenticated) {
     return (
       <div className="px-4 py-6 sm:px-0">
-        <div className="bg-green-100 p-4 rounded" data-test="auth-success">
-          <h2 className="text-xl font-semibold text-green-800">
+        <div
+          className="bg-green-100 p-4 rounded dark:bg-green-950/40"
+          data-test="auth-success"
+        >
+          <h2 className="text-xl font-semibold text-green-800 dark:text-green-300">
             Successfully authenticated!
           </h2>
           <button
             onClick={() => setIsAuthenticated(false)}
-            className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+            className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600"
             data-test="logout-button"
           >
             Logout
@@ -65,7 +68,7 @@ export const AuthPage: React.FC = () => {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
               Username
             </label>
@@ -76,7 +79,7 @@ export const AuthPage: React.FC = () => {
               onChange={(e) =>
                 setCredentials({ ...credentials, username: e.target.value })
               }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
               data-test="username-input"
             />
           </div>
@@ -84,7 +87,7 @@ export const AuthPage: React.FC = () => {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
               Password
             </label>
@@ -95,13 +98,16 @@ export const AuthPage: React.FC = () => {
               onChange={(e) =>
                 setCredentials({ ...credentials, password: e.target.value })
               }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white"
               data-test="password-input"
             />
           </div>
 
           {error && (
-            <div className="text-red-600" data-test="auth-error">
+            <div
+              className="text-red-600 dark:text-red-400"
+              data-test="auth-error"
+            >
               {error}
             </div>
           )}
@@ -109,14 +115,14 @@ export const AuthPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50"
             data-test="login-button"
           >
             {isLoading ? "Loading..." : "Login"}
           </button>
         </form>
 
-        <div className="mt-4 text-sm text-gray-600">
+        <div className="mt-4 text-sm text-gray-600 dark:text-gray-300">
           <p>Use these credentials to log in:</p>
           <ul className="list-disc list-inside">
             <li>Username: admin</li>

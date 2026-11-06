@@ -56,7 +56,7 @@ export const LoginForm: React.FC = () => {
       <div>
         <label
           htmlFor="username"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
           Username
         </label>
@@ -72,7 +72,10 @@ export const LoginForm: React.FC = () => {
           data-test="username-input"
         />
         {errors.username && (
-          <p className="mt-1 text-sm text-red-600" data-test="username-error">
+          <p
+            className="mt-1 text-sm text-red-600 dark:text-red-400"
+            data-test="username-error"
+          >
             {errors.username}
           </p>
         )}
@@ -81,7 +84,7 @@ export const LoginForm: React.FC = () => {
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
           Email
         </label>
@@ -95,7 +98,10 @@ export const LoginForm: React.FC = () => {
           data-test="email-input"
         />
         {errors.email && (
-          <p className="mt-1 text-sm text-red-600" data-test="email-error">
+          <p
+            className="mt-1 text-sm text-red-600 dark:text-red-400"
+            data-test="email-error"
+          >
             {errors.email}
           </p>
         )}
@@ -104,7 +110,7 @@ export const LoginForm: React.FC = () => {
       <div>
         <label
           htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
           Password
         </label>
@@ -120,7 +126,10 @@ export const LoginForm: React.FC = () => {
           data-test="password-input"
         />
         {errors.password && (
-          <p className="mt-1 text-sm text-red-600" data-test="password-error">
+          <p
+            className="mt-1 text-sm text-red-600 dark:text-red-400"
+            data-test="password-error"
+          >
             {errors.password}
           </p>
         )}

@@ -947,7 +947,7 @@ export const IframeComplex: React.FC = () => {
         {simpleAndComplexForms.map(({ id, title, content }) => (
           <div
             key={id}
-            className="border rounded-lg p-4 bg-white shadow-sm"
+            className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
             data-test={`iframe-wrapper-${id}`}
           >
             <h3 className="text-lg font-medium mb-4">{title}</h3>
@@ -962,7 +962,7 @@ export const IframeComplex: React.FC = () => {
       </div>
 
       <div
-        className="border rounded-lg p-4 bg-white shadow-sm"
+        className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         data-test={`iframe-wrapper-${complexPage.id}`}
       >
         <h3 className="text-lg font-medium mb-4">{complexPage.title}</h3>
@@ -976,7 +976,7 @@ export const IframeComplex: React.FC = () => {
 
       {messages.length > 0 && (
         <div
-          className="mt-6 p-6 bg-white rounded-lg shadow-sm"
+          className="mt-6 rounded-lg bg-white p-6 shadow-sm dark:bg-gray-800"
           data-test="iframe-messages"
         >
           <h3 className="text-lg font-medium mb-4">Form Submissions:</h3>
@@ -984,7 +984,7 @@ export const IframeComplex: React.FC = () => {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className="p-4 bg-gray-50 rounded-md"
+                className="rounded-md bg-gray-50 p-4 dark:bg-gray-700"
                 data-test={`iframe-message-${index}`}
               >
                 <p className="font-medium mb-2">Form ID: {message.formId}</p>

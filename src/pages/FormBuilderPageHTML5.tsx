@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   GripVertical,
   Type,
@@ -122,7 +122,7 @@ const ComponentPreview: React.FC<{ component: FormComponent }> = ({
       return (
         <input
           type={component.type === "textbox" ? "text" : component.type}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
           placeholder={`Enter ${component.label.toLowerCase()}`}
           disabled
         />
@@ -130,7 +130,7 @@ const ComponentPreview: React.FC<{ component: FormComponent }> = ({
     case "list":
       return (
         <select
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
           disabled
         >
           <option>Select an option</option>
@@ -138,8 +138,8 @@ const ComponentPreview: React.FC<{ component: FormComponent }> = ({
       );
     case "table":
       return (
-        <div className="border border-gray-300 rounded-md p-2">
-          <div className="text-sm text-gray-500">
+        <div className="border border-gray-300 rounded-md p-2 dark:border-gray-600 dark:bg-gray-900">
+          <div className="text-sm text-gray-500 dark:text-gray-300">
             Table component placeholder
           </div>
         </div>
@@ -155,7 +155,7 @@ const ComponentPreview: React.FC<{ component: FormComponent }> = ({
       return (
         <input
           type="date"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
           disabled
         />
       );
@@ -168,7 +168,7 @@ const ComponentPreview: React.FC<{ component: FormComponent }> = ({
 export const FormBuilderPageHTML5: React.FC = () => {
   const [droppedSections, setDroppedSections] = useState<DroppedSection[]>([]);
   const [showLivePreview, setShowLivePreview] = useState(false);
-  const [draggedItem, setDraggedItem] = useState<{
+  const [, setDraggedItem] = useState<{
     type: "section" | "component";
     data: Section | FormComponent;
   } | null>(null);
@@ -354,14 +354,14 @@ export const FormBuilderPageHTML5: React.FC = () => {
                   key={section.id}
                   draggable
                   onDragStart={(e) => handleDragStart(e, "section", section)}
-                  className="border border-purple-200 bg-purple-50 rounded-lg p-3 cursor-move hover:shadow-md transition-shadow"
+                  className="border border-purple-200 bg-purple-50 rounded-lg p-3 cursor-move hover:shadow-md transition-shadow dark:border-purple-800 dark:bg-purple-950/40"
                   data-dragzone="true"
                   data-drag-type="section"
                   data-testid={`section-${section.id}`}
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <GripVertical className="w-5 h-5 text-gray-400" />
-                    <h3 className="font-semibold text-gray-800">
+                    <h3 className="font-semibold text-gray-800 dark:text-gray-100">
                       {section.title}
                     </h3>
                   </div>
@@ -369,7 +369,7 @@ export const FormBuilderPageHTML5: React.FC = () => {
                     {section.components.map((component) => (
                       <div
                         key={component.id}
-                        className="flex items-center gap-2 p-2 bg-white border border-gray-200 rounded text-sm"
+                        className="flex items-center gap-2 p-2 bg-white border border-gray-200 rounded text-sm dark:border-gray-700 dark:bg-gray-800"
                       >
                         {getComponentIcon(component.type)}
                         <span>{component.label}</span>
@@ -394,7 +394,7 @@ export const FormBuilderPageHTML5: React.FC = () => {
                   onDragStart={(e) =>
                     handleDragStart(e, "component", component)
                   }
-                  className="flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-md cursor-move hover:shadow-md transition-shadow"
+                  className="flex items-center gap-2 p-3 bg-blue-50 border border-blue-200 rounded-md cursor-move hover:shadow-md transition-shadow dark:border-blue-800 dark:bg-blue-950/40"
                   data-dragzone="true"
                   data-drag-type="component"
                   data-testid={`component-${component.id}`}
@@ -423,14 +423,14 @@ export const FormBuilderPageHTML5: React.FC = () => {
                 onDrop={(e) => handleDrop(e, { type: "empty" })}
                 className={`flex items-center justify-center h-96 border-2 border-dashed rounded-lg ${
                   dragOverTarget === "empty"
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-300"
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-950/40"
+                    : "border-gray-300 dark:border-gray-600"
                 }`}
                 data-dragzone="true"
                 data-drop-zone="true"
                 data-testid="drop-zone-empty"
               >
-                <p className="text-gray-500 text-center">
+                <p className="text-gray-500 text-center dark:text-gray-300">
                   Drag sections here to start building your form
                 </p>
               </div>
@@ -445,15 +445,15 @@ export const FormBuilderPageHTML5: React.FC = () => {
                     }
                     className={`border rounded-lg ${
                       dragOverTarget === section.id
-                        ? "ring-2 ring-blue-500 ring-offset-2"
-                        : "border-gray-300"
-                    } bg-white`}
+                        ? "ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-800"
+                        : "border-gray-300 dark:border-gray-600"
+                    } bg-white dark:bg-gray-900`}
                     data-dragzone="true"
                     data-drag-type="section"
                     data-testid={`section-${section.id}`}
                   >
-                    <div className="flex items-center gap-2 p-3 border-b bg-gray-50">
-                      <h3 className="flex-1 font-semibold text-gray-800">
+                    <div className="flex items-center gap-2 p-3 border-b bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+                      <h3 className="flex-1 font-semibold text-gray-800 dark:text-gray-100">
                         {section.title}
                       </h3>
                       <button
@@ -482,7 +482,7 @@ export const FormBuilderPageHTML5: React.FC = () => {
                         {section.components.map((component) => (
                           <div
                             key={component.id}
-                            className="flex items-center gap-2 p-2 bg-white border border-gray-200 rounded"
+                            className="flex items-center gap-2 p-2 bg-white border border-gray-200 rounded dark:border-gray-700 dark:bg-gray-800"
                             data-testid={`component-${component.id}`}
                           >
                             {getComponentIcon(component.type)}
@@ -509,10 +509,10 @@ export const FormBuilderPageHTML5: React.FC = () => {
 
             {/* Live Form Preview Toggle */}
             {droppedSections.length > 0 && (
-              <div className="mt-8 pt-8 border-t border-gray-200">
+              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
                 <button
                   onClick={() => setShowLivePreview(!showLivePreview)}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors mb-4"
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors mb-4 dark:bg-blue-700 dark:hover:bg-blue-600"
                 >
                   {showLivePreview ? (
                     <>
@@ -531,12 +531,12 @@ export const FormBuilderPageHTML5: React.FC = () => {
                   <div className="space-y-6 animate-in fade-in duration-300">
                     {droppedSections.map((section) => (
                       <div key={`preview-${section.id}`} className="space-y-4">
-                        <h4 className="font-semibold text-gray-700">
+                        <h4 className="font-semibold text-gray-700 dark:text-gray-100">
                           {section.title}
                         </h4>
                         {section.components.map((component) => (
                           <div key={`preview-comp-${component.id}`}>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-300">
                               {component.label}
                             </label>
                             <ComponentPreview component={component} />

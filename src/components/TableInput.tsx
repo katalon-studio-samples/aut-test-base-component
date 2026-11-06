@@ -77,7 +77,7 @@ const TableInput: React.FC<TableInputProps> = ({
     return (
       <button
         onClick={onClick}
-        className="ml-2 bg-blue-500 text-white px-2 py-1 rounded"
+        className="ml-2 rounded bg-blue-500 px-2 py-1 text-white dark:bg-blue-700"
       >
         {value}
       </button>

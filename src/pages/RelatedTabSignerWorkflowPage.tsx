@@ -815,7 +815,7 @@ export const RelatedTabSignerWorkflowPage: React.FC = () => {
                       id={`open-signer-${id}-same-domain-tab`}
                       type="button"
                       onClick={() => openSignerTab(id, "same-domain")}
-                      className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600"
+                      className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:bg-blue-700 dark:hover:bg-blue-600"
                       data-testid={`open-signer-${id}-same-domain-tab`}
                     >
                       Open same-domain signer tab
@@ -841,7 +841,7 @@ export const RelatedTabSignerWorkflowPage: React.FC = () => {
                       }
                       disabled={!nonAllowlistedStatus.canOpen}
                       title={nonAllowlistedStatus.message}
-                      className="rounded-md bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 dark:bg-amber-500 dark:hover:bg-amber-600 dark:disabled:bg-gray-700 dark:disabled:text-gray-400"
+                      className="rounded-md bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 dark:bg-amber-700 dark:hover:bg-amber-600 dark:disabled:bg-gray-700 dark:disabled:text-gray-400"
                       data-testid={`open-signer-${id}-cross-domain-non-allowlisted-tab`}
                     >
                       Open cross-domain non-allowlisted signer tab
@@ -918,7 +918,7 @@ export const RelatedTabSignerWorkflowPage: React.FC = () => {
                 type="button"
                 onClick={handleSign}
                 disabled={!fullName.trim() || !agreed}
-                className="rounded-md bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 dark:bg-blue-500 dark:hover:bg-blue-600 dark:disabled:bg-gray-700 dark:disabled:text-gray-400"
+                className="rounded-md bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600 dark:bg-blue-700 dark:hover:bg-blue-600 dark:disabled:bg-gray-700 dark:disabled:text-gray-400"
                 data-testid={`signer-${signerId}-sign`}
               >
                 Sign

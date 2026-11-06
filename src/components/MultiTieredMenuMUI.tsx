@@ -103,7 +103,10 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
               sx={{ zIndex: 1300 }}
             >
               <ClickAwayListener onClickAway={handleClickAway}>
-                <Paper elevation={3}>
+                <Paper
+                  elevation={3}
+                  sx={{ ".dark &": { bgcolor: "#1f2937", color: "#f9fafb" } }}
+                >
                   <List sx={{ minWidth: 200 }}>
                     {item.children.map((child) =>
                       renderMenuItem(child, level + 1),
@@ -129,7 +132,7 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
         <ListItemButton onClick={() => handleClick(item)}>
           <ListItemText primary={item.label} />
           {hasChildren && (
-            <IconButton size="small" sx={{ ml: 1 }}>
+            <IconButton size="small" sx={{ ml: 1, color: "inherit" }}>
               <KeyboardArrowRight />
             </IconButton>
           )}
@@ -141,7 +144,10 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
             placement="right-start"
             sx={{ zIndex: 1300 }}
           >
-            <Paper elevation={3}>
+            <Paper
+              elevation={3}
+              sx={{ ".dark &": { bgcolor: "#1f2937", color: "#f9fafb" } }}
+            >
               <List sx={{ minWidth: 200 }}>
                 {item.children.map((child) => renderMenuItem(child, level + 1))}
               </List>
@@ -154,12 +160,26 @@ const MultiTieredMenuMUI: React.FC<MultiTieredMenuMUIProps> = ({ items }) => {
 
   return (
     <>
-      <AppBar position="static" color="default">
+      <AppBar
+        position="static"
+        color="default"
+        sx={{ ".dark &": { bgcolor: "#1f2937", color: "#f9fafb" } }}
+      >
         <Toolbar sx={{ justifyContent: "start" }}>
           {items.map((item) => renderMenuItem(item))}
         </Toolbar>
       </AppBar>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        slotProps={{
+          paper: {
+            sx: {
+              ".dark &": { backgroundColor: "#1f2937", color: "#f9fafb" },
+            },
+          },
+        }}
+      >
         <DialogTitle>Item Clicked</DialogTitle>
         <DialogContent>
           <p>You clicked: {clickedItemLabel}</p>

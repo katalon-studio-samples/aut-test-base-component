@@ -72,7 +72,7 @@ export const IframeExample: React.FC = () => {
         {iframeContents.map(({ id, title, content }) => (
           <div
             key={id}
-            className="border rounded-lg p-4"
+            className="border rounded-lg border-gray-200 p-4 dark:border-gray-700 dark:bg-gray-800"
             data-test={`iframe-wrapper-${id}`}
           >
             <h3 className="text-lg font-medium mb-2">{title}</h3>
@@ -88,7 +88,7 @@ export const IframeExample: React.FC = () => {
 
       {messages.length > 0 && (
         <div
-          className="mt-4 p-4 bg-gray-50 rounded-lg"
+          className="mt-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-700"
           data-test="iframe-messages"
         >
           <h3 className="text-lg font-medium mb-2">Messages from iframes:</h3>

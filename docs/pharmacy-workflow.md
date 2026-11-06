@@ -9,10 +9,11 @@ Each generated product has distinct CIN/NDC/GTIN identifiers and demo invoices a
 ## Try the flow
 
 1. Search for **care**, enter a quantity for **Demo Care Cream**, and choose **Add to cart**.
-2. Open **View cart**. Edit quantity, PO number, memo and **Do not substitute**. **Analyze cart** checks available stock; **Submit cart** confirms a browser-local practice submission.
-3. Choose **Create return request**. Select **Ordered in error**, enter a numeric serial and the product's demo GTIN `00000000001001`.
-4. Choose **Match to invoice**, select `INV-DEMO-1001-1`, then apply. Add a second row to exercise Each/Case changes or a different invoice.
-5. Submit the return and open **Return history**. **Invoices & credits** shows the remaining returnable quantities. **Reset demo data** starts again.
+2. Open **View cart**. Edit quantity, PO number, memo and **Do not substitute**. **Analyze cart** checks available stock; choose **Proceed to checkout** when the cart is ready.
+3. Complete the required contact, delivery and billing information. Select **Country** before **City**; the City dropdown lists cities for that country. If the billing address differs, uncheck **Billing address same as delivery address** and select its Country and City separately. Choose **Standard** or **Express** delivery, review the order and the demo **Invoice to account** payment method, then choose **Place practice order**. The order confirmation is local to this browser; the cart remains available for return exercises.
+4. Return to the cart and choose **Create return request**. Select **Ordered in error**, enter a numeric serial and the product's demo GTIN `00000000001001`.
+5. Choose **Match to invoice**, select `INV-DEMO-1001-1`, then apply. Add a second row to exercise Each/Case changes or a different invoice.
+6. Submit the return and open **Return history**. **Invoices & credits** shows the remaining returnable quantities. **Reset demo data** starts again.
 
 For a non-serialized flow, search for **cleanser** and add it directly to a return request. Enter a quantity instead of serial/GTIN.
 
@@ -20,21 +21,19 @@ For a non-serialized flow, search for **cleanser** and add it directly to a retu
 
 The readable recordings from 2026-10-13 at 11:39, 11:43 and 12:06 show product search/results, quantity entry, cart editing, PO/memo, substitution controls, serialized and non-serialized return cards, required reasons/comments, dynamic serial/unit/GTIN rows, invoice fields/matching and an unsaved-progress warning. Sampled frames from the 11:53 recording were black, so that recording was not used as evidence.
 
-The prototype adds a deterministic invoice picker, local submission receipts/history, invoice-balance enforcement, and simplified validation so the whole flow can be exercised. These are demo rules, not verified Cardinal business rules: Each = 1 unit, Case = 4 units, serial = 1–20 digits, GTIN = 8–14 digits, non-serialized quantity = 1–99. Prices, stock, identifiers, accounts and invoices are synthetic; source recordings and their production data are not copied into the repository.
+The prototype adds a checkout with local order confirmation, a deterministic invoice picker, local return receipts/history, invoice-balance enforcement, and simplified validation so the whole flow can be exercised. These are demo rules, not verified Cardinal business rules: Each = 1 unit, Case = 4 units, serial = 1–20 digits, GTIN = 8–14 digits, non-serialized quantity = 1–99. Prices, stock, identifiers, accounts and invoices are synthetic; source recordings and their production data are not copied into the repository.
 
 ## State and navigation
 
-Cart, favorites and submitted return history persist in `sessionStorage` for the current tab. Draft returns are in memory. Leaving a dirty return draft through app navigation or browser Back/Forward opens **Progress will not be saved**; cancel preserves rows and discard follows the intended navigation. Reload/close uses the browser's native unsaved-changes prompt. Accepted reload discards the draft.
+Cart, checkout form entries, favorites and submitted return history persist in `sessionStorage` for the current tab. The checkout confirmation is temporary; draft returns are in memory. Leaving a dirty return draft through app navigation or browser Back/Forward opens **Progress will not be saved**; cancel preserves rows and discard follows the intended navigation. Reload/close uses the browser's native unsaved-changes prompt. Accepted reload discards the draft.
 
-All business actions run locally with no ordering/returns backend. The existing site Traffic Agent loader remains available under its normal configuration, so this fixture can also exercise replay capture. Tables scroll horizontally on narrow screens.
+All business actions, including checkout and Invoice to account, run locally with no payment, ordering or returns backend. The existing site Traffic Agent loader remains available under its normal configuration, so this fixture can also exercise replay capture. Tables scroll horizontally on narrow screens.
 
 ## Verification
 
 Run `npx playwright test tests/specs/regression/pharmacy-workflow.regression.spec.ts --project=chromium`.
 
-Coverage includes the complete serialized flow, cart persistence, return history/reset, invalid fields and duplicate serials, aggregate invoice balances, non-serialized returns, navigation warning/cancel/discard, filters, pagination, empty results and local cart submission.
-
-Validated locally: 11 Chromium scenarios (complete flow, sorting and responsive layout), 6 WebKit scenarios (complete flow and responsive layout), production Vite build, and lint for changed workflow modules. App-wide TypeScript checking has existing failures in other pages; no diagnostics were reported for these workflow modules.
+Coverage includes the complete serialized flow, cart persistence, return history/reset, invalid fields and duplicate serials, aggregate invoice balances, non-serialized returns, navigation warning/cancel/discard, filters, pagination, empty results, country-dependent City dropdowns and local checkout.
 
 Responsive layout is checked at 1440, 1024, 768, 390 and 320 px. The workflow uses its actual container width for breakpoints so the app sidebar cannot squeeze desktop controls out of view. Return reason/comment fields share one baseline and 40 px control height; narrow screens stack full-width fields. Order menus stay inside the page, long tables scroll within their frames, picker dialogs have a reachable sticky close header, and measured banner height keeps the logo and app controls clear. Cart actions and pagination remain above the catalog table.
 

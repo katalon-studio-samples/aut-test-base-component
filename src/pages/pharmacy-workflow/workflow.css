@@ -1109,3 +1109,548 @@ body:has(.pharmacy-workflow) .app-side-nav {
   grid-column: 1 / -1;
   font-weight: 400;
 }
+
+.wf-checkout-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+  align-items: start;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.pharmacy-workflow .wf-title h1,
+.pharmacy-workflow .wf-checkout-panel h2,
+.pharmacy-workflow .wf-checkout-empty h2,
+.pharmacy-workflow .wf-checkout-confirmation h2 {
+  color: #25333a;
+}
+.wf-checkout-main {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+.wf-checkout-panel {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #cad5da;
+  border-radius: 9px;
+  background: #fff;
+}
+.wf-checkout-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.wf-checkout-section-heading > span {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e72d37;
+  color: #fff;
+  font-weight: 700;
+}
+.pharmacy-workflow .wf-checkout-section-heading p,
+.pharmacy-workflow .wf-checkout-review > p {
+  margin: 5px 0 0;
+  color: #64747c;
+  font-size: 12px;
+}
+.wf-checkout-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+.wf-checkout-wide {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.pharmacy-workflow .wf-checkout-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  color: #4d6069;
+  font-size: 12px;
+  font-weight: 600;
+}
+.wf-checkout-field > span > span {
+  color: #c51c29;
+}
+.wf-checkout-field input {
+  width: 100%;
+}
+.pharmacy-workflow .wf-checkout-field input,
+.pharmacy-workflow .wf-checkout-field input[type="email"],
+.pharmacy-workflow .wf-checkout-field input[type="text"] {
+  margin: 0;
+  border: 1px solid #aeb8be;
+  background: #fff;
+  color: #25333a;
+}
+.pharmacy-workflow .wf-checkout-field select {
+  width: 100%;
+  background: #fff;
+  color: #25333a;
+}
+.pharmacy-workflow .wf-checkout-field input[readonly] {
+  background: #f3f6f7;
+}
+.wf-checkout-options {
+  display: grid;
+  gap: 9px;
+  min-width: 0;
+  border: 0;
+  margin: 20px 0 0;
+  padding: 0;
+}
+.wf-checkout-options legend {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.wf-checkout-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #cad5da;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.pharmacy-workflow .wf-checkout-option,
+.pharmacy-workflow .wf-checkout-checkbox {
+  color: #25333a;
+}
+.wf-checkout-option:has(input:checked) {
+  border-color: #e72d37;
+  background: #fff8f8;
+}
+.wf-checkout-option > span {
+  display: grid;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+.wf-checkout-option small {
+  color: #64747c;
+  line-height: 1.35;
+}
+.wf-checkout-option > strong {
+  white-space: nowrap;
+}
+.wf-checkout-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.wf-checkout-billing-fields {
+  margin-top: 18px;
+}
+.wf-checkout-review {
+  position: sticky;
+  top: 15px;
+}
+.wf-checkout-products {
+  display: grid;
+  gap: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0;
+  margin: 18px 0 0;
+  list-style: none;
+}
+.wf-checkout-products li,
+.wf-checkout-totals > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+.wf-checkout-products li {
+  padding: 11px 0;
+  border-bottom: 1px solid #e4e9eb;
+}
+.wf-checkout-products li > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.wf-checkout-products strong,
+.wf-checkout-products span {
+  overflow-wrap: anywhere;
+}
+.wf-checkout-products small {
+  color: #64747c;
+}
+.wf-checkout-order-notes {
+  padding: 8px 0;
+  border-bottom: 1px solid #e4e9eb;
+  overflow-wrap: anywhere;
+}
+.wf-checkout-order-notes p {
+  margin: 6px 0;
+}
+.wf-checkout-totals {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 0;
+}
+.wf-checkout-totals dd {
+  margin: 0;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.wf-checkout-grand-total {
+  padding-top: 14px;
+  border-top: 1px solid #cad5da;
+  font-size: 16px;
+  font-weight: 700;
+}
+.pharmacy-workflow .wf-checkout-help {
+  margin: 18px 0;
+  color: #64747c;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.pharmacy-workflow .wf-checkout-place,
+.pharmacy-workflow .wf-checkout-back {
+  width: 100%;
+  margin-top: 10px;
+}
+.wf-checkout-confirmation {
+  max-width: 650px;
+  margin: 28px auto 60px;
+  padding: 30px;
+  border: 1px solid #b5dfca;
+  border-radius: 10px;
+  background: #f5fbf7;
+  color: #25333a;
+  text-align: center;
+}
+.wf-checkout-confirmation > svg {
+  color: #178354;
+}
+.wf-checkout-confirmation h2 {
+  margin: 10px 0;
+  text-align: center;
+}
+.pharmacy-workflow .wf-checkout-confirmation p {
+  line-height: 1.5;
+}
+.wf-checkout-confirmation-facts,
+.wf-checkout-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-top: 20px;
+}
+.wf-checkout-confirmation-facts {
+  padding: 15px;
+  border-block: 1px solid #c8e7d4;
+}
+.wf-checkout-empty {
+  margin: 0 0 30px;
+  border: 1px solid #cad5da;
+  border-radius: 9px;
+}
+.wf-checkout-empty h2 {
+  text-align: center;
+}
+@container (max-width: 900px) {
+  .wf-checkout-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wf-checkout-review {
+    position: static;
+  }
+}
+@container (max-width: 500px) {
+  .wf-checkout-panel {
+    padding: 17px;
+  }
+  .wf-checkout-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wf-checkout-option {
+    align-items: flex-start;
+  }
+}
+
+/* The workflow uses its own surfaces, so its dark colors must change with the
+   app theme instead of inheriting light text over the light practice panels. */
+.dark .pharmacy-workflow {
+  --wf-dark-surface: #1b2934;
+  --wf-dark-raised: #243540;
+  --wf-dark-border: #455967;
+  --wf-dark-text: #edf3f6;
+  --wf-dark-muted: #b7c8d0;
+  --wf-dark-accent: #8ad5e9;
+  color: var(--wf-dark-text);
+  background: #15212a;
+  border-color: var(--wf-dark-border);
+  color-scheme: dark;
+}
+.dark .pharmacy-workflow :is(h1, h2, h3),
+.dark .wf-dialog :is(h2, h3) {
+  color: var(--wf-dark-text, #edf3f6);
+}
+.dark .pharmacy-workflow :is(p, label, table, th, td),
+.dark .wf-dialog :is(p, label, table, th, td) {
+  color: var(--wf-dark-text, #edf3f6);
+}
+.dark .pharmacy-workflow button,
+.dark .wf-dialog button {
+  color: var(--wf-dark-text, #edf3f6);
+  background: var(--wf-dark-raised, #243540);
+  border-color: var(--wf-dark-border, #455967);
+}
+.dark .pharmacy-workflow button:hover:not(:disabled),
+.dark .wf-dialog button:hover:not(:disabled) {
+  background: #314754;
+}
+.dark .pharmacy-workflow .wf-primary,
+.dark .wf-dialog .wf-primary {
+  color: #fff;
+  background: #c91e29;
+  border-color: #c91e29;
+}
+.dark .pharmacy-workflow .wf-primary:hover:not(:disabled),
+.dark .wf-dialog .wf-primary:hover:not(:disabled) {
+  background: #aa1721;
+}
+.dark
+  .pharmacy-workflow
+  :is(input:not([type="checkbox"]):not([type="radio"]), select),
+.dark .wf-dialog :is(input:not([type="checkbox"]):not([type="radio"]), select) {
+  color: var(--wf-dark-text, #edf3f6);
+  background: #14232d;
+  border-color: #617582;
+}
+.dark .pharmacy-workflow input::placeholder,
+.dark .wf-dialog input::placeholder {
+  color: #a9bac3;
+  opacity: 1;
+}
+.dark .pharmacy-workflow :focus-visible,
+.dark .wf-dialog :focus-visible {
+  outline-color: #59cbe7;
+}
+.dark .pharmacy-workflow .wf-header,
+.dark .pharmacy-workflow .wf-nav-menu > div,
+.dark
+  .pharmacy-workflow
+  :is(.wf-checkout-panel, .wf-cart-card, .wf-return-card),
+.dark .wf-dialog,
+.dark .wf-dialog > header {
+  color: var(--wf-dark-text, #edf3f6);
+  background: var(--wf-dark-surface, #1b2934);
+  border-color: var(--wf-dark-border, #455967);
+}
+.dark .pharmacy-workflow .wf-brand {
+  color: var(--wf-dark-text);
+  background: transparent;
+}
+.dark
+  .pharmacy-workflow
+  :is(.wf-account-bar, .wf-brand-mark, .wf-checkout-section-heading > span) {
+  background: #c91e29;
+}
+.dark .pharmacy-workflow .wf-cart-link > span {
+  background: #116a81;
+}
+.dark .pharmacy-workflow .wf-brand > span:last-child {
+  color: var(--wf-dark-muted);
+  border-color: var(--wf-dark-border);
+}
+.dark
+  .pharmacy-workflow
+  :is(
+    .wf-header nav > button,
+    .wf-breadcrumb button,
+    .wf-text-link,
+    .wf-returns-layout aside button,
+    .wf-footer button,
+    .wf-nav-menu > div > button
+  ) {
+  background: transparent;
+}
+.dark
+  .pharmacy-workflow
+  :is(.wf-header nav .active, .wf-returns-layout aside button.active) {
+  color: #ff737d;
+}
+.dark .pharmacy-workflow .wf-account-bar form,
+.dark .pharmacy-workflow .wf-account-bar form button {
+  background: #14232d;
+}
+.dark .pharmacy-workflow .wf-account-bar > button {
+  background: #26353c;
+  border-color: #b51c27;
+}
+.dark .pharmacy-workflow .wf-demo-strip {
+  color: #f1d99b;
+  background: #3d3420;
+}
+.dark .pharmacy-workflow .wf-breadcrumb,
+.dark
+  .pharmacy-workflow
+  :is(
+    .wf-title p,
+    .wf-filterbar > span,
+    .wf-cart-summary p,
+    .wf-fields label,
+    .wf-return-actions label,
+    .wf-row-toolbar > span,
+    .wf-row-toolbar > strong,
+    .wf-returns-layout aside p,
+    .wf-credit-summary span,
+    .wf-credit-summary small,
+    .wf-return-card-header p,
+    .wf-card-credit,
+    .wf-return-overview summary span,
+    .wf-footer,
+    .wf-empty,
+    .wf-checkout-section-heading p,
+    .wf-checkout-review > p,
+    .wf-checkout-field,
+    .wf-checkout-help,
+    .wf-checkout-products small,
+    .wf-checkout-option small,
+    .wf-picker-list small
+  ) {
+  color: var(--wf-dark-muted);
+}
+.dark
+  .pharmacy-workflow
+  :is(
+    .wf-breadcrumb button,
+    .wf-text-link,
+    .wf-return-overview .wf-invoice-ref
+  ) {
+  color: var(--wf-dark-accent);
+}
+.dark .pharmacy-workflow td small {
+  color: var(--wf-dark-muted);
+}
+.dark .pharmacy-workflow .wf-checkout-field > span > span {
+  color: #ff8b94;
+}
+.dark
+  .pharmacy-workflow
+  :is(
+    .wf-filterbar,
+    .wf-cart-summary,
+    .wf-return-overview summary,
+    .wf-checkout-option
+  ) {
+  color: var(--wf-dark-text);
+  background: var(--wf-dark-raised);
+  border-color: var(--wf-dark-border);
+}
+.dark .pharmacy-workflow .wf-checkout-option:has(input:checked) {
+  background: #3a2a32;
+  border-color: #f06972;
+}
+.dark .pharmacy-workflow .wf-checkout-field input[readonly] {
+  background: #2b3b46;
+}
+.dark
+  .pharmacy-workflow
+  :is(
+    .wf-table-scroll,
+    .wf-cart-summary,
+    .wf-cart-card,
+    .wf-row-toolbar,
+    .wf-return-overview,
+    .wf-return-card,
+    .wf-returns-layout aside,
+    .wf-checkout-panel,
+    .wf-checkout-products li,
+    .wf-checkout-totals .wf-checkout-grand-total,
+    .wf-footer
+  ) {
+  border-color: var(--wf-dark-border);
+}
+.dark .pharmacy-workflow th,
+.dark .wf-dialog th {
+  color: #d3e0e6;
+  background: var(--wf-dark-raised, #243540);
+  border-color: var(--wf-dark-border, #455967);
+}
+.dark .pharmacy-workflow td,
+.dark .wf-dialog td {
+  color: var(--wf-dark-text, #edf3f6);
+  border-color: var(--wf-dark-border, #455967);
+}
+.dark .pharmacy-workflow tbody tr:nth-child(even),
+.dark .wf-dialog tbody tr:nth-child(even) {
+  background: #1d2d38;
+}
+.dark
+  .pharmacy-workflow
+  :is(
+    .wf-filterbar,
+    .wf-row-toolbar,
+    .wf-cart-summary,
+    .wf-checkout-review,
+    .wf-checkout-empty
+  ) {
+  border-color: var(--wf-dark-border);
+}
+.dark .pharmacy-workflow .wf-tag {
+  color: #d6e5ea;
+  background: #344955;
+}
+.dark .pharmacy-workflow .wf-tag-blue {
+  color: #a7dff1;
+  background: #214151;
+}
+.dark .pharmacy-workflow .wf-tag-green {
+  color: #a5e5c5;
+  background: #214638;
+}
+.dark .pharmacy-workflow .wf-notice,
+.dark .wf-dialog .wf-notice {
+  color: #a9ebc7;
+  background: #173b2d;
+  border-color: #398465;
+}
+.dark .pharmacy-workflow .wf-error,
+.dark .wf-dialog .wf-error {
+  color: #ffc3c5;
+  background: #46242b;
+  border-color: #a85760;
+}
+.dark .pharmacy-workflow .wf-checkout-confirmation,
+.dark .pharmacy-workflow .wf-success {
+  color: #e3f5ec;
+  background: #19392d;
+  border-color: #3f8769;
+}
+.dark .pharmacy-workflow .wf-checkout-confirmation-facts,
+.dark .pharmacy-workflow .wf-checkout-order-notes {
+  border-color: var(--wf-dark-border);
+}
+.dark .pharmacy-workflow .wf-card-credit strong {
+  color: var(--wf-dark-text);
+}
+.dark .wf-dialog > header,
+.dark .wf-dialog .wf-modal-actions,
+.dark .wf-dialog .wf-picker-list > div {
+  border-color: #455967;
+}
+.dark .wf-dialog .wf-modal-actions {
+  background: #243540;
+}
+.dark .wf-dialog .wf-picker-list small {
+  color: #b7c8d0;
+}
+.dark body:has(.pharmacy-workflow) .app-side-nav {
+  background: #1f2937;
+}

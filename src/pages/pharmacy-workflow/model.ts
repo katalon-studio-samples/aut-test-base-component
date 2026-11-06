@@ -1,3 +1,5 @@
+import { countries, regionForCity } from "./locations";
+
 export interface Product {
   id: string;
   name: string;
@@ -147,6 +149,54 @@ export interface CartLine {
   selected: boolean;
   noSubstitution: boolean;
 }
+export interface CheckoutDetails {
+  fullName: string;
+  email: string;
+  phone: string;
+  pharmacyName: string;
+  address1: string;
+  address2: string;
+  city: string;
+  region: string;
+  postalCode: string;
+  country: string;
+  deliveryInstructions: string;
+  deliveryMethod: "standard" | "express";
+  paymentMethod: "invoice" | "bank-transfer";
+  billingSameAsShipping: boolean;
+  billingName: string;
+  billingAddress1: string;
+  billingAddress2: string;
+  billingCity: string;
+  billingRegion: string;
+  billingPostalCode: string;
+  billingCountry: string;
+}
+export const emptyCheckout = (): CheckoutDetails => ({
+  fullName: "",
+  email: "",
+  phone: "",
+  pharmacyName: "Demo pharmacy",
+  address1: "",
+  address2: "",
+  city: "",
+  region: "",
+  postalCode: "",
+  country: "United States",
+  deliveryInstructions: "",
+  deliveryMethod: "standard",
+  paymentMethod: "invoice",
+  billingSameAsShipping: true,
+  billingName: "",
+  billingAddress1: "",
+  billingAddress2: "",
+  billingCity: "",
+  billingRegion: "",
+  billingPostalCode: "",
+  billingCountry: "United States",
+});
+export const deliveryCents = (method: CheckoutDetails["deliveryMethod"]) =>
+  method === "express" ? 1295 : 0;
 export interface ReturnRow {
   id: string;
   serial: string;
@@ -174,6 +224,7 @@ export interface Store {
   cart: CartLine[];
   po: string;
   memo: string;
+  checkout: CheckoutDetails;
   favorites: string[];
   history: SubmittedReturn[];
 }
@@ -183,9 +234,63 @@ export const emptyStore = (): Store => ({
   cart: [],
   po: "",
   memo: "",
+  checkout: emptyCheckout(),
   favorites: [],
   history: [],
 });
+function loadCheckout(value: unknown): CheckoutDetails {
+  const defaults = emptyCheckout();
+  if (!value || typeof value !== "object") return defaults;
+  const stored = value as Partial<CheckoutDetails>;
+  const next = { ...defaults };
+  for (const key of Object.keys(defaults) as (keyof CheckoutDetails)[]) {
+    if (key === "billingSameAsShipping") {
+      next.billingSameAsShipping = stored.billingSameAsShipping !== false;
+    } else if (key === "deliveryMethod") {
+      next.deliveryMethod =
+        stored.deliveryMethod === "express" ? "express" : "standard";
+    } else if (key === "paymentMethod") {
+      next.paymentMethod =
+        stored.paymentMethod === "bank-transfer" ? "bank-transfer" : "invoice";
+    } else {
+      const field = key as Exclude<
+        keyof CheckoutDetails,
+        "billingSameAsShipping" | "deliveryMethod" | "paymentMethod"
+      >;
+      if (typeof stored[field] === "string") {
+        next[field] = stored[field].slice(
+          0,
+          field === "deliveryInstructions" ? 250 : 120,
+        );
+      }
+    }
+  }
+  if (!countries.includes(next.country)) {
+    next.country = defaults.country;
+    next.city = "";
+    next.region = "";
+    next.postalCode = "";
+  }
+  const deliveryRegion = regionForCity(next.country, next.city);
+  if (!deliveryRegion) {
+    next.city = "";
+    next.postalCode = "";
+  }
+  next.region = deliveryRegion;
+  if (!countries.includes(next.billingCountry)) {
+    next.billingCountry = defaults.billingCountry;
+    next.billingCity = "";
+    next.billingRegion = "";
+    next.billingPostalCode = "";
+  }
+  const billingRegion = regionForCity(next.billingCountry, next.billingCity);
+  if (!billingRegion) {
+    next.billingCity = "";
+    next.billingPostalCode = "";
+  }
+  next.billingRegion = billingRegion;
+  return next;
+}
 export function loadStore(): Store {
   try {
     const data = JSON.parse(
@@ -224,6 +329,7 @@ export function loadStore(): Store {
       ),
       po: String(data.po || "").slice(0, 60),
       memo: String(data.memo || "").slice(0, 200),
+      checkout: loadCheckout(data.checkout),
     };
   } catch {
     return emptyStore();

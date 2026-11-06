@@ -15,7 +15,10 @@ import {
   ValueGetterParams,
   ValueSetterParams,
   setupAgTestIds,
+  themeQuartz,
+  colorSchemeDark,
 } from "ag-grid-community";
+import { useTheme } from "../contexts/ThemeContext";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -34,8 +37,9 @@ class ShadowCellRenderer {
     this.shadow = this.eGui.attachShadow({ mode: "open" });
     this.shadow.innerHTML = `
       <style>
-        :host { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 4px; }
-        input, select, button { padding: 4px 8px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 13px; transition: all 0.2s; }
+        :host { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 4px; color: var(--ag-foreground-color, #374151); }
+        input, select, button { padding: 4px 8px; border: 1px solid var(--ag-border-color, #d1d5db); border-radius: 4px; font-size: 13px; transition: all 0.2s; }
+        input, select { color: var(--ag-foreground-color, #374151); background: var(--ag-background-color, #fff); }
         input:focus, select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1); }
         input[type="range"] { width: 100%; accent-color: #3b82f6; }
         input[type="checkbox"] { width: 16px; height: 16px; accent-color: #10b981; }
@@ -46,7 +50,7 @@ class ShadowCellRenderer {
         .radio-group { display: flex; gap: 12px; font-size: 12px; font-weight: 500; }
         .radio-group label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
         .stars { font-size: 16px; color: #fbbf24; }
-        .text-display { font-weight: 500; color: #374151; }
+        .text-display { font-weight: 500; color: inherit; }
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #3b82f6; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
         input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #3b82f6; cursor: pointer; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
       </style>
@@ -177,6 +181,11 @@ const generateData = (count: number) => {
 };
 
 const AGGridPage: React.FC = () => {
+  const { isDark } = useTheme();
+  const gridTheme = useMemo(
+    () => (isDark ? themeQuartz.withPart(colorSchemeDark) : themeQuartz),
+    [isDark],
+  );
   const gridRef = useRef<AgGridReact>(null);
   const [rowData] = useState(() => generateData(1000));
   const [showDialog, setShowDialog] = useState(false);
@@ -363,7 +372,7 @@ const AGGridPage: React.FC = () => {
         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
           AG Grid with Shadow DOM
         </h1>
-        <p className="text-gray-600 text-lg">
+        <p className="text-gray-600 text-lg dark:text-gray-300">
           Advanced data grid with protected shadow DOM cells and comprehensive
           filtering
         </p>
@@ -390,13 +399,14 @@ const AGGridPage: React.FC = () => {
         style={{
           height: "600px",
           width: "100%",
-          border: "1px solid #e5e7eb",
+          border: `1px solid ${isDark ? "#4b5563" : "#e5e7eb"}`,
           borderRadius: "8px",
           overflow: "hidden",
         }}
         data-testid="ag-grid-container"
       >
         <AgGridReact
+          theme={gridTheme}
           ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
@@ -413,12 +423,12 @@ const AGGridPage: React.FC = () => {
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
           data-testid="image-dialog"
         >
-          <div className="bg-white rounded-lg p-4 max-w-md">
+          <div className="bg-white rounded-lg p-4 max-w-md dark:bg-gray-800">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold">Sample Photo</h3>
               <button
                 onClick={() => setShowDialog(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
                 data-testid="close-dialog-btn"
               >
                 ✕
@@ -434,11 +444,11 @@ const AGGridPage: React.FC = () => {
         </div>
       )}
 
-      <div className="mt-6 p-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl border border-gray-200">
-        <h3 className="font-semibold text-gray-800 mb-3">
+      <div className="mt-6 rounded-xl border border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50 p-6 dark:border-gray-700 dark:from-gray-800 dark:to-slate-800">
+        <h3 className="mb-3 font-semibold text-gray-800 dark:text-gray-100">
           ✨ Features Implemented
         </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-600">
+        <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 dark:text-gray-300 md:grid-cols-3">
           <div>🛡️ Shadow DOM Protection</div>
           <div>📝 Editable Inputs</div>
           <div>🎚️ Range Sliders</div>

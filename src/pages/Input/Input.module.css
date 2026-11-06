@@ -8,7 +8,7 @@
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
-h2 {
+.container h2 {
   text-align: center;
   color: #3a3a3a;
   margin-bottom: 24px;
@@ -23,7 +23,7 @@ h2 {
   gap: 10px;
 }
 
-input[type="button"] {
+.container input[type="button"] {
   background: #4f8cff;
   color: #fff;
   border: none;
@@ -34,11 +34,11 @@ input[type="button"] {
   transition: background 0.2s;
 }
 
-input[type="button"]:hover {
+.container input[type="button"]:hover {
   background: #2563eb;
 }
 
-label {
+.container label {
   font-size: 1rem;
   color: #222;
 }
@@ -310,7 +310,7 @@ input[type="image"].submitButton:disabled {
 }
 
 /* Form styling */
-form {
+.container form {
   width: 100%;
 }
 
@@ -474,4 +474,247 @@ form {
 
 .suggestionsContainer::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+.homeLink {
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+}
+
+.homeLink:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+.intro {
+  color: #666;
+}
+
+.trackingPanel,
+.captchaPanel {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.trackingEnabledPanel {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.trackingHelp,
+.captchaHelp {
+  color: #6b7280;
+}
+
+.trackingEnabledHelp {
+  color: #047857;
+}
+
+.captchaPending {
+  color: #6b7280;
+}
+
+.captchaComplete {
+  color: #047857;
+}
+
+.sectionHeading {
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.sectionHeadingBlue {
+  color: #2563eb;
+}
+
+.sectionHeadingGreen {
+  color: #047857;
+}
+
+.sectionHeadingRed {
+  color: #dc2626;
+}
+
+.sectionHeadingPurple {
+  color: #7c3aed;
+}
+
+/* Keep the native input examples readable without changing their light theme. */
+:global(.dark) .container {
+  background: #1f2937;
+  color: #f3f4f6;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+:global(.dark) .homeLink {
+  color: #93c5fd;
+  background: #1e3a5f;
+  border-color: #3b82f6;
+}
+
+:global(.dark) .homeLink:hover {
+  background: #234b76;
+}
+
+:global(.dark) .intro,
+:global(.dark) .trackingHelp,
+:global(.dark) .captchaHelp {
+  color: #cbd5e1;
+}
+
+:global(.dark) .trackingPanel,
+:global(.dark) .captchaPanel {
+  background: #253345;
+  border-color: #475569;
+}
+
+:global(.dark) .trackingEnabledPanel {
+  background: #17392f;
+  border-color: #398465;
+}
+
+:global(.dark) .trackingEnabledHelp,
+:global(.dark) .sectionHeadingGreen,
+:global(.dark) .captchaComplete {
+  color: #86efac;
+}
+
+:global(.dark) .captchaPending {
+  color: #cbd5e1;
+}
+
+:global(.dark) .sectionHeading {
+  border-color: #475569;
+}
+
+:global(.dark) .sectionHeadingBlue {
+  color: #93c5fd;
+}
+
+:global(.dark) .sectionHeadingRed {
+  color: #fca5a5;
+}
+
+:global(.dark) .sectionHeadingPurple {
+  color: #d8b4fe;
+}
+
+:global(.dark) .container h2 {
+  color: #f9fafb;
+}
+
+:global(.dark) .container label {
+  color: #e5e7eb;
+}
+
+:global(.dark) .container input[type="button"] {
+  background: #1d4ed8;
+  color: #fff;
+}
+
+:global(.dark) .container input[type="button"]:hover {
+  background: #1e40af;
+}
+
+:global(.dark) .textInput {
+  background: #111827;
+  color: #f9fafb;
+  border-color: #64748b;
+}
+
+:global(.dark) .textInput::placeholder {
+  color: #aab9c9;
+}
+
+:global(.dark) .textInput[type="file"],
+:global(.dark) .textInput[type="file"]:is(:hover, :focus) {
+  background: #172634;
+  border-color: #64748b;
+}
+
+:global(.dark) .textInput:invalid:not(:placeholder-shown),
+:global(.dark) .textInput[required],
+:global(.dark) .textInput[required]:focus {
+  background: #35242c;
+  border-color: #f87171;
+}
+
+:global(.dark) .textInput:disabled {
+  background: #374151;
+  color: #cbd5e1;
+}
+
+:global(.dark) .textInput:disabled::placeholder {
+  color: #aab9c9;
+}
+
+:global(.dark) .result {
+  background: #1e3a5f;
+  color: #e0f2fe;
+}
+
+:global(.dark) .error {
+  background: #43262c;
+  border-color: #aa5561;
+  color: #fecdd3;
+}
+
+:global(.dark) .submitButton {
+  background: #047857 !important;
+}
+
+:global(.dark) .submitButton:hover {
+  background: #065f46 !important;
+}
+
+:global(.dark) .productItem,
+:global(.dark) .dataGridContainer,
+:global(.dark) .suggestionsContainer {
+  background: #17212f;
+  border-color: #475569;
+  color: #e5e7eb;
+}
+
+:global(.dark) .productItem strong {
+  color: #f9fafb;
+}
+
+:global(.dark) .dataGridTitle,
+:global(.dark) .productsTable th {
+  background: #253345;
+  border-color: #475569;
+  color: #e5e7eb;
+}
+
+:global(.dark) .productsTable td {
+  border-color: #475569;
+  color: #e5e7eb;
+}
+
+:global(.dark) .productsTable tbody tr:nth-child(even) {
+  background: #1e2b3b;
+}
+
+:global(.dark) .productsTable tbody tr:hover,
+:global(.dark) .productsTable tbody tr:nth-child(even):hover {
+  background: #304357;
+}
+
+:global(.dark) .noResults,
+:global(.dark) .suggestionItem {
+  color: #cbd5e1;
+}
+
+:global(.dark) .suggestionItem {
+  border-color: #334155;
+}
+
+:global(.dark) .suggestionItem:hover {
+  background: #304357;
+}
+
+:global(.dark) .suggestionSelected,
+:global(.dark) .suggestionSelected:hover {
+  background: #1d4ed8;
+  color: #fff;
 }

@@ -59,13 +59,13 @@ export const CardListPage: React.FC = () => {
   };
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="min-h-screen bg-gray-50 p-8 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
       <h1 className="text-2xl font-bold mb-4">
         Business Cards (All Attributes)
       </h1>
       <div className="flex items-center gap-4 mb-6">
         <select
-          className="border rounded px-2 py-1"
+          className="rounded border px-2 py-1 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
           value={filterKey}
           onChange={(e) => setFilterKey(e.target.value)}
         >
@@ -77,15 +77,15 @@ export const CardListPage: React.FC = () => {
           ))}
         </select>
         <input
-          className="border rounded px-2 py-1"
+          className="rounded border px-2 py-1 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
           type="text"
           placeholder="Search value"
           value={filterValue}
           onChange={(e) => setFilterValue(e.target.value)}
         />
-        <span className="mx-2 text-gray-500">AND</span>
+        <span className="mx-2 text-gray-500 dark:text-gray-300">AND</span>
         <select
-          className="border rounded px-2 py-1"
+          className="rounded border px-2 py-1 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
           value={filterKey2}
           onChange={(e) => setFilterKey2(e.target.value)}
         >
@@ -97,20 +97,20 @@ export const CardListPage: React.FC = () => {
           ))}
         </select>
         <input
-          className="border rounded px-2 py-1"
+          className="rounded border px-2 py-1 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
           type="text"
           placeholder="Search value"
           value={filterValue2}
           onChange={(e) => setFilterValue2(e.target.value)}
         />
         <button
-          className="ml-4 px-3 py-1 border rounded bg-gray-200 hover:bg-gray-300"
+          className="ml-4 rounded border bg-gray-200 px-3 py-1 hover:bg-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600"
           onClick={handleClearFilters}
         >
           Clear Filters
         </button>
         <input
-          className="border rounded px-2 py-1 bg-gray-100 w-32"
+          className="w-32 rounded border bg-gray-100 px-2 py-1 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
           type="text"
           readOnly
           value={`Total: ${filteredItems.length}`}
@@ -118,7 +118,7 @@ export const CardListPage: React.FC = () => {
         <label className="ml-4">
           Page size:&nbsp;
           <select
-            className="border rounded px-2 py-1"
+            className="rounded border px-2 py-1 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
             value={pageSize}
             onChange={(e) => setPageSize(Number(e.target.value))}
           >
@@ -134,7 +134,7 @@ export const CardListPage: React.FC = () => {
         {pagedItems.map((item, idx) => (
           <div
             key={idx + (currentPage - 1) * pageSize}
-            className="bg-white shadow rounded p-6 w-80 border break-words"
+            className="w-80 break-words rounded border bg-white p-6 shadow dark:border-gray-700 dark:bg-gray-800"
           >
             {Object.entries(item).map(([key, value]) => (
               <div
@@ -143,15 +143,19 @@ export const CardListPage: React.FC = () => {
                   selected &&
                   selected.idx === idx + (currentPage - 1) * pageSize &&
                   selected.key === key
-                    ? "bg-blue-100"
+                    ? "bg-blue-100 dark:bg-blue-900/50"
                     : ""
                 }`}
                 onClick={() =>
                   setSelected({ idx: idx + (currentPage - 1) * pageSize, key })
                 }
               >
-                <span className="font-semibold text-purple-700">{key}:</span>{" "}
-                <span className="text-gray-800">{String(value)}</span>
+                <span className="font-semibold text-purple-700 dark:text-purple-300">
+                  {key}:
+                </span>{" "}
+                <span className="text-gray-800 dark:text-gray-100">
+                  {String(value)}
+                </span>
               </div>
             ))}
           </div>
@@ -159,7 +163,7 @@ export const CardListPage: React.FC = () => {
       </div>
       <div className="flex items-center gap-2 mt-6">
         <button
-          className="px-3 py-1 border rounded disabled:opacity-50"
+          className="rounded border px-3 py-1 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800"
           onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
           disabled={currentPage === 1}
         >
@@ -169,7 +173,7 @@ export const CardListPage: React.FC = () => {
           Page {currentPage} of {totalPages}
         </span>
         <button
-          className="px-3 py-1 border rounded disabled:opacity-50"
+          className="rounded border px-3 py-1 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800"
           onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
           disabled={currentPage === totalPages}
         >

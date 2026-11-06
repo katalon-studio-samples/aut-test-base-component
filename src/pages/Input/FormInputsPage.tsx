@@ -1,6 +1,6 @@
 // Create an end-to-end flow to cover various input types with real-world scenarios
 // Input types: email, image, number, password, tel, url
-import React, { useState, useRef, useId, useEffect } from "react";
+import React, { useState, useId } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import styles from "./Input.module.css";
 
@@ -79,7 +79,7 @@ export const FormInputsPage: React.FC = () => {
     // Phone validation
     if (
       formData.phone &&
-      !/^[\+]?[1-9][\d]{0,15}$/.test(formData.phone.replace(/[\s\-\(\)]/g, ""))
+      !/^[+]?[1-9]\d{0,15}$/.test(formData.phone.replace(/[\s()-]/g, ""))
     ) {
       newErrors.phone = "Please enter a valid phone number";
     }
@@ -164,7 +164,7 @@ export const FormInputsPage: React.FC = () => {
   };
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    let updatedData = { ...formData, [field]: value };
+    const updatedData = { ...formData, [field]: value };
 
     // Ensure only one tracking option can be selected at a time
     if (field === "dontTrackMe" && value === true) {
@@ -261,27 +261,17 @@ export const FormInputsPage: React.FC = () => {
       <div style={{ marginBottom: "16px" }}>
         <a
           href={getFormattedPath("/")}
+          className={styles.homeLink}
           style={{
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
-            color: "#3b82f6",
             textDecoration: "none",
             fontSize: "0.9rem",
             fontWeight: "500",
             padding: "8px 12px",
             borderRadius: "6px",
-            backgroundColor: "#eff6ff",
-            border: "1px solid #dbeafe",
             transition: "all 0.2s ease",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#dbeafe";
-            e.currentTarget.style.borderColor = "#93c5fd";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "#eff6ff";
-            e.currentTarget.style.borderColor = "#dbeafe";
           }}
           id={`${id}-home-link`}
         >
@@ -292,7 +282,10 @@ export const FormInputsPage: React.FC = () => {
       <h2 className={styles.h2} id={`${id}-title`}>
         Advanced Form Input Types Demo
       </h2>
-      <p style={{ textAlign: "center", color: "#666", marginBottom: "24px" }}>
+      <p
+        className={styles.intro}
+        style={{ textAlign: "center", marginBottom: "24px" }}
+      >
         Real-world scenarios: User Registration, Financial Information, Contact
         Details
       </p>
@@ -300,11 +293,10 @@ export const FormInputsPage: React.FC = () => {
       <form onSubmit={handleSubmit} id={`${id}-form`}>
         {/* Global Tracking Control */}
         <div
+          className={styles.trackingPanel}
           style={{
             marginBottom: "24px",
             padding: "16px",
-            backgroundColor: "#f8fafc",
-            border: "1px solid #e2e8f0",
             borderRadius: "8px",
             borderLeft: "4px solid #3b82f6",
           }}
@@ -333,9 +325,9 @@ export const FormInputsPage: React.FC = () => {
             </label>
           </div>
           <div
+            className={styles.trackingHelp}
             style={{
               fontSize: "0.8rem",
-              color: "#6b7280",
               marginTop: "4px",
               marginLeft: "24px",
             }}
@@ -347,11 +339,10 @@ export const FormInputsPage: React.FC = () => {
 
         {/* Track Me Control */}
         <div
+          className={styles.trackingEnabledPanel}
           style={{
             marginBottom: "24px",
             padding: "16px",
-            backgroundColor: "#f0fdf4",
-            border: "1px solid #bbf7d0",
             borderRadius: "8px",
             borderLeft: "4px solid #10b981",
           }}
@@ -378,9 +369,9 @@ export const FormInputsPage: React.FC = () => {
             </label>
           </div>
           <div
+            className={styles.trackingEnabledHelp}
             style={{
               fontSize: "0.8rem",
-              color: "#059669",
               marginTop: "4px",
               marginLeft: "24px",
             }}
@@ -393,10 +384,9 @@ export const FormInputsPage: React.FC = () => {
         {/* Personal Information Section */}
         <div style={{ marginBottom: "32px" }}>
           <h3
+            className={`${styles.sectionHeading} ${styles.sectionHeadingBlue}`}
             style={{
-              color: "#2563eb",
               marginBottom: "16px",
-              borderBottom: "2px solid #e5e7eb",
               paddingBottom: "8px",
             }}
           >
@@ -530,10 +520,9 @@ export const FormInputsPage: React.FC = () => {
         {/* Network Information Section */}
         <div style={{ marginBottom: "32px" }}>
           <h3
+            className={`${styles.sectionHeading} ${styles.sectionHeadingGreen}`}
             style={{
-              color: "#059669",
               marginBottom: "16px",
-              borderBottom: "2px solid #e5e7eb",
               paddingBottom: "8px",
             }}
           >
@@ -586,10 +575,9 @@ export const FormInputsPage: React.FC = () => {
         {/* Security Section */}
         <div style={{ marginBottom: "32px" }}>
           <h3
+            className={`${styles.sectionHeading} ${styles.sectionHeadingRed}`}
             style={{
-              color: "#dc2626",
               marginBottom: "16px",
-              borderBottom: "2px solid #e5e7eb",
               paddingBottom: "8px",
             }}
           >
@@ -686,10 +674,9 @@ export const FormInputsPage: React.FC = () => {
         {/* CAPTCHA Verification Section */}
         <div style={{ marginBottom: "32px" }}>
           <h3
+            className={`${styles.sectionHeading} ${styles.sectionHeadingPurple}`}
             style={{
-              color: "#7c3aed",
               marginBottom: "16px",
-              borderBottom: "2px solid #e5e7eb",
               paddingBottom: "8px",
             }}
           >
@@ -708,13 +695,12 @@ export const FormInputsPage: React.FC = () => {
               Click the image below to verify you are human:
             </label>
             <div
+              className={styles.captchaPanel}
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "12px",
                 padding: "16px",
-                backgroundColor: "#f8fafc",
-                border: "1px solid #e2e8f0",
                 borderRadius: "8px",
               }}
             >
@@ -746,10 +732,14 @@ export const FormInputsPage: React.FC = () => {
               />
               <div style={{ flex: 1 }}>
                 <div
+                  className={
+                    captchaVerified
+                      ? styles.captchaComplete
+                      : styles.captchaPending
+                  }
                   style={{
                     fontSize: "0.9rem",
                     fontWeight: "500",
-                    color: captchaVerified ? "#10b981" : "#6b7280",
                     marginBottom: "4px",
                   }}
                 >
@@ -757,7 +747,10 @@ export const FormInputsPage: React.FC = () => {
                     ? "✓ Verification Complete"
                     : "Click to verify"}
                 </div>
-                <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+                <div
+                  className={styles.captchaHelp}
+                  style={{ fontSize: "0.8rem" }}
+                >
                   {captchaVerified
                     ? "You have successfully verified that you are human."
                     : "Please click the image above to confirm you are not a robot."}

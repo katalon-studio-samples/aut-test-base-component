@@ -177,7 +177,9 @@ const NgSelectField = ({
           className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
         >
           {label}
-          {required && <span className="text-red-500 ml-0.5">*</span>}
+          {required && (
+            <span className="text-red-500 ml-0.5 dark:text-red-300">*</span>
+          )}
         </label>
       </div>
       {/* question-selectbox mirrors the Angular select component host */}
@@ -285,7 +287,9 @@ const TextQuestion = ({
         className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
       >
         {label}
-        {required && <span className="text-red-500 ml-0.5">*</span>}
+        {required && (
+          <span className="text-red-500 ml-0.5 dark:text-red-300">*</span>
+        )}
       </label>
     </div>
     <question-text>

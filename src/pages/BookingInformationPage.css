@@ -363,6 +363,7 @@
 .dark .booking-page {
   --booking-line: #4b5563;
   background: #111827;
+  color: #f2f7f5;
 }
 
 .dark .booking-card,
@@ -398,4 +399,12 @@
 
 .dark .booking-form__error {
   color: #ff9792;
+}
+
+.dark .booking-form .booking-form__submit {
+  background: #1d4ed8;
+}
+
+.dark .booking-form .booking-form__submit:hover {
+  background: #1e40af;
 }

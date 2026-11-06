@@ -17,15 +17,32 @@ const AccordionSummary = styled(StyledAccordionSummary)(() => ({
   "&:hover": {
     backgroundColor: "gray",
   },
+  ".dark &": {
+    backgroundColor: "#374151",
+    color: "#f9fafb",
+    "&:hover": {
+      backgroundColor: "#4b5563",
+    },
+    ".MuiAccordionSummary-expandIconWrapper": {
+      color: "#f9fafb",
+    },
+  },
   ".MuiTypography-root": {
     fontWeight: "bold",
   },
 }));
 
+const accordionSx = {
+  ".dark &": {
+    backgroundColor: "#1f2937",
+    color: "#f9fafb",
+  },
+};
+
 export const IframePage: React.FC = () => {
   return (
     <Stack direction="column" spacing={5} className="px-4 py-6 sm:px-0">
-      <Accordion>
+      <Accordion sx={accordionSx}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Iframe Examples</Typography>
         </AccordionSummary>
@@ -39,7 +56,7 @@ export const IframePage: React.FC = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion>
+      <Accordion sx={accordionSx}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Iframe Complex</Typography>
         </AccordionSummary>
@@ -49,7 +66,7 @@ export const IframePage: React.FC = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion>
+      <Accordion sx={accordionSx}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Iframe same domain</Typography>
         </AccordionSummary>
@@ -70,7 +87,7 @@ export const IframePage: React.FC = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion>
+      <Accordion sx={accordionSx}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Iframe same domain forms</Typography>
         </AccordionSummary>
@@ -90,7 +107,7 @@ export const IframePage: React.FC = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion>
+      <Accordion sx={accordionSx}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Iframe same domain tables</Typography>
         </AccordionSummary>
@@ -110,7 +127,7 @@ export const IframePage: React.FC = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion>
+      <Accordion sx={accordionSx}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Iframe same domain nested level</Typography>
         </AccordionSummary>
@@ -130,7 +147,7 @@ export const IframePage: React.FC = () => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion>
+      <Accordion sx={accordionSx}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography>Iframe different domain</Typography>
         </AccordionSummary>

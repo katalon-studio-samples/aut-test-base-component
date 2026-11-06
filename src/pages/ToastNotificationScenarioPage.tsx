@@ -24,7 +24,9 @@ const ShadowToastTriggerButton: React.FC<ShadowToastTriggerProps> = ({
 
   useEffect(() => {
     if (!hostRef.current) return;
-    const shadowRoot = hostRef.current.attachShadow({ mode: "open" });
+    const shadowRoot =
+      hostRef.current.shadowRoot ??
+      hostRef.current.attachShadow({ mode: "open" });
     const styleElement = document.createElement("style");
     styleElement.textContent = `
       :host {
@@ -343,7 +345,7 @@ export const ToastNotificationScenarioPage: React.FC = () => {
 
           {delayedState === "waiting" && (
             <div
-              className="p-4 border border-dashed border-blue-300 rounded-md bg-blue-50 text-blue-700"
+              className="p-4 border border-dashed border-blue-300 rounded-md bg-blue-50 text-blue-700 dark:border-blue-700 dark:bg-blue-950/50 dark:text-blue-200"
               data-test="delayed-notification-waiting"
             >
               Notification will appear in a moment. Perfect for verifying
@@ -353,7 +355,7 @@ export const ToastNotificationScenarioPage: React.FC = () => {
 
           {delayedState === "visible" && (
             <div
-              className="p-4 rounded-md border border-green-200 bg-green-50 text-green-900 flex items-start justify-between gap-4"
+              className="p-4 rounded-md border border-green-200 bg-green-50 text-green-900 flex items-start justify-between gap-4 dark:border-green-700 dark:bg-green-950/50 dark:text-green-200"
               data-test="delayed-notification-visible"
             >
               <div>
@@ -365,7 +367,7 @@ export const ToastNotificationScenarioPage: React.FC = () => {
               </div>
               <button
                 onClick={() => closeDelayedNotification("manual")}
-                className="text-green-800 hover:text-green-600"
+                className="text-green-800 hover:text-green-600 dark:text-green-200 dark:hover:text-white"
                 data-test="delayed-notification-close"
               >
                 <X className="w-4 h-4" />
@@ -416,8 +418,8 @@ export const ToastNotificationScenarioPage: React.FC = () => {
             key={toast.id}
             className={`p-4 rounded shadow-lg border flex items-start justify-between gap-3 transition-all ${
               toast.variant === "success"
-                ? "bg-white border-green-200 text-green-800"
-                : "bg-white border-yellow-200 text-yellow-800"
+                ? "bg-white border-green-200 text-green-800 dark:border-green-700 dark:bg-green-950/80 dark:text-green-200"
+                : "bg-white border-yellow-200 text-yellow-800 dark:border-yellow-700 dark:bg-yellow-950/80 dark:text-yellow-200"
             }`}
             data-test={`toast-${toast.id}`}
           >
@@ -429,7 +431,7 @@ export const ToastNotificationScenarioPage: React.FC = () => {
             </div>
             <button
               onClick={() => removeToast(toast.id)}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
               data-test={`toast-close-${toast.id}`}
             >
               <X className="w-4 h-4" />

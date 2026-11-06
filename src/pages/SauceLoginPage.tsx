@@ -123,19 +123,19 @@ export const SauceLoginPage: React.FC = () => {
 
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Header */}
-        <header className="bg-white shadow-sm border-b">
+        <header className="bg-white shadow-sm border-b dark:border-gray-700 dark:bg-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center">
-                <h1 className="text-xl font-semibold text-gray-900">
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
                   Sauce Demo
                 </h1>
               </div>
               <div className="flex items-center space-x-8">
                 <div className="relative flex items-center justify-center">
-                  <button className="p-2 text-gray-600 hover:text-gray-900 flex items-center justify-center">
+                  <button className="p-2 text-gray-600 hover:text-gray-900 flex items-center justify-center dark:text-gray-300 dark:hover:text-white">
                     <svg
                       className="h-6 w-6"
                       fill="none"
@@ -157,7 +157,7 @@ export const SauceLoginPage: React.FC = () => {
                   </button>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-700">
+                  <span className="text-sm text-gray-700 dark:text-gray-200">
                     Welcome, {currentUser}
                   </span>
                   <button
@@ -176,14 +176,16 @@ export const SauceLoginPage: React.FC = () => {
         {/* Main Content */}
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Products</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 dark:text-white">
+              Products
+            </h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {INVENTORY_ITEMS.map((item) => {
                 const isInCart = cartItems.includes(item.id);
                 return (
                   <div
                     key={item.id}
-                    className="bg-white rounded-lg shadow-md overflow-hidden"
+                    className="bg-white rounded-lg shadow-md overflow-hidden dark:bg-gray-800"
                   >
                     <div className="aspect-w-1 aspect-h-1 w-full">
                       {item.image ? (
@@ -197,10 +199,10 @@ export const SauceLoginPage: React.FC = () => {
                           }}
                         />
                       ) : (
-                        <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+                        <div className="w-full h-48 bg-gray-200 flex items-center justify-center dark:bg-gray-700">
                           <div className="text-center">
                             <div className="text-4xl mb-2">🛍️</div>
-                            <div className="text-sm text-gray-600 font-medium">
+                            <div className="text-sm text-gray-600 font-medium dark:text-gray-200">
                               {item.name}
                             </div>
                           </div>
@@ -208,14 +210,14 @@ export const SauceLoginPage: React.FC = () => {
                       )}
                     </div>
                     <div className="p-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 dark:text-white">
                         {item.name}
                       </h3>
-                      <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+                      <p className="text-sm text-gray-600 mb-3 line-clamp-3 dark:text-gray-300">
                         {item.description}
                       </p>
                       <div className="flex justify-between items-center">
-                        <span className="text-lg font-bold text-gray-900">
+                        <span className="text-lg font-bold text-gray-900 dark:text-white">
                           ${item.price}
                         </span>
                         <button
@@ -246,12 +248,12 @@ export const SauceLoginPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 dark:bg-gray-900">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <div className="mx-auto h-12 w-12 bg-red-100 rounded-full flex items-center justify-center">
+          <div className="mx-auto h-12 w-12 bg-red-100 rounded-full flex items-center justify-center dark:bg-red-950/50">
             <svg
-              className="h-6 w-6 text-red-600"
+              className="h-6 w-6 text-red-600 dark:text-red-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -264,15 +266,15 @@ export const SauceLoginPage: React.FC = () => {
               />
             </svg>
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
             Swag Labs
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
             Enter your credentials to access the application
           </p>
         </div>
 
-        <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="bg-white p-8 rounded-lg shadow-md dark:bg-gray-800">
           <form
             onSubmit={handleSubmit}
             className="space-y-6"
@@ -281,7 +283,7 @@ export const SauceLoginPage: React.FC = () => {
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Username
               </label>
@@ -292,7 +294,7 @@ export const SauceLoginPage: React.FC = () => {
                 onChange={(e) =>
                   setCredentials({ ...credentials, username: e.target.value })
                 }
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400"
                 placeholder="Enter username"
                 data-test="username-input"
               />
@@ -301,7 +303,7 @@ export const SauceLoginPage: React.FC = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Password
               </label>
@@ -312,7 +314,7 @@ export const SauceLoginPage: React.FC = () => {
                 onChange={(e) =>
                   setCredentials({ ...credentials, password: e.target.value })
                 }
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:placeholder-gray-400"
                 placeholder="Enter password"
                 data-test="password-input"
               />
@@ -320,12 +322,12 @@ export const SauceLoginPage: React.FC = () => {
 
             {error && (
               <div
-                className="bg-red-50 border border-red-200 rounded-md p-4 relative"
+                className="bg-red-50 border border-red-200 rounded-md p-4 relative dark:border-red-800 dark:bg-red-950/40"
                 data-test="auth-error"
               >
                 <button
                   type="button"
-                  className="absolute top-2 right-2 text-red-400 hover:text-red-600"
+                  className="absolute top-2 right-2 text-red-400 hover:text-red-600 dark:text-red-300 dark:hover:text-red-200"
                   aria-label="Close error"
                   onClick={() => setError("")}
                   data-test="close-error"
@@ -361,7 +363,9 @@ export const SauceLoginPage: React.FC = () => {
                     </svg>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-red-800">{error}</p>
+                    <p className="text-sm text-red-800 dark:text-red-200">
+                      {error}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -406,11 +410,11 @@ export const SauceLoginPage: React.FC = () => {
           </form>
 
           <div className="mt-6">
-            <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
-              <h3 className="text-sm font-medium text-blue-800 mb-2">
+            <div className="bg-blue-50 border border-blue-200 rounded-md p-4 dark:border-blue-800 dark:bg-blue-950/40">
+              <h3 className="text-sm font-medium text-blue-800 mb-2 dark:text-blue-200">
                 Available Test Credentials:
               </h3>
-              <div className="text-sm text-blue-700 space-y-1">
+              <div className="text-sm text-blue-700 space-y-1 dark:text-blue-200 dark:[&_p]:text-blue-200">
                 <p>
                   <strong>standard_user</strong> - Normal user access
                 </p>

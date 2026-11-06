@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Menu, Space } from "antd";
+import { ConfigProvider, Layout, Menu, Space, theme } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import {
@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
+import { useTheme } from "../contexts/ThemeContext";
 
 const { Header } = Layout;
 
@@ -23,6 +24,7 @@ interface MultiTieredMenuAntdProps {
 }
 
 const MultiTieredMenuAntd: React.FC<MultiTieredMenuAntdProps> = ({ items }) => {
+  const { isDark } = useTheme();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
   const handleClose = () => {
@@ -93,28 +95,44 @@ const MultiTieredMenuAntd: React.FC<MultiTieredMenuAntdProps> = ({ items }) => {
   };
 
   return (
-    <Layout>
-      <Header
-        style={{
-          background: "#fff",
-          padding: 0,
-          borderBottom: "1px solid #f0f0f0",
-        }}
-      >
-        <Menu {...submenuStyle} />
-      </Header>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Item Clicked</DialogTitle>
-        <DialogContent>
-          <p>You clicked: {clickedItemLabel}</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Layout>
+    <ConfigProvider
+      theme={{
+        algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+      }}
+    >
+      <Layout style={{ background: isDark ? "#1f2937" : "#fff" }}>
+        <Header
+          style={{
+            background: isDark ? "#1f2937" : "#fff",
+            padding: 0,
+            borderBottom: isDark ? "1px solid #4b5563" : "1px solid #f0f0f0",
+          }}
+        >
+          <Menu {...submenuStyle} />
+        </Header>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          slotProps={{
+            paper: {
+              sx: {
+                ".dark &": { backgroundColor: "#1f2937", color: "#f9fafb" },
+              },
+            },
+          }}
+        >
+          <DialogTitle>Item Clicked</DialogTitle>
+          <DialogContent>
+            <p>You clicked: {clickedItemLabel}</p>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Layout>
+    </ConfigProvider>
   );
 };
 

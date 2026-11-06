@@ -141,9 +141,11 @@ export const ScenarioTogglePage: React.FC = () => {
   };
 
   const getStatusColor = (scenario: Scenario) => {
-    if (scenario.bypassed) return "bg-yellow-100 border-yellow-400";
-    if (scenario.enabled) return "bg-green-100 border-green-400";
-    return "bg-gray-100 border-gray-400";
+    if (scenario.bypassed)
+      return "bg-yellow-100 border-yellow-400 dark:border-yellow-700 dark:bg-yellow-950/40";
+    if (scenario.enabled)
+      return "bg-green-100 border-green-400 dark:border-green-700 dark:bg-green-950/40";
+    return "bg-gray-100 border-gray-400 dark:border-gray-600 dark:bg-gray-800";
   };
 
   const getStatusText = (scenario: Scenario) => {
@@ -153,9 +155,9 @@ export const ScenarioTogglePage: React.FC = () => {
   };
 
   const getStatusBadgeColor = (scenario: Scenario) => {
-    if (scenario.bypassed) return "bg-yellow-500 text-white";
-    if (scenario.enabled) return "bg-green-500 text-white";
-    return "bg-gray-500 text-white";
+    if (scenario.bypassed) return "bg-yellow-500 text-white dark:bg-yellow-700";
+    if (scenario.enabled) return "bg-green-500 text-white dark:bg-green-700";
+    return "bg-gray-500 text-white dark:bg-gray-600";
   };
 
   const enabledCount = scenarios.filter((s) => s.enabled).length;
@@ -165,38 +167,46 @@ export const ScenarioTogglePage: React.FC = () => {
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-2">Scenario Toggle Control Panel</h1>
-      <p className="text-gray-600 mb-6">
+      <p className="text-gray-600 mb-6 dark:text-gray-300">
         Enable, disable, or bypass different test scenarios
       </p>
 
       {/* Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
-          <div className="text-sm text-gray-600">Total Scenarios</div>
+        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500 dark:bg-gray-800">
+          <div className="text-sm text-gray-600 dark:text-gray-300">
+            Total Scenarios
+          </div>
           <div className="text-2xl font-bold">{scenarios.length}</div>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
-          <div className="text-sm text-gray-600">Enabled</div>
-          <div className="text-2xl font-bold text-green-600">
+        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-green-500 dark:bg-gray-800">
+          <div className="text-sm text-gray-600 dark:text-gray-300">
+            Enabled
+          </div>
+          <div className="text-2xl font-bold text-green-600 dark:text-green-400">
             {enabledCount}
           </div>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-gray-500">
-          <div className="text-sm text-gray-600">Disabled</div>
-          <div className="text-2xl font-bold text-gray-600">
+        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-gray-500 dark:bg-gray-800">
+          <div className="text-sm text-gray-600 dark:text-gray-300">
+            Disabled
+          </div>
+          <div className="text-2xl font-bold text-gray-600 dark:text-gray-300">
             {disabledCount}
           </div>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-yellow-500">
-          <div className="text-sm text-gray-600">Bypassed</div>
-          <div className="text-2xl font-bold text-yellow-600">
+        <div className="bg-white p-4 rounded-lg shadow border-l-4 border-yellow-500 dark:bg-gray-800">
+          <div className="text-sm text-gray-600 dark:text-gray-300">
+            Bypassed
+          </div>
+          <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
             {bypassedCount}
           </div>
         </div>
       </div>
 
       {/* Bulk Actions */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
+      <div className="bg-white p-4 rounded-lg shadow mb-6 dark:bg-gray-800">
         <h3 className="font-semibold mb-3">Bulk Actions</h3>
         <div className="flex flex-wrap gap-2">
           <button
@@ -215,7 +225,7 @@ export const ScenarioTogglePage: React.FC = () => {
           </button>
           <button
             onClick={handleBypassAll}
-            className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
+            className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition dark:bg-yellow-700 dark:hover:bg-yellow-600"
             data-testid="bypass-all-btn"
           >
             Bypass All
@@ -246,7 +256,7 @@ export const ScenarioTogglePage: React.FC = () => {
 
       {/* History Panel */}
       {showHistory && (
-        <div className="bg-white p-4 rounded-lg shadow mb-6">
+        <div className="bg-white p-4 rounded-lg shadow mb-6 dark:bg-gray-800">
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-semibold">Action History</h3>
             <button
@@ -257,14 +267,16 @@ export const ScenarioTogglePage: React.FC = () => {
               Clear History
             </button>
           </div>
-          <div className="bg-gray-50 p-3 rounded max-h-48 overflow-y-auto font-mono text-sm">
+          <div className="bg-gray-50 p-3 rounded max-h-48 overflow-y-auto font-mono text-sm dark:bg-gray-900">
             {history.length === 0 ? (
-              <div className="text-gray-500 text-center">No actions yet</div>
+              <div className="text-gray-500 text-center dark:text-gray-400">
+                No actions yet
+              </div>
             ) : (
               history.map((entry, idx) => (
                 <div
                   key={idx}
-                  className="py-1 border-b border-gray-200 last:border-0"
+                  className="py-1 border-b border-gray-200 last:border-0 dark:border-gray-700"
                 >
                   {entry}
                 </div>
@@ -285,7 +297,7 @@ export const ScenarioTogglePage: React.FC = () => {
             <div className="flex justify-between items-start mb-2">
               <div className="flex-1">
                 <h3 className="font-semibold text-lg">{scenario.name}</h3>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-600 mt-1 dark:text-gray-300">
                   {scenario.description}
                 </p>
               </div>
@@ -302,7 +314,7 @@ export const ScenarioTogglePage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor={`enabled-${scenario.id}`}
-                  className="text-sm font-medium text-gray-700"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-200"
                 >
                   {scenario.enabled ? "Enabled" : "Disabled"}
                 </label>
@@ -321,7 +333,7 @@ export const ScenarioTogglePage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor={`bypassed-${scenario.id}`}
-                  className="text-sm font-medium text-gray-700"
+                  className="text-sm font-medium text-gray-700 dark:text-gray-200"
                 >
                   {scenario.bypassed ? "Bypassed" : "Not Bypassed"}
                 </label>
@@ -341,9 +353,11 @@ export const ScenarioTogglePage: React.FC = () => {
       </div>
 
       {/* Instructions */}
-      <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
-        <h4 className="font-semibold mb-2 text-blue-900">Instructions:</h4>
-        <ul className="text-sm text-blue-800 space-y-1">
+      <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200 dark:border-blue-800 dark:bg-blue-950/40">
+        <h4 className="font-semibold mb-2 text-blue-900 dark:text-blue-200">
+          Instructions:
+        </h4>
+        <ul className="text-sm text-blue-800 space-y-1 dark:text-blue-200">
           <li>
             • <strong>Enabled</strong>: The scenario is active and running
           </li>

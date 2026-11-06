@@ -547,7 +547,7 @@ export const TrafficAgentIframeFixturePage = () => {
                   id="parent-text-input"
                   name="parentTextInput"
                   data-testid="parent-text-input"
-                  className="w-full rounded border border-gray-300 px-2 py-2 text-gray-900"
+                  className="w-full rounded border border-gray-300 px-2 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
                   onInput={(event) => logParentEvent("input", event.currentTarget)}
                 />
               </div>
@@ -559,7 +559,7 @@ export const TrafficAgentIframeFixturePage = () => {
                   id="parent-select"
                   name="parentSelect"
                   data-testid="parent-select"
-                  className="w-full rounded border border-gray-300 px-2 py-2 text-gray-900"
+                  className="w-full rounded border border-gray-300 px-2 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100"
                   onChange={(event) => logParentEvent("change", event.currentTarget)}
                 >
                   <option value="">Choose parent option</option>
@@ -805,14 +805,14 @@ export const TrafficAgentIframeFixturePage = () => {
             <div
               id="debug-log-panel"
               data-testid="debug-log-panel"
-              className="max-h-[70vh] space-y-2 overflow-auto rounded border border-gray-200 bg-gray-50 p-2 text-xs text-gray-900"
+              className="max-h-[70vh] space-y-2 overflow-auto rounded border border-gray-200 bg-gray-50 p-2 text-xs text-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
             >
               {debugEvents.length === 0 && <p>No debug events yet.</p>}
               {debugEvents.map((event) => (
                 <article
                   key={`${event.eventId}-${event.timestamp}`}
                   data-testid="debug-log-entry"
-                  className="rounded border border-gray-200 bg-white p-2"
+                  className="rounded border border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-800"
                 >
                   <div className="font-mono">{event.timestamp}</div>
                   <div>

@@ -92,11 +92,7 @@ export const TextPage: React.FC = () => {
         />
       </div>
       {error && (
-        <div
-          className={styles.error}
-          id={`${id}-error`}
-          style={{ color: "red" }}
-        >
+        <div className={styles.error} id={`${id}-error`}>
           {error}
         </div>
       )}

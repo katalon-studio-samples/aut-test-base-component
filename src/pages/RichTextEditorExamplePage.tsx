@@ -27,7 +27,6 @@ export const RichTextEditorExamplePage: React.FC = () => {
       editorRef.current.innerHTML = savedHtml;
       checkEmpty();
     }
-    // eslint-disable-next-line
   }, [savedHtml]);
 
   const checkEmpty = () => {
@@ -65,7 +64,7 @@ export const RichTextEditorExamplePage: React.FC = () => {
       <div className="mb-2 flex gap-2">
         <button
           type="button"
-          className="px-2 py-1 border rounded hover:bg-gray-100"
+          className="px-2 py-1 border rounded hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700"
           onMouseDown={(e) => {
             e.preventDefault();
             format("bold");
@@ -75,7 +74,7 @@ export const RichTextEditorExamplePage: React.FC = () => {
         </button>
         <button
           type="button"
-          className="px-2 py-1 border rounded hover:bg-gray-100"
+          className="px-2 py-1 border rounded hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700"
           onMouseDown={(e) => {
             e.preventDefault();
             format("italic");
@@ -85,7 +84,7 @@ export const RichTextEditorExamplePage: React.FC = () => {
         </button>
         <button
           type="button"
-          className="px-2 py-1 border rounded hover:bg-gray-100"
+          className="px-2 py-1 border rounded hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700"
           onMouseDown={(e) => {
             e.preventDefault();
             format("underline");
@@ -97,7 +96,7 @@ export const RichTextEditorExamplePage: React.FC = () => {
       <div className="relative">
         <div
           ref={editorRef}
-          className="border rounded p-2 min-h-[300px] bg-white"
+          className="border rounded p-2 min-h-[300px] bg-white dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
           contentEditable
           suppressContentEditableWarning
           style={{ outline: "none" }}
@@ -128,7 +127,7 @@ export const RichTextEditorExamplePage: React.FC = () => {
           Save
         </button>
         <button
-          className="px-4 py-2 bg-gray-300 rounded"
+          className="px-4 py-2 bg-gray-300 rounded dark:bg-gray-700 dark:text-gray-100"
           onClick={handleCancel}
         >
           Cancel

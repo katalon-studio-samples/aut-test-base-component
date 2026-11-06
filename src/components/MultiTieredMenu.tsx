@@ -60,8 +60,8 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
             flex w-full items-center justify-between gap-2
             ${
               level === 0
-                ? "min-h-14 px-4 py-3 text-gray-700 hover:text-blue-600 font-medium text-base"
-                : "px-4 py-2 text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                ? "min-h-14 px-4 py-3 text-gray-700 hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-300 font-medium text-base"
+                : "px-4 py-2 text-left text-gray-700 hover:text-blue-600 hover:bg-gray-50 dark:text-gray-200 dark:hover:text-blue-300 dark:hover:bg-gray-700"
             }
           `}
           onClick={() => handleClick(item)}
@@ -89,7 +89,7 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
         {shouldShowChildren && item.children && (
           <div
             className={`
-              absolute bg-white shadow-lg rounded-md py-2 min-w-[200px] z-10
+              absolute bg-white dark:bg-gray-800 shadow-lg rounded-md py-2 min-w-[200px] z-10
               ${level === 0 ? "left-0 top-[95%]" : "left-[95%] top-0"}
             `}
           >
@@ -104,14 +104,24 @@ const MultiTieredMenu: React.FC<MultiTieredMenuProps> = ({ items }) => {
 
   return (
     <>
-      <nav className="bg-white border-b">
+      <nav className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4">
           <ul className="flex items-stretch">
             {items.map((item) => renderMenuItem(item))}
           </ul>
         </div>
       </nav>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        slotProps={{
+          paper: {
+            sx: {
+              ".dark &": { backgroundColor: "#1f2937", color: "#f9fafb" },
+            },
+          },
+        }}
+      >
         <DialogTitle>Item Clicked</DialogTitle>
         <DialogContent>
           <p>You clicked: {clickedItemLabel}</p>

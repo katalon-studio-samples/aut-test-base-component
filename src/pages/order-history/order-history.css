@@ -411,3 +411,50 @@
     margin-left: 0;
   }
 }
+
+.dark .truephamacy-order-history {
+  --truephamacy-accent: #76c8ef;
+  --truephamacy-text: #edf3f6;
+  --truephamacy-muted: #becdd3;
+  --truephamacy-border: #4c606b;
+  --truephamacy-surface: #24343f;
+  background: #15212a;
+  color-scheme: dark;
+}
+.dark .truephamacy-header,
+.dark .truephamacy-order-history th {
+  background: #1c2a34;
+}
+.dark .truephamacy-taskbar {
+  background: #0d5b95;
+}
+.dark .truephamacy-order-history input:not([type="checkbox"]),
+.dark .truephamacy-order-history select,
+.dark .truephamacy-order-history button {
+  color: var(--truephamacy-text);
+  background: #182832;
+  border-color: var(--truephamacy-border);
+}
+.dark .truephamacy-order-history input::placeholder {
+  color: var(--truephamacy-muted);
+  opacity: 1;
+}
+.dark .truephamacy-order-history button:hover:not(:disabled),
+.dark .truephamacy-order-history tbody tr:hover {
+  background: #30434e;
+}
+.dark .truephamacy-order-history th button {
+  background: transparent;
+}
+.dark .truephamacy-order-history td {
+  border-color: var(--truephamacy-border);
+}
+.dark .truephamacy-order-history .order-date-range > span:first-child {
+  color: var(--truephamacy-accent);
+}
+.dark .truephamacy-breadcrumb > span:first-of-type {
+  color: var(--truephamacy-muted);
+}
+.dark .truephamacy-order-history .workload-error {
+  color: #ff9aa1;
+}

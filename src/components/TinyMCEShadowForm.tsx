@@ -103,7 +103,7 @@ export const TinyMCEShadowForm: React.FC<TinyMCEShadowFormProps> = ({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+            className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:opacity-50 dark:bg-blue-700 dark:hover:bg-blue-800"
             data-test="tinymce-submit-btn"
             id="tinymce-submit-button"
           >
@@ -116,7 +116,7 @@ export const TinyMCEShadowForm: React.FC<TinyMCEShadowFormProps> = ({
               editorRef.current?.setContent("");
               setContent("");
             }}
-            className="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            className="rounded bg-gray-500 px-6 py-2 text-white hover:bg-gray-600 dark:bg-gray-700 dark:hover:bg-gray-800"
             data-test="tinymce-clear-btn"
           >
             Clear
@@ -125,7 +125,7 @@ export const TinyMCEShadowForm: React.FC<TinyMCEShadowFormProps> = ({
       </form>
 
       {content && (
-        <div className="mt-6 p-4 bg-gray-100 rounded">
+        <div className="mt-6 rounded bg-gray-100 p-4 dark:bg-gray-800">
           <h3 className="font-semibold mb-2">Current Content:</h3>
           <div
             className="prose max-w-none"

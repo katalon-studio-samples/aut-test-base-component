@@ -19,7 +19,7 @@ const formTypeOptions = [
 
 // Form components that will be dynamically loaded
 const UserProfileForm = () => (
-  <div className="p-4 border rounded bg-blue-50">
+  <div className="p-4 border rounded bg-blue-50 dark:border-blue-800 dark:bg-blue-950/40 dark:text-gray-100">
     <h3 className="font-semibold mb-3">User Profile Form</h3>
     <div className="space-y-3">
       <input
@@ -46,7 +46,7 @@ const UserProfileForm = () => (
 );
 
 const ContactInfoForm = () => (
-  <div className="p-4 border rounded bg-green-50">
+  <div className="p-4 border rounded bg-green-50 dark:border-green-800 dark:bg-green-950/40 dark:text-gray-100">
     <h3 className="font-semibold mb-3">Contact Information Form</h3>
     <div className="space-y-3">
       <input
@@ -74,7 +74,7 @@ const ContactInfoForm = () => (
 );
 
 const BillingDetailsForm = () => (
-  <div className="p-4 border rounded bg-yellow-50">
+  <div className="p-4 border rounded bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-950/40 dark:text-gray-100">
     <h3 className="font-semibold mb-3">Billing Details Form</h3>
     <div className="space-y-3">
       <input
@@ -104,16 +104,16 @@ const BillingDetailsForm = () => (
 );
 
 const PreferencesForm = () => (
-  <div className="p-4 border rounded bg-purple-50">
+  <div className="p-4 border rounded bg-purple-50 dark:border-purple-800 dark:bg-purple-950/40 dark:text-gray-100">
     <h3 className="font-semibold mb-3">User Preferences Form</h3>
     <div className="space-y-3">
-      <select className="w-full p-2 border rounded">
+      <select className="w-full p-2 border rounded dark:border-gray-600 dark:bg-gray-800 dark:text-white">
         <option>Select Language</option>
         <option>English</option>
         <option>Spanish</option>
         <option>French</option>
       </select>
-      <select className="w-full p-2 border rounded">
+      <select className="w-full p-2 border rounded dark:border-gray-600 dark:bg-gray-800 dark:text-white">
         <option>Select Theme</option>
         <option>Light</option>
         <option>Dark</option>
@@ -128,7 +128,7 @@ const PreferencesForm = () => (
 );
 
 const SecuritySettingsForm = () => (
-  <div className="p-4 border rounded bg-red-50">
+  <div className="p-4 border rounded bg-red-50 dark:border-red-800 dark:bg-red-950/40 dark:text-gray-100">
     <h3 className="font-semibold mb-3">Security Settings Form</h3>
     <div className="space-y-3">
       <input
@@ -169,16 +169,16 @@ const LoadingFormPlaceholder = ({ formType }: { formType: string }) => {
   };
 
   return (
-    <div className="p-4 border rounded bg-gray-100 animate-pulse">
+    <div className="p-4 border rounded bg-gray-100 animate-pulse dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold">Loading {getFormLabel(formType)}...</h3>
         <LoadingSpinner />
       </div>
       <div className="space-y-3">
-        <div className="h-10 bg-gray-300 rounded"></div>
-        <div className="h-10 bg-gray-300 rounded"></div>
-        <div className="h-10 bg-gray-300 rounded"></div>
-        <div className="h-20 bg-gray-300 rounded"></div>
+        <div className="h-10 bg-gray-300 rounded dark:bg-gray-700"></div>
+        <div className="h-10 bg-gray-300 rounded dark:bg-gray-700"></div>
+        <div className="h-10 bg-gray-300 rounded dark:bg-gray-700"></div>
+        <div className="h-20 bg-gray-300 rounded dark:bg-gray-700"></div>
       </div>
     </div>
   );
@@ -272,7 +272,7 @@ export const ComboBoxExamplePage: React.FC = () => {
           <select
             id="site-select"
             data-testid="subject-details-modal-site-input"
-            className="w-full border rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full border rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
             value={selectedSite}
             onChange={(e) => setSelectedSite(e.target.value)}
           >
@@ -297,7 +297,7 @@ export const ComboBoxExamplePage: React.FC = () => {
             <select
               id="form-select"
               data-testid="form-type-input"
-              className="w-full border rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full border rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
               value={selectedFormType}
               onChange={handleSelectChange}
               onMouseDown={handleMouseDown}
@@ -352,9 +352,9 @@ export const ComboBoxExamplePage: React.FC = () => {
       )}
 
       {/* Instructions */}
-      <div className="mt-8 p-4 bg-gray-100 rounded">
+      <div className="mt-8 p-4 bg-gray-100 rounded dark:bg-gray-800">
         <h4 className="font-semibold mb-2">Instructions:</h4>
-        <ul className="text-sm text-gray-700 space-y-1">
+        <ul className="text-sm text-gray-700 space-y-1 dark:text-gray-300">
           <li>• Use the first combobox to select a site ID</li>
           <li>
             • <strong>Click</strong> on the second combobox to select and load

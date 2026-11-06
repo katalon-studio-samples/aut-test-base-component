@@ -31,6 +31,65 @@ async function matchRow(page: Page, row: Locator, id = invoice) {
   await dialog.getByRole("button", { name: "Apply invoice match" }).click();
   await expect(dialog).not.toBeVisible();
 }
+
+async function expectReadableContrast(locator: Locator, description: string) {
+  await expect(locator).toBeVisible();
+  const { ratio, foreground, background } = await locator.evaluate(
+    (element) => {
+      type Rgb = [number, number, number];
+      type Rgba = [number, number, number, number];
+      const parse = (value: string): Rgba => {
+        const channels = value.match(/[\d.]+/g)?.map(Number) ?? [];
+        if (channels.length < 3)
+          throw new Error(`Unsupported CSS color: ${value}`);
+        return [channels[0], channels[1], channels[2], channels[3] ?? 1];
+      };
+      const blend = (top: Rgba, bottom: Rgb): Rgb => [
+        top[0] * top[3] + bottom[0] * (1 - top[3]),
+        top[1] * top[3] + bottom[1] * (1 - top[3]),
+        top[2] * top[3] + bottom[2] * (1 - top[3]),
+      ];
+      const luminance = (color: Rgb) => {
+        const [red, green, blue] = color.map((channel) => {
+          const value = channel / 255;
+          return value <= 0.04045
+            ? value / 12.92
+            : ((value + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+      };
+
+      // Composite actual ancestor surfaces, including the element's own input background.
+      const ancestors: Element[] = [];
+      for (
+        let node: Element | null = element;
+        node;
+        node = node.parentElement
+      ) {
+        ancestors.unshift(node);
+      }
+      let background: Rgb = [255, 255, 255];
+      for (const node of ancestors) {
+        background = blend(
+          parse(getComputedStyle(node).backgroundColor),
+          background,
+        );
+      }
+      const foreground = blend(
+        parse(getComputedStyle(element).color),
+        background,
+      );
+      const light = Math.max(luminance(foreground), luminance(background));
+      const dark = Math.min(luminance(foreground), luminance(background));
+      return { ratio: (light + 0.05) / (dark + 0.05), foreground, background };
+    },
+  );
+  expect(
+    ratio,
+    `${description}: text ${foreground.join(",")} on ${background.join(",")}`,
+  ).toBeGreaterThanOrEqual(4.5);
+}
+
 test("complete search/cart/serialized-return/invoice/history flow @regression", async ({
   page,
 }) => {
@@ -231,7 +290,7 @@ test("unsaved draft guards app navigation and browser Back; cancel preserves row
       .getByRole("textbox", { name: /Serial for/ }),
   ).toHaveValue("");
 });
-test("search filters, pagination, empty results and cart submission work locally @regression", async ({
+test("search filters, pagination, empty results and checkout work locally @regression", async ({
   page,
 }) => {
   await page.goto(BASE);
@@ -267,10 +326,279 @@ test("search filters, pagination, empty results and cart submission work locally
     .fill("2");
   await page.getByRole("button", { name: "Add to cart", exact: true }).click();
   await page.getByRole("button", { name: "View cart" }).click();
-  await page.getByRole("button", { name: "Submit cart", exact: true }).click();
-  await page.getByRole("button", { name: "Confirm local submission" }).click();
-  await expect(page.getByRole("status")).toContainText(
-    "Practice cart submitted locally",
+  await page
+    .getByRole("button", { name: "Proceed to checkout", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/truephamacy-workflow\/checkout$/);
+  for (const section of [
+    "Contact information",
+    "Delivery address",
+    "Billing and payment",
+    "Order summary",
+  ]) {
+    await expect(page.getByRole("heading", { name: section })).toBeVisible();
+  }
+  await expect(page.getByText(cream)).toBeVisible();
+  await expect(page.getByText("$25.90", { exact: true }).first()).toBeVisible();
+  await page
+    .getByRole("button", { name: "Place practice order", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/truephamacy-workflow\/checkout$/);
+  await expect(
+    page.getByRole("heading", { name: "Order placed", exact: true }),
+  ).not.toBeVisible();
+  await page
+    .getByRole("textbox", { name: "Full name", exact: true })
+    .fill("Alex Chen");
+  await page
+    .getByRole("textbox", { name: "Email address", exact: true })
+    .fill("not-an-email");
+  await page
+    .getByRole("textbox", { name: "Phone number", exact: true })
+    .fill("555-010-1234");
+  await page
+    .getByRole("textbox", { name: "Pharmacy name", exact: true })
+    .fill("Demo Pharmacy");
+  await page
+    .getByRole("textbox", { name: "Street address", exact: true })
+    .fill("123 Main Street");
+  await page
+    .getByRole("combobox", { name: "Country", exact: true })
+    .selectOption({ label: "United States" });
+  await page
+    .getByRole("combobox", { name: "City", exact: true })
+    .selectOption({ label: "Austin" });
+  await expect(
+    page.getByRole("textbox", { name: "State / province", exact: true }),
+  ).toHaveValue("Texas");
+  await page
+    .getByRole("textbox", { name: "ZIP / postal code", exact: true })
+    .fill("78701");
+  await page
+    .getByRole("radio", { name: "Express delivery", exact: true })
+    .check();
+  await expect(
+    page.getByRole("checkbox", { name: /billing.*same as.*delivery/i }),
+  ).toBeChecked();
+  await expect(
+    page.getByRole("radio", {
+      name: "Invoice to pharmacy account",
+      exact: true,
+    }),
+  ).toBeChecked();
+  await page
+    .getByRole("checkbox", { name: "Billing address same as delivery address" })
+    .uncheck();
+  await expect(
+    page.getByRole("textbox", { name: "Billing street address", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Place practice order", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/truephamacy-workflow\/checkout$/);
+  await expect(
+    page.getByRole("heading", { name: "Order placed", exact: true }),
+  ).not.toBeVisible();
+  await page
+    .getByRole("textbox", { name: "Billing name", exact: true })
+    .fill("Demo Pharmacy Accounts");
+  await page
+    .getByRole("textbox", { name: "Billing street address", exact: true })
+    .fill("456 Commerce Avenue");
+  await page
+    .getByRole("combobox", { name: "Billing country", exact: true })
+    .selectOption({ label: "Canada" });
+  await page
+    .getByRole("combobox", { name: "Billing city", exact: true })
+    .selectOption({ label: "Toronto" });
+  await expect(
+    page.getByRole("textbox", {
+      name: "Billing state / province",
+      exact: true,
+    }),
+  ).toHaveValue("Ontario");
+  await page
+    .getByRole("textbox", { name: "Billing ZIP / postal code", exact: true })
+    .fill("M5H 2N2");
+  await page.getByRole("button", { name: "Back to cart" }).click();
+  await page.getByRole("button", { name: "Proceed to checkout" }).click();
+  await page.reload();
+  await expect(
+    page.getByRole("textbox", { name: "Full name", exact: true }),
+  ).toHaveValue("Alex Chen");
+  await expect(
+    page.getByRole("textbox", { name: "Billing street address", exact: true }),
+  ).toHaveValue("456 Commerce Avenue");
+  await expect(
+    page.getByRole("radio", { name: "Express delivery", exact: true }),
+  ).toBeChecked();
+  await page
+    .getByRole("button", { name: "Place practice order", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Order placed", exact: true }),
+  ).not.toBeVisible();
+  await page
+    .getByRole("textbox", { name: "Email address", exact: true })
+    .fill("alex@example.com");
+  await page
+    .getByRole("button", { name: "Place practice order", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Order placed", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("ORDER-DEMO-");
+});
+
+test("direct checkout without cart items cannot place an order @regression", async ({
+  page,
+}) => {
+  await page.goto(`${BASE}/checkout`);
+  await expect(page.getByText("Your cart is empty.")).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Continue shopping", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Place practice order", exact: true }),
+  ).toHaveCount(0);
+});
+
+test("dark mode keeps search, cart and checkout text readable @regression", async ({
+  page,
+}) => {
+  await page.addInitScript(() => localStorage.setItem("theme", "dark"));
+  await page.goto(`${BASE}/search?q=care`);
+  await expect(page.locator("html")).toHaveClass(/dark/);
+
+  await expectReadableContrast(
+    page.getByRole("heading", { name: "Search results" }),
+    "search heading",
+  );
+  await expectReadableContrast(
+    page.locator(".wf-filterbar label").first(),
+    "search category label",
+  );
+  await expectReadableContrast(
+    page.getByRole("searchbox", { name: "Search products", exact: true }),
+    "search input",
+  );
+  await expectReadableContrast(
+    page
+      .getByTestId("product-care-cream")
+      .locator("td")
+      .nth(2)
+      .locator("strong"),
+    "search table product",
+  );
+
+  await page
+    .getByRole("spinbutton", { name: `Quantity for ${cream}`, exact: true })
+    .fill("1");
+  await page.getByRole("button", { name: "Add to cart", exact: true }).click();
+  await page.getByRole("button", { name: "View cart", exact: true }).click();
+  await expectReadableContrast(
+    page.getByRole("heading", { name: "Carts", exact: true }),
+    "cart heading",
+  );
+  const poNumber = page.getByLabel("PO number", { exact: true });
+  await poNumber.fill("PO-DARK-MODE");
+  await expectReadableContrast(poNumber.locator(".."), "cart PO number label");
+  await expectReadableContrast(poNumber, "cart PO number input");
+  await expectReadableContrast(
+    page.getByTestId("cart-care-cream").locator("td").nth(2).locator("strong"),
+    "cart table product",
+  );
+
+  await page
+    .getByRole("button", { name: "Proceed to checkout", exact: true })
+    .click();
+  await expectReadableContrast(
+    page.getByRole("heading", { name: "Contact information" }),
+    "checkout heading",
+  );
+  const email = page.getByRole("textbox", {
+    name: "Email address",
+    exact: true,
+  });
+  await email.fill("alex@example.com");
+  await expectReadableContrast(email.locator(".."), "checkout email label");
+  await expectReadableContrast(email, "checkout email input");
+  const country = page.getByRole("combobox", { name: "Country", exact: true });
+  await country.selectOption({ label: "United States" });
+  await expectReadableContrast(country, "checkout country dropdown");
+  await expectReadableContrast(
+    page.getByRole("radio", { name: "Express delivery" }).locator(".."),
+    "checkout delivery option",
+  );
+});
+
+test("checkout country filters city choices and clears stale locations @regression", async ({
+  page,
+}) => {
+  await page.goto(`${BASE}/search?q=care`);
+  await page
+    .getByRole("spinbutton", { name: `Quantity for ${cream}`, exact: true })
+    .fill("1");
+  await page.getByRole("button", { name: "Add to cart", exact: true }).click();
+  await page.getByRole("button", { name: "View cart", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Proceed to checkout", exact: true })
+    .click();
+
+  const country = page.getByRole("combobox", { name: "Country", exact: true });
+  const city = page.getByRole("combobox", { name: "City", exact: true });
+  const region = page.getByRole("textbox", {
+    name: "State / province",
+    exact: true,
+  });
+  await country.selectOption({ label: "United States" });
+  expect(await city.locator("option").allTextContents()).toContain("Austin");
+  expect(await city.locator("option").allTextContents()).not.toContain(
+    "Toronto",
+  );
+  await city.selectOption({ label: "Austin" });
+  await expect(region).toHaveValue("Texas");
+
+  await country.selectOption({ label: "Canada" });
+  await expect(city).toHaveValue("");
+  await expect(region).toHaveValue("");
+  expect(await city.locator("option").allTextContents()).toContain("Toronto");
+  expect(await city.locator("option").allTextContents()).not.toContain(
+    "Austin",
+  );
+  await city.selectOption({ label: "Toronto" });
+  await expect(region).toHaveValue("Ontario");
+
+  await country.selectOption({ label: "Vietnam" });
+  await expect(city).toHaveValue("");
+  await expect(region).toHaveValue("");
+  expect(await city.locator("option").allTextContents()).toContain(
+    "Ho Chi Minh City",
+  );
+
+  await page
+    .getByRole("checkbox", { name: "Billing address same as delivery address" })
+    .uncheck();
+  const billingCountry = page.getByRole("combobox", {
+    name: "Billing country",
+    exact: true,
+  });
+  const billingCity = page.getByRole("combobox", {
+    name: "Billing city",
+    exact: true,
+  });
+  const billingRegion = page.getByRole("textbox", {
+    name: "Billing state / province",
+    exact: true,
+  });
+  await billingCountry.selectOption({ label: "Canada" });
+  await billingCity.selectOption({ label: "Toronto" });
+  await expect(billingRegion).toHaveValue("Ontario");
+  await billingCountry.selectOption({ label: "United States" });
+  await expect(billingCity).toHaveValue("");
+  await expect(billingRegion).toHaveValue("");
+  expect(await billingCity.locator("option").allTextContents()).toContain(
+    "Austin",
   );
 });
 
@@ -430,6 +758,19 @@ for (const width of [1440, 1024, 768, 390, 320]) {
     await page.getByRole("button", { name: "View cart", exact: true }).click();
     await fits(page.getByLabel("PO number", { exact: true }));
     await fits(page.getByLabel("PO memo", { exact: true }));
+    await page
+      .getByRole("button", { name: "Proceed to checkout", exact: true })
+      .click();
+    await fits(page.getByRole("textbox", { name: "Full name", exact: true }));
+    await fits(page.getByRole("combobox", { name: "Country", exact: true }));
+    await fits(page.getByRole("combobox", { name: "City", exact: true }));
+    await fits(
+      page.getByRole("button", { name: "Place practice order", exact: true }),
+    );
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
+      .toBeLessThanOrEqual(width);
+    await page.goto(`${BASE}/cart`);
     await page
       .getByRole("button", { name: "Create return request", exact: true })
       .click();

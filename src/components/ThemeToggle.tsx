@@ -28,7 +28,7 @@ export const ThemeToggle: React.FC = () => {
           onClick={() => setShowExtensionDropdown(!showExtensionDropdown)}
           className={`p-2 rounded-md shadow-md transition-all duration-200 flex items-center gap-1 ${
             urlExtension
-              ? "bg-blue-500 text-white"
+              ? "bg-blue-500 text-white dark:bg-blue-700"
               : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
           }`}
           aria-label="Select URL extension"

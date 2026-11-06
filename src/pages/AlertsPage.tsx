@@ -40,7 +40,7 @@ export const AlertsPage: React.FC = () => {
         <div>
           <button
             onClick={handleDialog}
-            className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+            className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 dark:bg-orange-700 dark:hover:bg-orange-600"
             data-test="alert-button"
           >
             Show Dialog Modal
@@ -50,7 +50,7 @@ export const AlertsPage: React.FC = () => {
         <div>
           <button
             onClick={handleAlert}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600"
             data-test="alert-button"
           >
             Show Alert
@@ -60,7 +60,7 @@ export const AlertsPage: React.FC = () => {
         <div>
           <button
             onClick={handleConfirm}
-            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600"
             data-test="confirm-button"
           >
             Show Confirm
@@ -70,7 +70,7 @@ export const AlertsPage: React.FC = () => {
         <div>
           <button
             onClick={handlePrompt}
-            className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+            className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 dark:bg-purple-700 dark:hover:bg-purple-600"
             data-test="prompt-button"
           >
             Show Prompt
