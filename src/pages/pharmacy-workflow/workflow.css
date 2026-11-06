@@ -346,6 +346,26 @@
   background: transparent;
   font-size: 12px;
 }
+.pharmacy-workflow .wf-product-name-link {
+  display: inline-block;
+  color: #176e87;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pharmacy-workflow .wf-product-name-link:hover {
+  color: #0b5064;
+}
+.wf-detail-not-found {
+  max-width: 650px;
+  margin: 24px auto 50px;
+  padding: 28px;
+  border: 1px solid #cad5da;
+  border-radius: 9px;
+  background: #f8fafb;
+}
+.wf-detail-not-found p {
+  margin: 10px 0 20px;
+}
 .wf-tag {
   font-size: 10px;
   display: inline-block;
@@ -1653,4 +1673,12 @@ body:has(.pharmacy-workflow) .app-side-nav {
 }
 .dark body:has(.pharmacy-workflow) .app-side-nav {
   background: #1f2937;
+}
+.dark .pharmacy-workflow .wf-product-name-link,
+.dark .pharmacy-workflow .wf-product-name-link:hover {
+  color: var(--wf-dark-accent);
+}
+.dark .pharmacy-workflow .wf-detail-not-found {
+  background: var(--wf-dark-surface);
+  border-color: var(--wf-dark-border);
 }

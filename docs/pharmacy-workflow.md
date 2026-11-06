@@ -8,7 +8,7 @@ Each generated product has distinct CIN/NDC/GTIN identifiers and demo invoices a
 
 ## Try the flow
 
-1. Search for **care**, enter a quantity for **Demo Care Cream**, and choose **Add to cart**.
+1. Search for **care** and open **Demo Care Cream** by clicking its product name. The detail page shows its catalog identifiers, stock, unit price and handling information. Choose **Each**, **Pack**, **Case** or **Carton**, enter a quantity, optionally select **Do not substitute**, then choose **Add to cart**. Pack adds two catalog units, Case adds four and Carton adds twelve, all at the unit price and subject to stock. **Back to product list** returns to the filtered catalog. You can also enter a quantity and add directly from the product list.
 2. Open **View cart**. Edit quantity, PO number, memo and **Do not substitute**. **Analyze cart** checks available stock; choose **Proceed to checkout** when the cart is ready.
 3. Complete the required contact, delivery and billing information. Select **Country** before **City**; the City dropdown lists cities for that country. If the billing address differs, uncheck **Billing address same as delivery address** and select its Country and City separately. Choose **Standard** or **Express** delivery, review the order and the demo **Invoice to account** payment method, then choose **Place practice order**. The order confirmation is local to this browser; the cart remains available for return exercises.
 4. Return to the cart and choose **Create return request**. Select **Ordered in error**, enter a numeric serial and the product's demo GTIN `00000000001001`.
@@ -21,7 +21,7 @@ For a non-serialized flow, search for **cleanser** and add it directly to a retu
 
 The readable recordings from 2026-10-13 at 11:39, 11:43 and 12:06 show product search/results, quantity entry, cart editing, PO/memo, substitution controls, serialized and non-serialized return cards, required reasons/comments, dynamic serial/unit/GTIN rows, invoice fields/matching and an unsaved-progress warning. Sampled frames from the 11:53 recording were black, so that recording was not used as evidence.
 
-The prototype adds a checkout with local order confirmation, a deterministic invoice picker, local return receipts/history, invoice-balance enforcement, and simplified validation so the whole flow can be exercised. These are demo rules, not verified Cardinal business rules: Each = 1 unit, Case = 4 units, serial = 1–20 digits, GTIN = 8–14 digits, non-serialized quantity = 1–99. Prices, stock, identifiers, accounts and invoices are synthetic; source recordings and their production data are not copied into the repository.
+The prototype adds a checkout with local order confirmation, a deterministic invoice picker, local return receipts/history, invoice-balance enforcement, and simplified validation so the whole flow can be exercised. These are demo rules, not verified Cardinal business rules: Each = 1 unit, Pack = 2 units, Case = 4 units, Carton = 3 cases (12 units), serial = 1–20 digits, GTIN = 8–14 digits, non-serialized quantity = 1–99. Prices, stock, identifiers, accounts and invoices are synthetic; source recordings and their production data are not copied into the repository.
 
 ## State and navigation
 
@@ -33,7 +33,7 @@ All business actions, including checkout and Invoice to account, run locally wit
 
 Run `npx playwright test tests/specs/regression/pharmacy-workflow.regression.spec.ts --project=chromium`.
 
-Coverage includes the complete serialized flow, cart persistence, return history/reset, invalid fields and duplicate serials, aggregate invoice balances, non-serialized returns, navigation warning/cancel/discard, filters, pagination, empty results, country-dependent City dropdowns and local checkout.
+Coverage includes product detail links, Pack/Case cart quantity conversion, missing-product fallback, the complete serialized flow, cart persistence, return history/reset, invalid fields and duplicate serials, aggregate invoice balances, non-serialized returns, navigation warning/cancel/discard, filters, pagination, empty results, country-dependent City dropdowns and local checkout.
 
 Responsive layout is checked at 1440, 1024, 768, 390 and 320 px. The workflow uses its actual container width for breakpoints so the app sidebar cannot squeeze desktop controls out of view. Return reason/comment fields share one baseline and 40 px control height; narrow screens stack full-width fields. Order menus stay inside the page, long tables scroll within their frames, picker dialogs have a reachable sticky close header, and measured banner height keeps the logo and app controls clear. Cart actions and pagination remain above the catalog table.
 

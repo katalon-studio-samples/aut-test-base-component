@@ -1,0 +1,361 @@
+.pharmacy-workflow .wf-product-detail {
+  padding-bottom: 32px;
+}
+
+.pharmacy-workflow .wf-product-detail-back {
+  border: 0;
+  padding: 0;
+  margin: 0 0 20px;
+  color: #176b83;
+  background: transparent;
+  font-size: 13px;
+}
+
+.pharmacy-workflow .wf-product-detail-back:hover {
+  color: #0d5266;
+  background: transparent;
+  text-decoration: underline;
+}
+
+.pharmacy-workflow .wf-product-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px;
+  margin-bottom: 20px;
+  border: 1px solid #dbe4e8;
+  border-radius: 10px;
+  background: #f7fafb;
+}
+
+.pharmacy-workflow .wf-product-detail-symbol {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  color: #d82c37;
+  background: #fce8e9;
+}
+
+.pharmacy-workflow .wf-product-detail-eyebrow {
+  margin: 0 0 6px;
+  color: #596a73;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pharmacy-workflow .wf-product-detail-header h1 {
+  margin-bottom: 12px;
+}
+
+.pharmacy-workflow .wf-product-detail-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pharmacy-workflow .wf-product-detail-badges > span {
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: #3f5965;
+  background: #e6eef1;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pharmacy-workflow .wf-product-detail-badges .wf-product-detail-stock-in {
+  color: #106140;
+  background: #dcf3e7;
+}
+
+.pharmacy-workflow .wf-product-detail-badges .wf-product-detail-stock-out {
+  color: #9d2531;
+  background: #fbe4e6;
+}
+
+.pharmacy-workflow .wf-product-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+  align-items: start;
+  gap: 20px;
+}
+
+.pharmacy-workflow :is(.wf-product-detail-info, .wf-product-detail-order) {
+  min-width: 0;
+  border: 1px solid #dbe4e8;
+  border-radius: 10px;
+  padding: 24px;
+  background: #fff;
+}
+
+.pharmacy-workflow .wf-product-detail-description {
+  margin: 8px 0 24px;
+  color: #647780;
+  line-height: 1.5;
+}
+
+.pharmacy-workflow .wf-product-detail-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+  margin: 0;
+}
+
+.pharmacy-workflow .wf-product-detail-facts > div {
+  min-width: 0;
+  padding: 15px 0;
+  border-top: 1px solid #e5ebee;
+}
+
+.pharmacy-workflow .wf-product-detail-facts dt {
+  margin-bottom: 6px;
+  color: #667780;
+  font-size: 12px;
+}
+
+.pharmacy-workflow .wf-product-detail-facts dd {
+  margin: 0;
+  color: #26353c;
+  font-size: 14px;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.pharmacy-workflow .wf-product-detail-order h2 {
+  margin-bottom: 16px;
+}
+
+.pharmacy-workflow .wf-product-detail-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.pharmacy-workflow .wf-product-detail-price strong {
+  color: #c91e29;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.pharmacy-workflow .wf-product-detail-price span,
+.pharmacy-workflow .wf-product-detail-availability,
+.pharmacy-workflow .wf-product-detail-help {
+  color: #667780;
+  font-size: 12px;
+}
+
+.pharmacy-workflow .wf-product-detail-availability {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 12px 0 22px;
+}
+
+.pharmacy-workflow .wf-product-detail-availability > span {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #168960;
+}
+
+.pharmacy-workflow
+  .wf-product-detail-availability[data-available="false"]
+  > span {
+  background: #bd4550;
+}
+
+.pharmacy-workflow .wf-product-detail-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 16px;
+  font-weight: 650;
+}
+
+.pharmacy-workflow .wf-product-detail-field :is(select, input) {
+  width: 100%;
+}
+
+.pharmacy-workflow .wf-product-detail-field input[type="number"] {
+  width: 100%;
+}
+
+.pharmacy-workflow .wf-product-detail-field :is(select, input):disabled {
+  background: #edf1f3;
+  color: #697981;
+  cursor: not-allowed;
+}
+
+.pharmacy-workflow .wf-product-detail-help,
+.pharmacy-workflow .wf-product-detail-error {
+  margin: 7px 0 0;
+  line-height: 1.45;
+}
+
+.pharmacy-workflow .wf-product-detail-error {
+  color: #b52330;
+  font-size: 12px;
+}
+
+.pharmacy-workflow .wf-product-detail-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 21px 0;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.pharmacy-workflow .wf-product-detail-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 17px 0;
+  border-top: 1px solid #e5ebee;
+  color: #586d77;
+  font-size: 12px;
+}
+
+.pharmacy-workflow .wf-product-detail-total strong {
+  color: #26353c;
+  font-size: 19px;
+  white-space: nowrap;
+}
+
+.pharmacy-workflow .wf-product-detail-add,
+.pharmacy-workflow .wf-product-detail-view-cart {
+  width: 100%;
+  min-height: 42px;
+}
+
+.pharmacy-workflow .wf-primary.wf-product-detail-add {
+  background: #c91e29;
+  border-color: #c91e29;
+}
+
+.pharmacy-workflow .wf-primary.wf-product-detail-add:hover:not(:disabled) {
+  background: #aa1721;
+}
+
+.pharmacy-workflow .wf-product-detail-view-cart {
+  margin-top: 9px;
+}
+
+.dark .pharmacy-workflow .wf-product-detail-back {
+  color: var(--wf-dark-accent, #8ad5e9);
+  background: transparent;
+  border-color: transparent;
+}
+
+.dark .pharmacy-workflow .wf-product-detail-back:hover:not(:disabled) {
+  color: #b7ebf5;
+  background: transparent;
+}
+
+.dark .pharmacy-workflow .wf-product-detail-header,
+.dark
+  .pharmacy-workflow
+  :is(.wf-product-detail-info, .wf-product-detail-order) {
+  color: var(--wf-dark-text, #edf3f6);
+  background: var(--wf-dark-surface, #1b2934);
+  border-color: var(--wf-dark-border, #455967);
+}
+
+.dark .pharmacy-workflow .wf-product-detail-symbol {
+  color: #ff8f96;
+  background: #4a2932;
+}
+
+.dark .pharmacy-workflow .wf-product-detail-badges > span {
+  color: #d7e5eb;
+  background: #344955;
+}
+
+.dark .pharmacy-workflow .wf-product-detail-badges .wf-product-detail-stock-in {
+  color: #a5e5c5;
+  background: #214638;
+}
+
+.dark
+  .pharmacy-workflow
+  .wf-product-detail-badges
+  .wf-product-detail-stock-out {
+  color: #ffbdc1;
+  background: #552d36;
+}
+
+.dark
+  .pharmacy-workflow
+  :is(
+    .wf-product-detail-eyebrow,
+    .wf-product-detail-description,
+    .wf-product-detail-facts dt,
+    .wf-product-detail-price span,
+    .wf-product-detail-availability,
+    .wf-product-detail-help,
+    .wf-product-detail-total
+  ) {
+  color: var(--wf-dark-muted, #b7c8d0);
+}
+
+.dark .pharmacy-workflow .wf-product-detail-facts > div,
+.dark .pharmacy-workflow .wf-product-detail-total {
+  border-color: var(--wf-dark-border, #455967);
+}
+
+.dark
+  .pharmacy-workflow
+  :is(.wf-product-detail-facts dd, .wf-product-detail-total strong) {
+  color: var(--wf-dark-text, #edf3f6);
+}
+
+.dark .pharmacy-workflow .wf-product-detail-price strong {
+  color: #ff8f96;
+}
+
+.dark .pharmacy-workflow .wf-product-detail-error {
+  color: #ffb5bb;
+}
+
+.dark .pharmacy-workflow .wf-product-detail-field :is(select, input):disabled {
+  background: #2b3b46;
+  color: var(--wf-dark-muted, #b7c8d0);
+}
+
+@container (max-width: 800px) {
+  .pharmacy-workflow .wf-product-detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@container (max-width: 500px) {
+  .pharmacy-workflow .wf-product-detail-header {
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .pharmacy-workflow .wf-product-detail-symbol {
+    width: 48px;
+    height: 48px;
+  }
+
+  .pharmacy-workflow .wf-product-detail-symbol svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .pharmacy-workflow :is(.wf-product-detail-info, .wf-product-detail-order) {
+    padding: 18px;
+  }
+
+  .pharmacy-workflow .wf-product-detail-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

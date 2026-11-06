@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   CheckCircle2,
   ChevronDown,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { currency } from "./order-history/orders";
 import { Modal } from "./pharmacy-workflow/Modal";
+import { ProductDetail } from "./pharmacy-workflow/ProductDetail";
 import { Checkout, type CheckoutReceipt } from "./pharmacy-workflow/Checkout";
 import { regionForCity } from "./pharmacy-workflow/locations";
 import { ReturnCard } from "./pharmacy-workflow/ReturnCard";
@@ -49,6 +50,8 @@ const paths = {
   history: `${BASE}/returns/history`,
   invoices: `${BASE}/invoices`,
 };
+const productPath = (id: string) =>
+  `${BASE}/products/${encodeURIComponent(id)}`;
 // Register before BrowserRouter installs its history listener, so a dirty draft
 // can restore POP without letting the router render the destination first.
 let blockPop: ((event: PopStateEvent) => void) | null = null;
@@ -70,9 +73,10 @@ const catalogColumns = [
   { key: "favorite", label: "Favorites" },
 ] as const;
 type CatalogSortKey = (typeof catalogColumns)[number]["key"];
-type View = keyof typeof paths;
+type View = keyof typeof paths | "detail";
 type PendingNavigation = { url: string; fullLoad?: boolean; popDelta?: number };
 function currentView(path: string): View {
+  if (path.startsWith(`${BASE}/products/`)) return "detail";
   if (path.includes("/returns/history")) return "history";
   if (path.includes("/returns/return-request")) return "returns";
   if (path.includes("/checkout")) return "checkout";
@@ -84,6 +88,13 @@ export function PharmacyWorkflowPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const view = currentView(location.pathname);
+  const productListPath = `${paths.search}${location.search}`;
+  const detailProduct =
+    view === "detail"
+      ? products.find(
+          (product) => productPath(product.id) === location.pathname,
+        )
+      : undefined;
   const [store, setStore] = useState<Store>(loadStore);
   const [query, setQuery] = useState(
     new URLSearchParams(location.search).get("q") || "",
@@ -117,6 +128,7 @@ export function PharmacyWorkflowPage() {
   const dirtyRef = useRef(false);
   const historyIndex = useRef<number>(window.history.state?.idx ?? 0);
   const restoringPop = useRef<PendingNavigation | null>(null);
+  const previousRoute = useRef({ view, search: location.search });
   dirtyRef.current = dirty;
   historyIndex.current = window.history.state?.idx ?? historyIndex.current;
   useEffect(() => {
@@ -129,11 +141,16 @@ export function PharmacyWorkflowPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setQuery(new URLSearchParams(location.search).get("q") || "");
-    setPage(1);
+    const catalogRoundTrip =
+      ((previousRoute.current.view === "search" && view === "detail") ||
+        (previousRoute.current.view === "detail" && view === "search")) &&
+      previousRoute.current.search === location.search;
+    if (!catalogRoundTrip) setPage(1);
+    previousRoute.current = { view, search: location.search };
     setError("");
     historyIndex.current = window.history.state?.idx ?? 0;
     document.querySelector(".wf-nav-menu[open]")?.removeAttribute("open");
-  }, [location.search, location.pathname]);
+  }, [location.search, location.pathname, view]);
   useEffect(() => {
     if (!dirty) return;
     const beforeUnload = (event: BeforeUnloadEvent) => {
@@ -318,6 +335,54 @@ export function PharmacyWorkflowPage() {
     setError("");
     setNotice(
       `${selectedProducts.length} product${selectedProducts.length === 1 ? "" : "s"} added to cart.`,
+    );
+  };
+  const addDetailCart = (
+    product: Product,
+    units: number,
+    noSubstitution: boolean,
+  ) => {
+    const current = Number(
+      store.cart.find((line) => line.productId === product.id)?.quantity || 0,
+    );
+    const total = current + units;
+    if (
+      !Number.isInteger(units) ||
+      !validQuantity(String(units)) ||
+      !validQuantity(String(total)) ||
+      total > product.stock
+    ) {
+      setError(
+        `Choose a total quantity of 1–${Math.min(99, product.stock)} for ${product.name}.`,
+      );
+      return;
+    }
+    setStore((previous) => {
+      const existing = previous.cart.find(
+        (line) => line.productId === product.id,
+      );
+      return {
+        ...previous,
+        cart: existing
+          ? previous.cart.map((line) =>
+              line.productId === product.id
+                ? { ...line, quantity: String(total), noSubstitution }
+                : line,
+            )
+          : [
+              ...previous.cart,
+              {
+                productId: product.id,
+                quantity: String(units),
+                selected: false,
+                noSubstitution,
+              },
+            ],
+      };
+    });
+    setError("");
+    setNotice(
+      `${units} unit${units === 1 ? "" : "s"} of ${product.name} added to cart.`,
     );
   };
   const patchCart = (id: string, changes: Partial<Store["cart"][number]>) =>
@@ -554,7 +619,7 @@ export function PharmacyWorkflowPage() {
         </button>
         <nav aria-label="Pharmacy sections">
           <button
-            className={view === "search" ? "active" : ""}
+            className={view === "search" || view === "detail" ? "active" : ""}
             onClick={() => go(paths.search)}
           >
             Products
@@ -626,18 +691,26 @@ export function PharmacyWorkflowPage() {
         <div className="wf-breadcrumb">
           <button onClick={() => go(paths.search)}>Home</button>
           <span>/</span>
-          <span>
-            {
+          {view === "detail" ? (
+            <>
+              <button onClick={() => go(productListPath)}>Products</button>
+              <span>/</span>
+              <span>{detailProduct?.name ?? "Product not found"}</span>
+            </>
+          ) : (
+            <span>
               {
-                search: "Search results",
-                cart: "Carts",
-                checkout: "Checkout",
-                returns: "Return request",
-                history: "Return history",
-                invoices: "Invoices & credits",
-              }[view]
-            }
-          </span>
+                {
+                  search: "Search results",
+                  cart: "Carts",
+                  checkout: "Checkout",
+                  returns: "Return request",
+                  history: "Return history",
+                  invoices: "Invoices & credits",
+                }[view]
+              }
+            </span>
+          )}
         </div>
         {notice && (
           <div className="wf-notice" role="status">
@@ -861,7 +934,12 @@ export function PharmacyWorkflowPage() {
                         />
                       </td>
                       <td>
-                        <strong>{product.name}</strong>
+                        <Link
+                          className="wf-product-name-link"
+                          to={`${productPath(product.id)}${location.search}`}
+                        >
+                          <strong>{product.name}</strong>
+                        </Link>
                         <small className="wf-tag">
                           {product.serialized ? "Serialized" : "Non-serialized"}
                         </small>
@@ -920,6 +998,37 @@ export function PharmacyWorkflowPage() {
             </div>
           </>
         )}
+        {view === "detail" &&
+          (detailProduct ? (
+            <ProductDetail
+              key={detailProduct.id}
+              product={detailProduct}
+              cartQuantity={Number(
+                store.cart.find((line) => line.productId === detailProduct.id)
+                  ?.quantity || 0,
+              )}
+              noSubstitution={
+                store.cart.find((line) => line.productId === detailProduct.id)
+                  ?.noSubstitution || false
+              }
+              onAdd={(units, noSubstitution) =>
+                addDetailCart(detailProduct, units, noSubstitution)
+              }
+              onBack={() => go(productListPath)}
+              onViewCart={() => go(paths.cart)}
+            />
+          ) : (
+            <section
+              className="wf-detail-not-found"
+              data-testid="product-detail-not-found"
+            >
+              <h1>Product not found</h1>
+              <p>This demo catalog does not contain that product.</p>
+              <button onClick={() => go(productListPath)}>
+                Back to product list
+              </button>
+            </section>
+          ))}
         {view === "cart" && (
           <>
             <div className="wf-title">

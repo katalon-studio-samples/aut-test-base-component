@@ -1,6 +1,7 @@
 import { test, expect, Page, Locator } from "@playwright/test";
 const BASE = "/truephamacy-workflow";
 const cream = "Demo Care Cream · 30 g";
+const coolingKit = "Demo Cooling Kit · 1 each";
 const invoice = "INV-DEMO-1001-1";
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -461,6 +462,141 @@ test("direct checkout without cart items cannot place an order @regression", asy
   await expect(
     page.getByRole("button", { name: "Place practice order", exact: true }),
   ).toHaveCount(0);
+});
+
+test("product name opens detail and back returns to filtered catalog @regression", async ({
+  page,
+}) => {
+  await page.goto(`${BASE}/search?q=cooling`);
+  await page.getByRole("link", { name: coolingKit, exact: true }).click();
+  await expect(page).toHaveURL(
+    /\/truephamacy-workflow\/products\/cooling-kit(?:\?.*)?$/,
+  );
+
+  const detail = page.getByTestId("product-detail");
+  await expect(detail.getByRole("heading", { name: coolingKit })).toBeVisible();
+  await expect(detail).toContainText("Cold chain");
+  await expect(detail).toContainText("Refrigerated");
+  await expect(detail).toContainText("DEMO-NDC-1008");
+  await expect(detail).toContainText("DEMO-1008");
+  await expect(detail).toContainText("00000000001008");
+  await expect(detail).toContainText("16 units available");
+  await expect(detail).toContainText("$32.95");
+  await expect(
+    detail
+      .getByRole("combobox", { name: "Purchase unit" })
+      .locator("option:checked"),
+  ).toContainText("Each");
+
+  await detail.getByRole("button", { name: "Back to product list" }).click();
+  await expect(page).toHaveURL(`${BASE}/search?q=cooling`);
+  await expect(
+    page.getByRole("searchbox", { name: "Search products", exact: true }),
+  ).toHaveValue("cooling");
+  await expect(
+    page.getByRole("link", { name: coolingKit, exact: true }),
+  ).toBeVisible();
+});
+
+test("product detail case option adds the correct units and substitution choice to cart @regression", async ({
+  page,
+}) => {
+  await page.goto(`${BASE}/search?q=cooling`);
+  await page.getByRole("link", { name: coolingKit, exact: true }).click();
+  const detail = page.getByTestId("product-detail");
+  const unit = detail.getByRole("combobox", { name: "Purchase unit" });
+  await expect(unit.locator("option")).toHaveCount(4);
+  await unit.selectOption("Case");
+  await expect(unit.locator("option:checked")).toContainText("Case");
+  await detail.getByRole("spinbutton", { name: "Quantity" }).fill("2");
+  await detail.getByRole("checkbox", { name: "Do not substitute" }).check();
+  await detail.getByRole("button", { name: "Add to cart" }).click();
+  await detail.getByRole("button", { name: "View cart" }).click();
+
+  await expect(page).toHaveURL(`${BASE}/cart`);
+  await expect(page.getByTestId("cart-cooling-kit")).toBeVisible();
+  await expect(
+    page.getByRole("spinbutton", { name: `Cart quantity for ${coolingKit}` }),
+  ).toHaveValue("8");
+  await expect(
+    page.getByRole("switch", { name: `Do not substitute ${coolingKit}` }),
+  ).toHaveAttribute("aria-checked", "true");
+});
+
+test("product detail pack option adds the correct number of units to cart @regression", async ({
+  page,
+}) => {
+  await page.goto(`${BASE}/search?q=cooling`);
+  await page.getByRole("link", { name: coolingKit, exact: true }).click();
+  const detail = page.getByTestId("product-detail");
+  const unit = detail.getByRole("combobox", { name: "Purchase unit" });
+  await unit.selectOption("Pack");
+  await expect(unit.locator("option:checked")).toContainText("Pack");
+  await detail.getByRole("spinbutton", { name: "Quantity" }).fill("3");
+  await detail.getByRole("button", { name: "Add to cart" }).click();
+  await detail.getByRole("button", { name: "View cart" }).click();
+
+  await expect(page).toHaveURL(`${BASE}/cart`);
+  await expect(
+    page.getByRole("spinbutton", { name: `Cart quantity for ${coolingKit}` }),
+  ).toHaveValue("6");
+});
+
+test("product detail carton option respects stock and adds twelve units @regression", async ({
+  page,
+}) => {
+  await page.goto(`${BASE}/products/cooling-kit`);
+  const detail = page.getByTestId("product-detail");
+  await detail
+    .getByRole("combobox", { name: "Purchase unit" })
+    .selectOption("Carton");
+  const quantity = detail.getByRole("spinbutton", { name: "Quantity" });
+  await quantity.fill("2");
+  await expect(
+    detail.getByRole("button", { name: "Add to cart" }),
+  ).toBeDisabled();
+  await expect(detail).toContainText("Only 1 carton can be added.");
+
+  await quantity.fill("1");
+  await expect(detail.locator(".wf-product-detail-total")).toContainText(
+    "12 units",
+  );
+  await detail.getByRole("button", { name: "Add to cart" }).click();
+  await detail.getByRole("button", { name: "View cart" }).click();
+  await expect(
+    page.getByRole("spinbutton", { name: `Cart quantity for ${coolingKit}` }),
+  ).toHaveValue("12");
+});
+
+test("unknown product detail shows a safe fallback @regression", async ({
+  page,
+}) => {
+  await page.goto(`${BASE}/products/unknown-product`);
+  await expect(
+    page.getByRole("heading", { name: "Product not found" }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Add to cart" })).toHaveCount(
+    0,
+  );
+  await page.getByRole("button", { name: "Back to product list" }).click();
+  await expect(page).toHaveURL(`${BASE}/search`);
+});
+
+test("out-of-stock product detail cannot add to cart @regression", async ({
+  page,
+}) => {
+  await page.goto(`${BASE}/products/dressing`);
+  const detail = page.getByTestId("product-detail");
+  await expect(
+    detail.getByRole("spinbutton", { name: "Quantity" }),
+  ).toBeDisabled();
+  await expect(
+    detail.getByRole("button", { name: "Add to cart" }),
+  ).toBeDisabled();
+  await expect(detail.locator(".wf-product-detail-total")).toContainText(
+    "Out of stock",
+  );
+  await expect(detail.locator(".wf-product-detail-total")).toContainText("—");
 });
 
 test("dark mode keeps search, cart and checkout text readable @regression", async ({

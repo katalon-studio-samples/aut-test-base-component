@@ -138,4 +138,4 @@ Open `/traffic-agent-performance` for the English library application: book cata
 
 ## Pharmacy Workflow
 
-Open `/truephamacy-workflow` for the Cardinal-inspired demo: product search → cart → checkout → return request → serial/unit/GTIN rows → invoice matching → local return history. All business data is synthetic. See [the walkthrough and reference notes](docs/pharmacy-workflow.md).
+Open `/truephamacy-workflow` for the Cardinal-inspired demo: product search → product detail with Each/Pack/Case/Carton options → cart → checkout → return request → serial/unit/GTIN rows → invoice matching → local return history. All business data is synthetic. See [the walkthrough and reference notes](docs/pharmacy-workflow.md).
