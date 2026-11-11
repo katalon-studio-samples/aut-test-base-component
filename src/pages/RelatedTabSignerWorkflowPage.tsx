@@ -78,6 +78,37 @@ const createInitialState = (): Record<SignerId, SignerState> =>
     {} as Record<SignerId, SignerState>,
   );
 
+// Storage and related tabs may contain only a subset of the known signers.
+const normalizeSignerState = (
+  value: unknown,
+  fallback = createInitialState(),
+): Record<SignerId, SignerState> => {
+  const state = { ...fallback };
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return state;
+  }
+
+  for (const id of SIGNER_IDS) {
+    const entry = (value as Record<string, unknown>)[id];
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) continue;
+    const signer = entry as Partial<SignerState>;
+    if (typeof signer.name !== "string" || typeof signer.signed !== "boolean") {
+      continue;
+    }
+    state[id] = {
+      id,
+      name: signer.name,
+      signed: signer.signed,
+      ...(typeof signer.signedAt === "string" && { signedAt: signer.signedAt }),
+      ...(typeof signer.mode === "string" &&
+        Object.prototype.hasOwnProperty.call(MODE_LABELS, signer.mode) && {
+          mode: signer.mode,
+        }),
+    };
+  }
+  return state;
+};
+
 const readJson = <T,>(key: string, fallback: T): T => {
   try {
     const value = window.localStorage.getItem(key);
@@ -199,7 +230,7 @@ export const RelatedTabSignerWorkflowPage: React.FC = () => {
   const openedByWorkflowButton =
     searchParams.get("workflowOpen") === "1" && !!openerExists;
   const [signers, setSigners] = useState<Record<SignerId, SignerState>>(() =>
-    readJson(STORAGE_STATE_KEY, createInitialState()),
+    normalizeSignerState(readJson<unknown>(STORAGE_STATE_KEY, null)),
   );
   const [events, setEvents] = useState<WorkflowEvent[]>(() =>
     readJson(STORAGE_EVENTS_KEY, []),
@@ -313,14 +344,22 @@ export const RelatedTabSignerWorkflowPage: React.FC = () => {
       window.name = MAIN_WINDOW_NAME;
     }
 
+    const receiveSignerState = (value: unknown) => {
+      const next = normalizeSignerState(value, signersRef.current);
+      // Update the ref before another queued tab message can use it.
+      signersRef.current = next;
+      setSigners(next);
+      saveState(next);
+    };
+
     if ("BroadcastChannel" in window) {
       channelRef.current = new BroadcastChannel(CHANNEL_NAME);
       channelRef.current.onmessage = ({
         data,
       }: MessageEvent<ChannelMessage>) => {
+        if (!data || typeof data !== "object") return;
         if (data.type === "state-sync") {
-          setSigners(data.state);
-          saveState(data.state);
+          receiveSignerState(data.state);
           appendDebugEvent("Received signer state update");
         }
         if (data.type === "event") {
@@ -345,7 +384,13 @@ export const RelatedTabSignerWorkflowPage: React.FC = () => {
 
     const handleStorage = (event: StorageEvent) => {
       if (event.key === STORAGE_STATE_KEY) {
-        setSigners(readJson(STORAGE_STATE_KEY, createInitialState()));
+        if (window.localStorage.getItem(STORAGE_STATE_KEY) === null) {
+          const emptyState = createInitialState();
+          signersRef.current = emptyState;
+          setSigners(emptyState);
+        } else {
+          receiveSignerState(readJson<unknown>(STORAGE_STATE_KEY, null));
+        }
         appendDebugEvent("Received localStorage signer state update");
       }
       if (event.key === STORAGE_EVENTS_KEY) {
@@ -520,6 +565,7 @@ export const RelatedTabSignerWorkflowPage: React.FC = () => {
 
   const resetWorkflow = () => {
     const emptyState = createInitialState();
+    signersRef.current = emptyState;
     saveState(emptyState);
     saveEvents([]);
     setSigners(emptyState);

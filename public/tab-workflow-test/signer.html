@@ -291,12 +291,45 @@
         };
 
         const readState = () => {
+          const state = Object.fromEntries(
+            SIGNER_IDS.map((id) => [id, { id, name: "", signed: false }]),
+          );
           try {
-            const value = window.localStorage.getItem(STORAGE_STATE_KEY);
-            return value ? JSON.parse(value) : {};
+            const value = JSON.parse(
+              window.localStorage.getItem(STORAGE_STATE_KEY) || "null",
+            );
+            if (!value || typeof value !== "object" || Array.isArray(value)) {
+              return state;
+            }
+            for (const id of SIGNER_IDS) {
+              const signer = value[id];
+              if (
+                !signer ||
+                typeof signer.name !== "string" ||
+                typeof signer.signed !== "boolean"
+              ) {
+                continue;
+              }
+              state[id] = {
+                id,
+                name: signer.name,
+                signed: signer.signed,
+                ...(typeof signer.signedAt === "string" && {
+                  signedAt: signer.signedAt,
+                }),
+                ...(typeof signer.mode === "string" &&
+                  Object.prototype.hasOwnProperty.call(
+                    MODE_LABELS,
+                    signer.mode,
+                  ) && {
+                    mode: signer.mode,
+                  }),
+              };
+            }
           } catch {
-            return {};
+            // A missing or invalid saved state starts a complete pending workflow.
           }
+          return state;
         };
 
         const writeSameDomainState = (fullName, timestamp) => {
